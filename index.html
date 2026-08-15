@@ -62,6 +62,29 @@
   }
 
   /* ---- Masthead ---- */
+  .sitenav {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 14px;
+  }
+
+  .sitenav a {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--ink-faint);
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+  }
+
+  .sitenav a.current {
+    color: var(--accent-ink);
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
   .topbar {
     padding: 20px 20px 16px;
     border-bottom: 1px solid var(--border);
@@ -406,6 +429,10 @@
 
 <div class="app">
   <header class="topbar">
+    <nav class="sitenav">
+      <a href="./" class="current">PBS News</a>
+      <a href="vocab.html">英単語帳</a>
+    </nav>
     <span class="eyebrow">Listening Guide</span>
     <h1>PBS News Hour</h1>
     <p class="tagline">英語字幕から作る、日本語リスニング学習ガイド(直近分)</p>

@@ -1,0 +1,342 @@
+<title>英単語帳</title>
+<meta name="description" content="スクリーンショットから作った英単語・フレーズの学習帳" />
+<style>
+  :root {
+    --bg: #EEF1F3;
+    --surface: #FFFFFF;
+    --surface-2: #E3E8EB;
+    --ink: #10151C;
+    --ink-soft: #4B5560;
+    --ink-faint: #7C8790;
+    --border: #D7DCE1;
+    --accent: #0B8793;
+    --accent-ink: #FFFFFF;
+    --amber: #B96A1E;
+    --font-display: "Bahnschrift", "DIN Alternate", "Arial Narrow", sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic Medium", "Yu Gothic", "Noto Sans JP", "Segoe UI", sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B0F14;
+      --surface: #131920;
+      --surface-2: #1B222A;
+      --ink: #E7ECF0;
+      --ink-soft: #93A0AB;
+      --ink-faint: #5C6770;
+      --border: #232B33;
+      --accent: #4FD1DB;
+      --accent-ink: #06181A;
+      --amber: #E3A548;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--accent); }
+
+  .app {
+    max-width: 720px;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sitenav {
+    display: flex;
+    gap: 4px;
+    padding: 14px 20px 0;
+  }
+
+  .sitenav a {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    color: var(--ink-faint);
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+  }
+
+  .sitenav a.current {
+    color: var(--accent-ink);
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .topbar {
+    padding: 12px 20px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .eyebrow {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .topbar h1 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(26px, 6vw, 32px);
+    letter-spacing: 0.01em;
+    text-wrap: balance;
+  }
+
+  .topbar p.tagline {
+    margin: 6px 0 0;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  .controls {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .search-wrap {
+    position: relative;
+    flex: 1;
+  }
+
+  #search {
+    width: 100%;
+    font-family: var(--font-body);
+    font-size: 15px;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink);
+  }
+
+  #search:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  #search::placeholder { color: var(--ink-faint); }
+
+  .count {
+    font-family: var(--font-display);
+    font-variant-numeric: tabular-nums;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  main { flex: 1; padding: 4px 20px 40px; }
+
+  .vocab-list {
+    list-style: none;
+    margin: 0;
+    padding: 8px 0 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .vcard {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .vcard-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .word {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+  }
+
+  .word .mean {
+    font-weight: 400;
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+
+  .date {
+    font-family: var(--font-display);
+    font-variant-numeric: tabular-nums;
+    font-size: 11px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .exp {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    margin: 6px 0 0;
+  }
+
+  .ex {
+    font-size: 13.5px;
+    color: var(--ink-faint);
+    margin: 4px 0 0;
+    font-style: italic;
+  }
+
+  .ex::before { content: "\201C"; font-style: normal; }
+  .ex::after { content: "\201D"; font-style: normal; }
+
+  .src {
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    margin: 6px 0 0;
+  }
+
+  .empty {
+    padding: 40px 0;
+    text-align: center;
+    color: var(--ink-faint);
+    font-size: 14px;
+  }
+
+  footer {
+    padding: 18px 20px 28px;
+    border-top: 1px solid var(--border);
+    font-size: 12.5px;
+    color: var(--ink-faint);
+    line-height: 1.7;
+  }
+
+  [hidden] { display: none !important; }
+</style>
+
+<div class="app">
+  <nav class="sitenav">
+    <a href="./">PBS News</a>
+    <a href="vocab.html" class="current">英単語帳</a>
+  </nav>
+
+  <header class="topbar">
+    <span class="eyebrow">Vocabulary</span>
+    <h1>英単語帳</h1>
+    <p class="tagline">スクリーンショットから拾った単語・フレーズの記録(新しい順、復習のため重複も残しています)</p>
+  </header>
+
+  <nav class="controls">
+    <div class="search-wrap">
+      <input id="search" type="search" placeholder="単語・意味で検索…" autocomplete="off" />
+    </div>
+    <span class="count" id="count"></span>
+  </nav>
+
+  <main>
+    <ul class="vocab-list" id="vocab-list"></ul>
+    <p class="empty" id="empty" hidden>該当する単語が見つかりません</p>
+  </main>
+
+  <footer>
+    <p>スマホで英文を読んでいて出会った単語・フレーズを、スクリーンショットから抽出してまとめています。同じ語が複数回登場するのは、繰り返し分からなくなった=復習が必要という印として、あえて残しています。</p>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    "use strict";
+
+    var ENTRIES = [
+      ["2026-08-15", "downturn", "(景気の)下降、後退(名詞)", "経済が悪化する局面を表す名詞。本文では\"a serious downturn in the economy\"という形で、recession(不況)と並んで使われている。", "The company had to lay off staff during the economic downturn.", "英会話レッスンアプリの語彙学習画面"],
+      ["2026-08-15", "upturn", "(景気の)好転、上向き(名詞)", "downturnの対義語で、状況が上向きに改善することを表す。本文では\"What's the opposite of the word 'downturn'?\"の答えとして使われている。", "Economists expect an upturn in consumer spending next quarter.", "英会話レッスンアプリの語彙学習画面"],
+      ["2026-08-15", "obsolete", "時代遅れの、廃れた(形容詞)", "使われなくなった、時代に合わなくなったものを表す形容詞。本文では\"the stock is now obsolete\"という文脈で、手書きの丸で囲まれていた。", "This computer software is now obsolete and has been replaced by a newer version.", "英語学習アプリ(ビジネス語彙のリスニング教材)"],
+      ["2026-08-15", "sack", "(人を)クビにする、解雇する(動詞)", "fire, lay off, make redundant, downsizeと並ぶ「解雇する」の同義語の一つとして手書きの丸で囲まれていた。会話文中では\"has been sacked\"(受動態)の形で使われている。", "He was sacked for stealing from the company.", "英語学習アプリ(雇用・解雇語彙のリスニング教材)"],
+      ["2026-08-15", "take on", "(人を)雇う、引き受ける(句動詞)", "\"take\"と\"on\"が組み合わさって、単なる直訳では推測しにくい「雇用する」「(仕事・責任を)引き受ける」という意味になる句動詞。本文では\"appoint a freelancer rather than take on a permanent staff member\"のように使われていた。", "The company decided to take on two new employees this quarter.", "英語学習アプリ(フリーランス・雇用語彙のクイズ)"],
+      ["2026-08-15", "per annum", "1年につき、年あたり(副詞句)", "ラテン語由来のフォーマルな表現で、年収や年利など金額を「年単位」で示す際に使う。本文では\"I reckon ... earns about ... per annum\"のように使われていた。", "The position offers a starting salary of £35,000 per annum.", "英語学習アプリ(給与・会計語彙のクイズ)"],
+      ["2026-08-15", "per annum", "1年につき、年あたり(副詞句)", "ラテン語由来のフォーマルな表現で、年収や年利など金額を「年単位」で示す際に使う。本文では\"I reckon ... earns about ... per annum\"のように使われていた。", "The position offers a starting salary of £35,000 per annum.", "英語学習アプリ(給与・会計語彙のクイズ)"],
+      ["2026-08-15", "trade credit", "掛け売り・仕入先信用(名詞)", "仕入先(supplier)が代金の即時支払いを求めず、後払いを認める取引形態を指すビジネス用語。cash flow(資金繰り)を管理する手段の一つとして紹介される文脈。", "Many small businesses rely on trade credit from their suppliers to manage cash flow.", "ビジネス英語教材アプリ"],
+      ["2026-08-14", "tolerance", "許容度、我慢できる限度(名詞)", "\"tolerance for X\"で「Xに対する許容度」の意味。本文では\"tolerance for AI mistakes is close to zero\"という形で使われている。", "Some industries have zero tolerance for errors, especially in safety-critical systems.", "BBC (bbc.com)"],
+      ["2026-08-14", "prop up", "(通貨・価格などを)支える、下支えする(句動詞)", "\"prop\"(支柱)+\"up\"の組み合わせで、崩れそうなものを一時的に支える、という意味の句動詞。見出し\"US and Japan take action to prop up yen\"で使われている。", "The central bank intervened to prop up the currency after it hit a record low.", "BBC (bbc.com)"],
+      ["2026-08-14", "of all stripes", "あらゆる種類の、あらゆる立場の(イディオム)", "\"people/politicians of all stripes\"のように、様々なタイプ・立場の人々を指す定型表現。見出し\"Hall of Famers of all stripes open Field of Dreams Game festivities\"で使われている。", "The festival attracts musicians of all stripes, from jazz to rock.", "MLB.com"],
+      ["2026-08-14", "milestone", "画期的な出来事、節目(名詞)", "本来は「路標石」の意味だが、比喩的に重要な出来事・節目を指す。見出し\"Stats of the Week: Milestones for ... and more\"で使われている。", "Winning the championship was a major milestone in her career.", "MLB.com"],
+      ["2026-08-14", "meteorological", "気象の(形容詞)", "\"meteorological agency\"で「気象庁」のような気象観測・予報を行う機関を指す。本文では\"Japan's Meteorological Agency said the recent deluge was brought by...\"という形で使われている。", "The meteorological agency issued a severe weather warning ahead of the storm.", "BBC News (Japan floods記事)"],
+      ["2026-08-14", "authority", "当局(名詞、通常複数形で使う)", "ここでの\"authorities\"は「権威」ではなく、地方自治体・行政機関などの「当局」の意味。本文では\"Local authorities issued a level five emergency warning\"という形で使われている。", "Local authorities have issued an evacuation order for the coastal area.", "BBC News (Japan floods記事)"],
+      ["2026-08-14", "unprecedented", "前例のない、かつてない(形容詞)", "記録的な事態を強調する語で、ニュース記事で頻出する。本文では\"The rains, which authorities have described as 'unprecedented'\"のように使われている。", "The pandemic caused unprecedented disruption to the global economy.", "BBC News (Japan floods記事)"],
+      ["2026-08-14", "recommendation", "提言、勧告、推薦(名詞)", "動詞\"recommend\"の名詞形。フォーマルな文脈では\"make a recommendation\"/\"make recommendations\"のように\"make\"と組み合わせて使われることが多い。", "The consultant made a recommendation to improve customer service.", "accountant/bookkeeping教材"],
+      ["2026-08-14", "multinational", "多国籍の、多国籍企業の(形容詞)", "単に他国に製品を売っているだけでなく、複数の国に重要な事業拠点を持つ企業を指す。本文では\"a business that has significant operations based in several different countries\"と定義されている。", "Coca-Cola is a well-known multinational company with operations in over 200 countries.", "LESSON 7 \"multinational\" 教材"]
+    ];
+
+    var listEl = document.getElementById("vocab-list");
+    var countEl = document.getElementById("count");
+    var emptyEl = document.getElementById("empty");
+    var searchEl = document.getElementById("search");
+
+    function el(tag, className, html) {
+      var e = document.createElement(tag);
+      if (className) e.className = className;
+      if (html !== undefined) e.innerHTML = html;
+      return e;
+    }
+
+    function render(filter) {
+      var q = (filter || "").trim().toLowerCase();
+      listEl.innerHTML = "";
+      var shown = 0;
+      var frag = document.createDocumentFragment();
+
+      ENTRIES.forEach(function (entry) {
+        var date = entry[0], word = entry[1], mean = entry[2], exp = entry[3], ex = entry[4], src = entry[5];
+        if (q && word.toLowerCase().indexOf(q) === -1 && mean.toLowerCase().indexOf(q) === -1) return;
+
+        var li = el("li", "vcard");
+        var head = el("div", "vcard-head");
+        head.appendChild(el("span", "word", "<b>" + word + "</b> <span class=\"mean\">" + mean + "</span>"));
+        head.appendChild(el("span", "date", date));
+        li.appendChild(head);
+        li.appendChild(el("p", "exp", exp));
+        li.appendChild(el("p", "ex", ex));
+        li.appendChild(el("p", "src", src));
+        frag.appendChild(li);
+        shown++;
+      });
+
+      listEl.appendChild(frag);
+      countEl.textContent = shown + " / " + ENTRIES.length + "件";
+      emptyEl.hidden = shown !== 0;
+    }
+
+    searchEl.addEventListener("input", function () {
+      render(searchEl.value);
+    });
+
+    render("");
+  })();
+</script>
