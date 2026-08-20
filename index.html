@@ -1,1082 +1,2308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PBS News Hour Listening Guide</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="PBS NewsHourのフルエピソードから作成した日本語リスニング学習ガイドと単語帳" />
 <style>
   :root {
-    --bg: #EEF1F3;
-    --surface: #FFFFFF;
-    --surface-2: #E3E8EB;
-    --ink: #10151C;
-    --ink-soft: #4B5560;
-    --ink-faint: #7C8790;
-    --border: #D7DCE1;
-    --accent: #0B8793;
-    --accent-ink: #FFFFFF;
-    --amber: #B96A1E;
-    --font-display: "Bahnschrift", "DIN Alternate", "Arial Narrow", sans-serif;
-    --font-body: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic Medium", "Yu Gothic", "Noto Sans JP", "Segoe UI", sans-serif;
+    color-scheme: light dark;
+    --bg: #f7f7f5;
+    --surface: #ffffff;
+    --surface-2: #f0f0ee;
+    --text: #1c1c1a;
+    --text-dim: #55554f;
+    --border: #e0e0db;
+    --accent: #b5433a;
+    --accent-bg: #fbeae8;
+    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --radius: 10px;
   }
-
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0B0F14;
-      --surface: #131920;
-      --surface-2: #1B222A;
-      --ink: #E7ECF0;
-      --ink-soft: #93A0AB;
-      --ink-faint: #5C6770;
-      --border: #232B33;
-      --accent: #4FD1DB;
-      --accent-ink: #06181A;
-      --amber: #E3A548;
+      --bg: #17171a;
+      --surface: #1f1f23;
+      --surface-2: #26262b;
+      --text: #eceae6;
+      --text-dim: #a8a6a0;
+      --border: #34343a;
+      --accent: #e0796d;
+      --accent-bg: #3a2320;
+      --shadow: 0 1px 3px rgba(0,0,0,0.4);
     }
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; scroll-behavior: auto !important; }
-  }
-
   * { box-sizing: border-box; }
-
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-    color: var(--ink);
-  }
-
   body {
-    font-family: var(--font-body);
-    font-size: 17px;
-    line-height: 1.8;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  a { color: var(--accent); }
-
-  .app {
-    max-width: 720px;
-    margin: 0 auto;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* ---- Masthead ---- */
-  .sitenav {
-    display: flex;
-    gap: 4px;
-    margin-bottom: 14px;
-  }
-
-  .sitenav a {
-    font-family: var(--font-display);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-decoration: none;
-    color: var(--ink-faint);
-    padding: 5px 10px;
-    border: 1px solid var(--border);
-  }
-
-  .sitenav a.current {
-    color: var(--accent-ink);
-    background: var(--accent);
-    border-color: var(--accent);
-  }
-
-  .topbar {
-    padding: 20px 20px 16px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .eyebrow {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    color: var(--ink-faint);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .topbar h1 {
     margin: 0;
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(26px, 6vw, 32px);
-    letter-spacing: 0.01em;
-    text-wrap: balance;
-  }
-
-  .topbar p.tagline {
-    margin: 6px 0 0;
-    color: var(--ink-soft);
-    font-size: 15.5px;
-  }
-
-  /* ---- Controls ---- */
-  .controls {
-    position: sticky;
-    top: 0;
-    z-index: 10;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", "Segoe UI", sans-serif;
     background: var(--bg);
-    padding: 14px 20px 0;
-    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    line-height: 1.7;
   }
-
+  header {
+    padding: 28px 20px 10px;
+    text-align: center;
+  }
+  header h1 {
+    font-size: 1.4rem;
+    margin: 0 0 4px;
+  }
+  header p {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin: 0;
+  }
+  .controls {
+    max-width: 900px;
+    margin: 18px auto 0;
+    padding: 0 20px;
+  }
   .mode-toggle {
     display: flex;
-    gap: 2px;
-    background: var(--surface-2);
+    gap: 8px;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+  .mode-toggle button {
+    padding: 8px 22px;
+    border-radius: 999px;
     border: 1px solid var(--border);
-    padding: 2px;
-    width: fit-content;
-    margin-bottom: 12px;
-  }
-
-  .mode-btn {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 15px;
-    letter-spacing: 0.03em;
-    border: none;
-    background: transparent;
-    color: var(--ink-soft);
-    padding: 9px 18px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.95rem;
     cursor: pointer;
+    transition: background 0.15s, color 0.15s;
   }
-
-  .mode-btn:hover { color: var(--ink); }
-
-  .mode-btn.active {
+  .mode-toggle button.active {
     background: var(--accent);
-    color: var(--accent-ink);
+    border-color: var(--accent);
+    color: #fff;
   }
-
-  .mode-btn:focus-visible,
-  .date-btn:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-
   .date-tabs {
     display: flex;
     gap: 6px;
-    overflow-x: auto;
-    padding-bottom: 12px;
-    scrollbar-width: thin;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
   }
-
-  .date-btn {
-    flex: 0 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
+  .date-tab {
+    padding: 6px 16px;
+    border-radius: 8px;
     border: 1px solid var(--border);
     background: var(--surface);
-    color: var(--ink-soft);
-    padding: 6px 14px 5px;
+    color: var(--text-dim);
+    font-size: 0.85rem;
     cursor: pointer;
-    position: relative;
-    font-family: var(--font-display);
   }
-
-  .date-btn .d {
-    font-size: 17px;
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-    color: var(--ink);
-  }
-
-  .date-btn .dow {
-    font-size: 11px;
-    letter-spacing: 0.08em;
-    color: var(--ink-faint);
-  }
-
-  .date-btn.active {
+  .date-tab.active {
+    background: var(--accent-bg);
     border-color: var(--accent);
-    box-shadow: inset 0 -2px 0 var(--accent);
-  }
-
-  .date-btn.active .d { color: var(--accent); }
-
-  .new-tag {
-    position: absolute;
-    top: -8px;
-    right: -6px;
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    color: var(--amber);
-    background: var(--surface);
-    border: 1px solid var(--amber);
-    padding: 1px 4px;
-  }
-
-  /* ---- Main / panels ---- */
-  main { flex: 1; padding: 4px 20px 40px; }
-
-  .panel { }
-
-  .lead {
-    padding: 18px 0 6px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 4px;
-  }
-
-  .lead h2 {
-    font-family: var(--font-display);
-    font-size: 21px;
-    margin: 0 0 8px;
-    text-wrap: balance;
-  }
-
-  .lead .meta {
-    font-size: 14px;
-    color: var(--ink-faint);
-    font-variant-numeric: tabular-nums;
-    margin-bottom: 10px;
-  }
-
-  .lead .summary-jp {
-    color: var(--ink-soft);
-    font-size: 16.5px;
-  }
-
-  .tip {
-    margin: 10px 0 0;
-    font-size: 15.5px;
-    color: var(--ink-soft);
-    border-left: 2px solid var(--accent);
-    padding-left: 10px;
-  }
-
-  .segment {
-    padding: 20px 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .segment-head {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
-
-  .tc {
-    font-family: var(--font-display);
-    font-variant-numeric: tabular-nums;
-    font-size: 14px;
-    font-weight: 700;
     color: var(--accent);
-    letter-spacing: 0.02em;
-    white-space: nowrap;
+    font-weight: 600;
   }
-
-  .segment h3 {
-    margin: 0;
-    font-size: 17.5px;
-    font-weight: 700;
-    text-wrap: balance;
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
   }
-
-  .segment .bg {
-    margin: 0 0 12px;
-    color: var(--ink);
-  }
-
-  .block-label {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: var(--ink-faint);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .es {
+  .panel { display: none; }
+  .panel.active { display: block; }
+  .panel-group { display: none; }
+  .panel-group.active { display: block; }
+  .guide-panel {
     background: var(--surface);
     border: 1px solid var(--border);
-    padding: 12px 14px;
-    margin: 0 0 14px;
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    box-shadow: var(--shadow);
   }
-
-  .es p {
-    margin: 0;
-    font-size: 16px;
-    color: var(--ink-soft);
-    line-height: 1.75;
-  }
-
-  .vwrap { margin: 0 0 14px; }
-
-  .vlist {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-
-  .vlist li {
-    font-size: 15.5px;
-    padding-left: 14px;
-    position: relative;
-    color: var(--ink-soft);
-  }
-
-  .vlist li::before {
-    content: "\2013";
-    position: absolute;
-    left: 0;
-    color: var(--ink-faint);
-  }
-
-  .vlist b { color: var(--ink); font-weight: 700; }
-  .vlist em { color: var(--ink-faint); font-style: normal; }
-
-  .check {
-    font-size: 15.5px;
-    color: var(--ink-soft);
-    margin: 0;
-  }
-
-  .check .block-label { display: inline; margin-right: 6px; }
-
-  .note {
-    padding: 20px 0 4px;
-    font-size: 14.5px;
-    color: var(--ink-faint);
-  }
-
-  /* ---- Vocab cards ---- */
-  .vocab-list {
-    list-style: none;
-    margin: 0;
-    padding: 12px 0 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .vcard {
+  .guide-panel h2 { font-size: 1.25rem; margin-top: 0; }
+  .guide-panel h3 { font-size: 1.1rem; margin-top: 2em; border-top: 1px solid var(--border); padding-top: 1em; }
+  .guide-panel h4 { font-size: 1rem; color: var(--accent); margin-bottom: 0.4em; }
+  .guide-panel hr { border: none; border-top: 1px solid var(--border); margin: 1.6em 0; }
+  .guide-panel p { margin: 0.7em 0; }
+  .guide-panel ul { padding-left: 1.3em; }
+  .guide-panel li { margin: 0.35em 0; }
+  .guide-panel strong { color: var(--accent); }
+  .vocab-grid {
     display: grid;
-    grid-template-columns: 34px 1fr;
-    gap: 4px 12px;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--border);
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
   }
-
-  .vcard .idx {
-    font-family: var(--font-display);
-    font-variant-numeric: tabular-nums;
-    font-size: 13px;
-    color: var(--ink-faint);
-    padding-top: 2px;
+  .vocab-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    box-shadow: var(--shadow);
   }
-
-  .vcard .word {
+  .vocab-word {
     font-weight: 700;
-    font-size: 17px;
-    color: var(--ink);
+    font-size: 1.02rem;
+    color: var(--accent);
   }
-
-  .vcard .word .mean {
-    font-weight: 400;
-    color: var(--ink-soft);
-    font-size: 15.5px;
+  .vocab-meaning {
+    font-size: 0.92rem;
+    color: var(--text);
+    margin-top: 2px;
   }
-
-  .vcard .exp {
-    grid-column: 2 / 3;
-    font-size: 15px;
-    color: var(--ink-soft);
-    margin: 4px 0 0;
+  .vocab-explanation {
+    font-size: 0.83rem;
+    color: var(--text-dim);
+    margin-top: 8px;
   }
-
-  .vcard .ex {
-    grid-column: 2 / 3;
-    font-size: 15px;
-    color: var(--ink-faint);
-    margin: 4px 0 0;
+  .vocab-example {
+    font-size: 0.83rem;
     font-style: italic;
+    color: var(--text-dim);
+    margin-top: 6px;
+    border-top: 1px dashed var(--border);
+    padding-top: 6px;
   }
-
-  .vcard .ex::before { content: "\201C"; font-style: normal; }
-  .vcard .ex::after { content: "\201D"; font-style: normal; }
-
+  .empty-note {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 40px 0;
+  }
   footer {
-    padding: 18px 20px 28px;
-    border-top: 1px solid var(--border);
-    font-size: 14px;
-    color: var(--ink-faint);
-    line-height: 1.75;
-  }
-
-  [hidden] { display: none !important; }
-
-  @media (min-width: 600px) {
-    .segment-head { gap: 14px; }
-    .segment h3 { font-size: 17px; }
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 0.78rem;
+    padding: 20px;
   }
 </style>
+</head>
+<body>
+<header>
+  <h1>PBS News Hour Listening Guide</h1>
+  <p>直近5日分のリスニングガイド&amp;単語帳(英語字幕をもとに自分の言葉で要約・解説)</p>
+</header>
 
-<div class="app">
-  <header class="topbar">
-    <nav class="sitenav">
-      <a href="./" class="current">PBS News</a>
-      <a href="vocab.html">英単語帳</a>
-    </nav>
-    <span class="eyebrow">Listening Guide</span>
-    <h1>PBS News Hour</h1>
-    <p class="tagline">英語字幕から作る、日本語リスニング学習ガイド(直近分)</p>
-  </header>
-
-  <nav class="controls">
-    <div class="mode-toggle" role="tablist" aria-label="表示モード">
-      <button type="button" class="mode-btn active" data-mode="guide">ガイド</button>
-      <button type="button" class="mode-btn" data-mode="vocab">単語帳</button>
-    </div>
-    <div class="date-tabs" role="tablist" aria-label="放送日">
-      <button type="button" class="date-btn active" data-date="2026-08-14">
-        <span class="new-tag">NEW</span>
-        <span class="d">08/14</span><span class="dow">FRI</span>
-      </button>
-      <button type="button" class="date-btn" data-date="2026-08-13">
-        <span class="d">08/13</span><span class="dow">THU</span>
-      </button>
-    </div>
-  </nav>
-
-  <main>
-
-    <!-- ===================== GUIDE: 2026-08-14 ===================== -->
-    <section class="panel" data-mode="guide" data-date="2026-08-14">
-      <div class="lead">
-        <h2>PBS News Hour full episode — August 14, 2026</h2>
-        <div class="meta">56分46秒 &middot; 字幕369セグメント(カバー率97%)</div>
-        <p class="summary-jp">金曜日のニュースアワーは、UnitedHealthcare CEO射殺事件の被告Luigi Mangioneが連邦裁判所で有罪を認めた驚きの展開から始まります。続いて、中東に長期展開中の空母USS Abraham Lincolnで水兵の士気低下や船外への飛び込み未遂が報じられる中、トランプ大統領がこれを軽視する発言をした問題を特集。その後、ヨーロッパの熱波や日本・米中西部の洪水などの短いニュースが続き、コンゴ民主共和国で史上2番目の規模に拡大しているエボラ出血熱の流行、地中海を渡ってギリシャを目指す移民の実態、David BrooksとKimberly Atkins Stohrによる週替わり政治分析(ウィスコンシン州予備選とイラン情勢)、ボストンのチャイナタウンで行われている高齢者向け音楽療法という順で特集が展開されます。</p>
-      </div>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">00:00</span><h3>1. INTRO</h3></div>
-        <p class="bg">冒頭でキャスターのWilliam Brangham(この日はAmna NawazとGeoff Bennettが不在)が、その日の主要トピックを手短に紹介します。Mangioneの司法取引、空母の状況への大統領の反応、コンゴのエボラ、ギリシャの移民問題という4つの柱が予告されます。</p>
-        <div class="es">
-          <span class="block-label">English Summary</span>
-          <p>Anchor William Brangham opens the program alone, noting his co-anchors are away. He previews four major stories: Luigi Mangione's guilty plea, President Trump dismissing concerns about a Navy carrier's conditions, the worsening Ebola outbreak in Congo, and Greece's efforts to control migration across Europe.</p>
-        </div>
-        <div class="vwrap">
-          <span class="block-label">語彙・表現</span>
-          <ul class="vlist">
-            <li><b>are away</b>(不在にしている) <em>— 共同キャスター2人が休みであることを説明</em></li>
-            <li><b>shooting death</b>(銃撃による死) <em>— Mangioneが起訴されている事件を指す</em></li>
-            <li><b>dismiss concerns</b>(懸念を一蹴する) <em>— 大統領が空母の状況への懸念を軽視</em></li>
-            <li><b>long-deployed</b>(長期間配備されている) <em>— 通常より長く海上展開する空母</em></li>
-            <li><b>jump overboard</b>(船から飛び降りる) <em>— 水兵の船外飛び込み未遂の報道</em></li>
-            <li><b>death toll</b>(死亡者数) <em>— コンゴのエボラ流行の死者数</em></li>
-            <li><b>stem the flow of</b>(〜の流れを食い止める) <em>— ギリシャの移民流入抑制</em></li>
-            <li><b>demolish safeguards</b>(安全策を骨抜きにする) <em>— 庇護手続きの保護策喪失への懸念</em></li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>冒頭で予告された4つのトピックのうち、少なくとも2つを英語で言えるか確認してみましょう。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">02:29</span><h3>2. Guilty Plea</h3></div>
-        <p class="bg">UnitedHealthcareのCEO Brian Thompson殺害事件で起訴されていたLuigi Mangioneが、連邦裁判所で意外にも有罪を認めます。司法記者Ali Roginが、その動機や州レベルの殺人罪との関係(二重処罰の禁止=double jeopardy)を解説します。</p>
-        <div class="es">
-          <span class="block-label">English Summary</span>
-          <p>In a surprising move, Luigi Mangione pleaded guilty to federal stalking charges resulting in Brian Thompson's death, though he still faces a separate murder charge in New York state court. Correspondent Ali Rogin explains that his defense may be trying to invoke double jeopardy protections to get the state case dismissed. Mangione said he was motivated by chronic back pain and frustration with the health insurance system.</p>
-        </div>
-        <div class="vwrap">
-          <span class="block-label">語彙・表現</span>
-          <ul class="vlist">
-            <li><b>plead guilty</b>(罪を認める) <em>— 連邦裁判所での有罪答弁</em></li>
-            <li><b>stalking</b>(つきまとい) <em>— 起訴内容のひとつ</em></li>
-            <li><b>double jeopardy</b>(二重処罰の禁止) <em>— 弁護側が州裁判棄却を求める根拠</em></li>
-            <li><b>show no remorse</b>(反省の色を見せない) <em>— 法廷での態度</em></li>
-            <li><b>motion to dismiss</b>(却下を求める申立て) <em>— 弁護側が提出した法的文書</em></li>
-            <li><b>in stark contrast to</b>(〜とは対照的に) <em>— 投資家を装った際の対応の速さとの比較</em></li>
-            <li><b>posing as</b>(〜になりすまして) <em>— 投資家を装って会議日程を調べた手口</em></li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>Mangioneの弁護側が州の裁判を棄却させたい根拠は何か、自分の言葉で説明できますか。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">06:27</span><h3>3. At Sea</h3></div>
-        <p class="bg">中東に展開中の空母USS Abraham Lincolnが、通常6か月とされる展開期間を大幅に超えて昨年11月から海上に留まっています。食料・衛生用品の不足やメンタルヘルスの悪化が報じられ、トランプ大統領やヘグセス国防長官はこれを軽視する発言をしました。元海軍作戦部長Gary Roughead氏は、中東の港湾インフラが使えないことによる補給の難しさを説明します。</p>
-        <div class="es">
-          <span class="block-label">English Summary</span>
-          <p>The USS Abraham Lincoln has been deployed since last November, far longer than the Navy's usual six-month standard, and sailors' families report shortages of food and worsening mental health, including attempted suicides. President Trump and Defense Secretary Hegseth downplayed the reports, while a senator and a retired admiral raised serious concerns about supply logistics in the region. A former Navy chief of operations explained that regional ports are no longer available for resupply because of instability tied to Iran.</p>
-        </div>
-        <div class="vwrap">
-          <span class="block-label">語彙・表現</span>
-          <ul class="vlist">
-            <li><b>dismissive</b>(軽視する態度の) <em>— 大統領・長官の反応</em></li>
-            <li><b>swift backlash</b>(素早い反発) <em>— 議員らの反応</em></li>
-            <li><b>shortages of</b>(〜の不足) <em>— 食料・衛生用品の不足</em></li>
-            <li><b>town hall</b>(住民・関係者との対話集会) <em>— 家族が懸念を訴えた場</em></li>
-            <li><b>dig deep</b>(力を振り絞る) <em>— 海軍幹部が乗員に向けた言葉</em></li>
-            <li><b>resupply</b>(再補給する) <em>— この回のキーワードのひとつ</em></li>
-            <li><b>logistics model</b>(補給の仕組み) <em>— 中東での補給体制の変化</em></li>
-            <li><b>weigh on</b>(〜に重くのしかかる) <em>— 長期展開が心理面に与える影響</em></li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>元海軍作戦部長Gary Roughead氏によれば、なぜ現在の中東での補給が過去より難しくなっているのですか。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">12:45</span><h3>4. News Wrap</h3></div>
-        <p class="bg">ヨーロッパの熱波、日本の記録的豪雨(東京東部での洪水)、米中西部の洪水、ハワイに接近する熱帯嵐Lala、ウクライナへのロシアのドローン攻撃、英国Nigel Farage氏の議席奪還、ニジェールで拘束されていた米国人宣教師の解放、イタリアでの盗難美術品発見、株式市場の小幅下落など、複数の短いニュースが続けて読み上げられます。</p>
-        <div class="es">
-          <span class="block-label">English Summary</span>
-          <p>This news wrap covers a record-breaking European heat wave fueling wildfires, catastrophic flooding in Japan and the U.S. Midwest, an approaching tropical storm in Hawaii, deadly Russian drone strikes on Ukraine, Nigel Farage's return to the UK Parliament, the release of an American missionary held in Niger, and the recovery of stolen artworks in Italy.</p>
-        </div>
-        <div class="vwrap">
-          <span class="block-label">語彙・表現</span>
-          <ul class="vlist">
-            <li><b>break records</b>(記録を更新する) <em>— ヨーロッパの熱波</em></li>
-            <li><b>engulf</b>(〜を飲み込む) <em>— 英国の山火事</em></li>
-            <li><b>flood watch</b>(洪水注意報) <em>— 米中西部の警報</em></li>
-            <li><b>recede</b>(水位などが引く) <em>— 洪水の水位低下</em></li>
-            <li><b>strengthen into a hurricane</b>(発達してハリケーンになる) <em>— 熱帯嵐Lala</em></li>
-            <li><b>regain one's seat</b>(議席を取り戻す) <em>— Nigel Farage氏</em></li>
-            <li><b>claim responsibility</b>(犯行声明を出す) <em>— 誘拐事件、否定形で使用</em></li>
-            <li><b>heist</b>(強盗、窃盗事件) <em>— イタリアの美術品盗難</em></li>
-            <li><b>edge back from</b>(高値からわずかに後退する) <em>— S&amp;P500の下落</em></li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>日本の洪水被害について、当局は何時間でどれくらいの降水量があったと説明していましたか。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">19:07</span><h3>5. Ebola Outbreak</h3></div>
-        <p class="bg">コンゴ民主共和国で拡大するエボラ出血熱の流行を特集。確認感染者数は4500人超、死者は2100人以上に達し、過去の流行より速いペースで死者数が増えています。WHO事務局長テドロス氏の発言や、現地の医療従事者・市場関係者の声、UCLAの疫学者Anne Rimoin氏へのインタビューを通じて、対応の難しさ(医療従事者の未払い賃金、診断キットの不備、紛争による医療アクセスの制限など)が語られます。</p>
-        <div class="es">
-          <span class="block-label">English Summary</span>
-          <p>The Ebola outbreak in the Democratic Republic of Congo is now the second-largest on record, driven by the rare Bundibugyo strain, for which no vaccine exists. Healthcare workers, some unpaid for months, are striking even as cases surge, and ongoing conflict over minerals is blocking access to care. Epidemiologist Anne Rimoin explains that diagnostic delays and weak infrastructure allowed the outbreak to spiral out of control before it was even officially declared.</p>
-        </div>
-        <div class="vwrap">
-          <span class="block-label">語彙・表現</span>
-          <ul class="vlist">
-            <li><b>confirmed cases</b>(確認された感染者数)</li>
-            <li><b>sound the alarm</b>(警鐘を鳴らす) <em>— WHO事務局長</em></li>
-            <li><b>on track to</b>(〜する見込みである) <em>— 過去最悪ペース</em></li>
-            <li><b>fragmented (medical) system</b>(分断された医療体制)</li>
-            <li><b>walk off the job</b>(職場放棄をする) <em>— 未払い賃金への抗議</em></li>
-            <li><b>put one's life in danger</b>(命を危険にさらす) <em>— 看護師の発言</em></li>
-            <li><b>hinder</b>(妨げる) <em>— 紛争が人道支援を妨げる</em></li>
-            <li><b>spiral out of control</b>(制御不能なほど悪化する)</li>
-            <li><b>contact tracing</b>(接触者追跡)</li>
-            <li><b>get in front of (a problem)</b>(問題の先手を打つ)</li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>Anne Rimoin氏は、今回の流行がなぜ検出まで数か月かかったと説明していましたか。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">28:16</span><h3>6. Desperate Journey</h3></div>
-        <p class="bg">地中海を渡ってギリシャに向かう移民の実態を取材。SNS上ではリビアからクレタ島への渡航を美化する動画が拡散する一方、実際には年間およそ250人が命を落としています。ギリシャ政府は不法移民をウガンダなど第三国へ送還する枠組み作りを進めており、これに対し難民支援団体は「非合法な追い返し(プッシュバック)」だと批判しています。南スーダンやシエラレオネから逃れてきた人々の証言も紹介されます。</p>
-        <div class="es">
-          <span class="block-label">English Summary</span>
-          <p>Videos glamorizing the dangerous Mediterranean crossing to Greece are spreading on social media, even though roughly 250 migrants have died making the journey this year. Greece is negotiating a deal with Uganda to deport rejected asylum seekers, a move refugee advocates say undermines the right to seek asylum. The report also features migrants who successfully settled in Greece, including survivors of war and abuse.</p>
-        </div>
-        <div class="vwrap">
-          <span class="block-label">語彙・表現</span>
-          <ul class="vlist">
-            <li><b>inundate</b>(押し寄せる) <em>— SNS上の渡航美化動画</em></li>
-            <li><b>perils of</b>(〜の危険) <em>— 地中海横断</em></li>
-            <li><b>self-congratulatory</b>(自画自賛的な) <em>— 渡航成功者の投稿</em></li>
-            <li><b>deterrent</b>(抑止力) <em>— EUが見出せていない有効策</em></li>
-            <li><b>pushback</b>(国境での追い返し)</li>
-            <li><b>undermine</b>(損なう) <em>— プッシュバックへの批判</em></li>
-            <li><b>grant asylum</b>(庇護を認める)</li>
-            <li><b>flagrantly violate</b>(露骨に違反する) <em>— 支援団体の批判</em></li>
-            <li><b>persecuted</b>(迫害されている)</li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>ギリシャの元移民担当大臣Dimitris Kairidis氏は、SNS上の渡航動画を誰が広めていると考えていましたか。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">36:18</span><h3>7. Brooks &amp; Atkins Stohr</h3></div>
-        <p class="bg">The AtlanticのDavid Brooks氏とThe Boston GlobeのKimberly Atkins Stohr氏による週替わりの政治分析コーナー。ウィスコンシン州民主党知事予備選での番狂わせ(民主社会主義候補の敗北)や、「ウォーク」政治の是非、そしてイラン・ホルムズ海峡をめぐる膠着状態について議論します。</p>
-        <div class="es">
-          <span class="block-label">English Summary</span>
-          <p>Columnists David Brooks and Kimberly Atkins Stohr discuss an upset in Wisconsin's Democratic gubernatorial primary, where a moderate candidate defeated a democratic socialist seen as a weak general-election contender. They also debate whether the "woke" political era has truly ended and analyze the prolonged U.S.-Iran standoff over the Strait of Hormuz, noting how American military and economic leverage has diminished.</p>
-        </div>
-        <div class="vwrap">
-          <span class="block-label">語彙・表現</span>
-          <ul class="vlist">
-            <li><b>upset</b>(番狂わせ) <em>— ウィスコンシン州予備選の意外な結果</em></li>
-            <li><b>eke out a win</b>(かろうじて勝利をつかむ)</li>
-            <li><b>out of touch with</b>(〜の実情を理解していない)</li>
-            <li><b>big tent</b>(幅広い支持層を取り込む方針)</li>
-            <li><b>deplete</b>(使い果たす) <em>— 米軍の兵器備蓄</em></li>
-            <li><b>declare victory</b>(勝利を宣言する)</li>
-            <li><b>asymmetric warfare</b>(非対称戦)</li>
-            <li><b>you can't argue with reality</b>(現実には逆らえない)</li>
-            <li><b>cracking up</b>(崩壊しつつある) <em>— 既存の政治的イデオロギー</em></li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>David Brooks氏は、ウィスコンシンでの敗北の主な原因を「DSA(民主社会主義)運動の終わり」ではなく何だと説明していましたか。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">47:30</span><h3>8. Singing for Harmony</h3></div>
-        <p class="bg">ボストンのチャイナタウンにある高齢者施設で行われている音楽療法を特集。中国系の高齢移民たちが、なじみのある中国語の歌を通じて孤独感やうつ、認知機能の低下と向き合っている様子が紹介されます。Berklee音楽大学の専門家や学生が指導にあたっています。</p>
-        <div class="es">
-          <span class="block-label">English Summary</span>
-          <p>At a senior center in Boston's Chinatown, elderly Chinese immigrants use music therapy led by Berklee College of Music instructors to cope with isolation, depression, and memory loss. Participants describe how singing familiar songs helps them open up emotionally and feel joy, even those living with dementia. The segment highlights music therapy as a growing field bridging cultural and language barriers.</p>
-        </div>
-        <div class="vwrap">
-          <span class="block-label">語彙・表現</span>
-          <ul class="vlist">
-            <li><b>sing-along</b>(合唱、一緒に歌うこと) <em>— 施設の朝の恒例行事</em></li>
-            <li><b>lower one's defenses</b>(心を開かせる)</li>
-            <li><b>stigma</b>(偏見、汚名) <em>— 感情表現への文化的抵抗感</em></li>
-            <li><b>exhibit symptoms</b>(症状を示す)</li>
-            <li><b>cognitive decline</b>(認知機能の低下)</li>
-            <li><b>transferable (goals)</b>(応用可能な)</li>
-            <li><b>scratch the surface</b>(表面をなぞる程度)</li>
-            <li><b>formative years</b>(人格形成期) <em>— 参加者が若い頃親しんだ歌</em></li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>施設の副施設長Megan Cheung氏は、アジア系米国人のうつの表れ方についてどのように説明していましたか。</p>
-      </article>
-
-      <article class="segment" style="border-bottom:none;">
-        <div class="segment-head"><span class="tc">54:38</span><h3>9. Goodnight + Promo</h3></div>
-        <p class="bg">番組の締めくくり。処方薬の補助制度が予定より早く打ち切られることに関するオンライン記事の紹介、今夜放送の「Washington Week With The Atlantic」の予告(ホルムズ海峡の無期限封鎖の可能性について)、週末の「Horizons」「Compass Points」の告知が行われ、キャスターが視聴者に感謝を述べて番組を締めます。</p>
-        <div class="es">
-          <span class="block-label">English Summary</span>
-          <p>William Brangham closes the show by pointing viewers to an online article about the early end of a prescription drug subsidy, then previews tonight's "Washington Week With The Atlantic," which will discuss a possible indefinite U.S. blockade of the Strait of Hormuz. He also promotes the weekend programs "Horizons" and "Compass Points" before thanking the audience.</p>
-        </div>
-        <div class="vwrap">
-          <span class="block-label">語彙・表現</span>
-          <ul class="vlist">
-            <li><b>subsidy</b>(補助金)</li>
-            <li><b>a year early</b>(予定より1年早く)</li>
-            <li><b>tune into</b>(番組を視聴する)</li>
-            <li><b>indefinite blockade</b>(無期限の封鎖)</li>
-            <li><b>check your local listings</b>(地域の番組表を確認してください)</li>
-            <li><b>on behalf of</b>(〜を代表して)</li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>今夜放送予定の「Washington Week With The Atlantic」では、どんなテーマが扱われる予定だと紹介されていましたか。</p>
-      </article>
-
-      <p class="note">このガイドは、YouTubeの英語字幕(クローズドキャプション)全文を読み込んだ上で内容を自分の言葉で要約・解説したもので、逐語的な書き起こしではありません。取得日時: 2026年8月15日(1回目実行、字幕セグメント数369、動画の約97%をカバー)。</p>
-    </section>
-
-    <!-- ===================== GUIDE: 2026-08-13 ===================== -->
-    <section class="panel" data-mode="guide" data-date="2026-08-13" hidden>
-      <div class="lead">
-        <h2>PBS News Hour full episode — August 13, 2026</h2>
-        <div class="meta">56分46秒</div>
-        <p class="summary-jp">木曜日のニュースアワーでは、占領下のヨルダン川西岸地区でイスラエル人入植者が住居を包囲する事件が発生し、米国大使からの非難とイスラエル軍の対応を招いた。トランプ大統領の建設プロジェクトがワシントンの街並みを変え、納税者に多額のコストを負わせている実態。さらに、司法省がほとんど使われてこなかった手法を用いて、帰化したアメリカ人の市民権を剥奪しようとしている問題も取り上げられた。</p>
-      </div>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">00:00</span><h3>1. INTRO</h3></div>
-        <p class="bg">番組冒頭、その日の主要トピックが手短に紹介されるパートです。ここで話される内容が後続セグメントの「予告」になっているので、まずはここだけ聞いて、今日何が取り上げられるかをメモしてみましょう。</p>
-        <p class="tip">リスニングのコツ: 固有名詞(West Bank, Trump, DOJなど)を聞き取れるかに集中。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">02:43</span><h3>2. News Wrap</h3></div>
-        <p class="bg">複数の短いニュースを立て続けに読み上げるコーナー。コロンビアの地震関連のニュースなどが含まれます。</p>
-        <div class="vwrap">
-          <span class="block-label">想定される語彙</span>
-          <ul class="vlist">
-            <li><b>death toll</b>(死者数)</li>
-            <li><b>earthquake / aftershock</b>(地震/余震)</li>
-            <li><b>rescue efforts</b>(救助活動)</li>
-            <li><b>casualties</b>(死傷者)</li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>コロンビアの地震で死者数はどのくらいと報じられているか、1つだけメモできれば十分です。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">08:30</span><h3>3. 米国、ヨルダン川西岸での入植者による住居包囲を非難</h3></div>
-        <p class="bg">イスラエル人入植者がヨルダン川西岸地区でパレスチナ人の住居を包囲し、米国大使が非難、イスラエル軍が対応したというニュースです。</p>
-        <div class="vwrap">
-          <span class="block-label">想定される語彙</span>
-          <ul class="vlist">
-            <li><b>settlers / settlement</b>(入植者/入植地)</li>
-            <li><b>siege</b>(包囲)</li>
-            <li><b>condemn</b>(非難する)</li>
-            <li><b>ambassador</b>(大使)</li>
-            <li><b>military response</b>(軍事的対応)</li>
-            <li><b>act of terror</b>(テロ行為)</li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>Who condemned the incident? / What did the Israeli military do in response?</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">13:03</span><h3>4. 包囲された家族の証言</h3></div>
-        <p class="bg">実際に住居を包囲されたパレスチナ系アメリカ人家族へのインタビュー。個人の体験談なので、ニュース原稿より話し言葉に近く、感情がこもった話し方になりやすい点に注意。</p>
-        <div class="vwrap">
-          <span class="block-label">想定される語彙</span>
-          <ul class="vlist">
-            <li><b>terrified / frightened</b>(怖かった)</li>
-            <li><b>barricade</b>(バリケード)</li>
-            <li><b>witness</b>(目撃する)</li>
-            <li><b>firsthand account</b>(直接の体験談)</li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>家族が具体的にどんな行動を取ったか、1つのエピソードを聞き取れるか試してみましょう。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">18:37</span><h3>5. Monumental Costs ― トランプ氏の建設事業</h3></div>
-        <p class="bg">トランプ大統領が主導する首都ワシントンでの建設プロジェクトが、景観を変え、納税者に多額の負担を強いているという特集。</p>
-        <div class="vwrap">
-          <span class="block-label">想定される語彙</span>
-          <ul class="vlist">
-            <li><b>taxpayer-funded</b>(税金で賄われる)</li>
-            <li><b>renovation / construction project</b>(改修/建設事業)</li>
-            <li><b>price tag / cost overrun</b>(費用/予算超過)</li>
-            <li><b>marble</b>(大理石)</li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>プロジェクトの総額や、批判されている理由をメモしてみましょう。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">27:04</span><h3>6. Revoking Citizenship ― 帰化米国人の市民権剥奪</h3></div>
-        <p class="bg">司法省(DOJ)が、あまり使われてこなかった手法を使って帰化したアメリカ人の市民権を剥奪しようとしている問題。法律・行政用語が多く出てくるやや難易度高めのセグメントです。</p>
-        <div class="vwrap">
-          <span class="block-label">想定される語彙</span>
-          <ul class="vlist">
-            <li><b>naturalized citizen</b>(帰化した市民)</li>
-            <li><b>denaturalization</b>(市民権剥奪)</li>
-            <li><b>Justice Department / DOJ</b>(司法省)</li>
-            <li><b>legal tactic / loophole</b>(法的手法/抜け穴)</li>
-            <li><b>due process</b>(法の適正手続き)</li>
-          </ul>
-        </div>
-        <p class="check"><span class="block-label">理解度チェック</span>DOJが使っている手法はどんなものとして説明されているか、大まかにでも掴めるか試してみましょう。</p>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">32:27</span><h3>7. Cuts &amp; Consequences</h3></div>
-        <p class="bg">予算削減とその影響についての特集。</p>
-        <div class="vwrap">
-          <span class="block-label">想定される語彙</span>
-          <ul class="vlist">
-            <li><b>budget cuts</b>(予算削減)</li>
-            <li><b>funding</b>(資金提供)</li>
-            <li><b>impact / consequences</b>(影響)</li>
-          </ul>
-        </div>
-      </article>
-
-      <article class="segment">
-        <div class="segment-head"><span class="tc">39:22</span><h3>8. Saving Elephants</h3></div>
-        <p class="bg">比較的軽めのトピックで、動物・科学系の特集です。</p>
-        <div class="vwrap">
-          <span class="block-label">想定される語彙</span>
-          <ul class="vlist">
-            <li><b>conservation</b>(保護活動)</li>
-            <li><b>endangered species</b>(絶滅危惧種)</li>
-            <li><b>veterinarian</b>(獣医)</li>
-            <li><b>disease / outbreak</b>(病気/流行)</li>
-          </ul>
-        </div>
-        <p class="tip">リスニングのコツ: 政治・法律パートより語彙がやさしめなので、リスニング練習の「息抜き」に向いています。</p>
-      </article>
-
-      <article class="segment" style="border-bottom:none;">
-        <div class="segment-head"><span class="tc">44:51</span><h3>9. 音楽と芸術のコーナー</h3></div>
-        <p class="bg">Empowered by Art(アート関連の特集)、Hermanos Gutiérrezによる演奏「Los Ojos del Cóndor」、エンディング(Goodnight)。ここはニュースというより文化コーナーなので、リラックスして聞くのに向いています。</p>
-      </article>
-
-      <p class="note">上記は、PBSが公式にYouTubeへ掲載している番組概要文とチャプター(章立て)情報から合理的に推測した内容です。実際の放送で使われた言い回しをそのまま書き起こしたものではなく、あくまで学習用の予習・復習ガイドとしてご利用ください。取得日時: 2026年8月14日。</p>
-    </section>
-
-    <!-- ===================== VOCAB: 2026-08-14 ===================== -->
-    <section class="panel" data-mode="vocab" data-date="2026-08-14" hidden>
-      <div class="lead">
-        <h2>単語帳 — August 14, 2026</h2>
-        <div class="meta">ガイドの登場順(チャプター1&rarr;9)&middot; 全74語</div>
-      </div>
-      <ul class="vocab-list" id="vocab-0814"></ul>
-    </section>
-
-    <!-- ===================== VOCAB: 2026-08-13 ===================== -->
-    <section class="panel" data-mode="vocab" data-date="2026-08-13" hidden>
-      <div class="lead">
-        <h2>単語帳 — August 13, 2026</h2>
-        <div class="meta">ガイドの登場順(チャプター1&rarr;9)&middot; 全96語</div>
-      </div>
-      <ul class="vocab-list" id="vocab-0813"></ul>
-    </section>
-
-  </main>
-
-  <footer>
-    <p>PBS NewsHourのYouTube公式字幕をもとに、内容を自分の言葉で要約・解説した学習ガイドです。放送内容の逐語的な書き起こしではありません。直近5日分を保持し、日次で自動更新されます。</p>
-  </footer>
+<div class="controls">
+  <div class="mode-toggle">
+    <button class="mode-btn active" data-mode="guide">ガイド</button>
+    <button class="mode-btn" data-mode="vocab">単語帳</button>
+  </div>
+  <div class="date-tabs">
+<button class="date-tab active" data-date="2026-08-19">2026/08/19</button>
+<button class="date-tab" data-date="2026-08-14">2026/08/14</button>
+<button class="date-tab" data-date="2026-08-13">2026/08/13</button>
+  </div>
 </div>
 
+<main>
+  <div class="panel-group active" data-mode="guide">
+<div class="panel guide-panel active" data-date="2026-08-19">
+<h2>PBS NewsHour Listening Guide</h2>
+<h4>PBS News Hour full episode — August 19, 2026(56分46秒)</h4>
+<hr>
+<h3>番組概要(内容を踏まえた要約)</h3>
+<p>水曜日のニュースアワーは、フロリダ州の予備選挙で民主社会主義者のアンジー・ニクソン氏が番狂わせの勝利を収めた一方、アラスカ州ではメアリー・ペルトラ氏が上院予備選をリードするなど、前日の予備選結果の分析から始まります。続いて、Meta社が子ども向けに依存性の高い機能を意図的に設計したとして複数の州から訴えられている裁判、トランプ大統領が新たなFDA長官候補にハイディ・オーバートン博士を指名した件、北朝鮮への融和的な発言と同盟国韓国への不満を同時に示すトランプ大統領の姿勢、そしてジュディ・ウッドラフがピューリッツァー賞受賞の歴史家ベバリー・ゲイジ氏とともにシカゴやパルマン、テレホートを巡り、金ぴか時代(Gilded Age)と現代の類似点を探る特集が展開されます。最後は、オハイオ州で開かれる世界最大級の双子の祭典「Twins Days Festival」の紹介で締めくくられます。</p>
+<hr>
+<h3>1. INTRO(00:00〜)</h3>
+<p>番組冒頭、ジェフ・ベネットとアムナ・ナワズが、その日の主要トピックを手短に紹介します。フロリダの番狂わせな予備選結果、Meta社の裁判、そしてジュディ・ウッドラフによる金ぴか時代の特集という3本柱が予告されます。</p>
+<p><strong>English Summary</strong>: Geoff Bennett and Amna Nawaz open the program by previewing tonight's top stories: a progressive candidate's upset primary win in Florida, Meta's trial over allegedly addictive app features for children, and Judy Woodruff's road-trip series exploring parallels between the Gilded Age and today.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>upset win</strong>(番狂わせの勝利) — 左派候補アンジー・ニクソン氏がフロリダ予備選で勝利したことを表す冒頭の表現。例文: <em>The rookie player's upset win stunned the entire league.</em></li>
+<li><strong>a tough road ahead</strong>(この先の厳しい道のり) — 予備選には勝ったものの本選挙では苦戦が予想されることを表す。例文: <em>Even after winning the nomination, she faces a tough road ahead in November.</em></li>
+<li><strong>on trial</strong>(裁判にかけられている) — Meta社が子どもの安全をめぐって法廷で争われている状況を表す。例文: <em>The company is currently on trial for alleged safety violations.</em></li>
+<li><strong>deliberately designing</strong>(意図的に設計する) — Meta社が中毒性の高い機能を意図的に作ったという州側の主張。例文: <em>Critics say the app was deliberately designing features to keep users hooked.</em></li>
+<li><strong>negatively affecting</strong>(悪影響を与えている) — 子どもの精神衛生への影響を表す表現。例文: <em>Long screen time is negatively affecting children's sleep patterns.</em></li>
+<li><strong>a second Gilded Age</strong>(第二の金ぴか時代) — 歴史家ベバリー・ゲイジ氏が現代をたとえて使った表現。例文: <em>Some economists argue we are living through a second Gilded Age.</em></li>
+<li><strong>erase</strong>(消し去る) — 20世紀の労働運動の成果が失われ、19世紀後半のような状況に戻ったという趣旨の発言。例文: <em>Decades of progress seemed to be erased almost overnight.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: 冒頭で予告される3つのトピックを、英語で1つでも言えるか試してみましょう。</p>
+<hr>
+<h3>2. Vote 2026(02:18〜)</h3>
+<p>前日の予備選挙結果を、リサ・デジャルダンズとの対話形式で振り返ります。フロリダでは民主社会主義者のアンジー・ニクソン氏がアレックス・ヴィンドマン氏を破って上院予備選を制し、共和党のバイロン・ドナルズ氏が知事選候補に決定。アラスカでは元下院議員メアリー・ペルトラ氏が上院予備選をリード。さらに南カロライナ州では、故リンゼー・グラハム上院議員の後任をめぐる共和党候補者討論会で、妹のダーリン・グラハム氏が国家安全保障の質問に答えられず苦しい場面も紹介されます。</p>
+<p><strong>English Summary</strong>: Democratic Socialist Angie Nixon pulled off an upset Senate primary win in Florida despite being vastly outspent, while Byron Donalds easily won the Republican gubernatorial nomination. In Alaska, former Congresswoman Mary Peltola led the nonpartisan Senate primary. In South Carolina, Senator Darline Graham struggled to answer a national security question during a heated debate with challenger Ralph Norman ahead of next week's primary.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>outraised A 16 to 1</strong>(資金調達でAに16対1の差をつけられた) — ニクソン氏が対立候補に資金面で大きく劣っていたことを表す。例文: <em>The incumbent outraised her opponent nearly five to one.</em></li>
+<li><strong>remapped districts</strong>(再区割りされた選挙区) — フロリダ共和党が引き直した選挙区を指す。例文: <em>Two incumbents won reelection in the newly remapped districts.</em></li>
+<li><strong>prevail</strong>(勝利を収める) — 民主党現職議員が新しい選挙区でも勝ったことを表す。例文: <em>She prevailed in a closely watched primary race.</em></li>
+<li><strong>abuse allegations</strong>(虐待疑惑) — 落選した共和党議員コリー・ミルズ氏に関する報道。例文: <em>He resigned amid abuse allegations from former staff members.</em></li>
+<li><strong>a toss-up with a twist</strong>(意外な要素のある接戦) — アラスカ上院選が接戦であることを表す表現。例文: <em>Analysts called the race a toss-up with a twist after a third candidate entered.</em></li>
+<li><strong>self-funded</strong>(自己資金で賄われた) — 対立候補ラルフ・ノーマン氏が選挙資金の多くを自己負担していることを表す。例文: <em>His campaign was largely self-funded rather than relying on donors.</em></li>
+<li><strong>not a polished politician</strong>(洗練された政治家ではない) — ダーリン・グラハム氏が自らの弱点を認めた発言。例文: <em>She admitted she wasn't a polished politician but promised to work hard.</em></li>
+<li><strong>a deep red state</strong>(共和党が非常に強い州) — 南カロライナ州の政治的傾向を表す表現。例文: <em>Winning the primary is decisive in such a deep red state.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: フロリダ州知事選の共和党候補バイロン・ドナルズ氏は、本選挙で誰と対決することになりますか。</p>
+<hr>
+<h3>3. News Wrap(10:04〜)</h3>
+<p>複数の短いニュースが続けて読み上げられます。トランプ大統領がカナダへの50%関税を一時停止したこと、イスラエル軍がガザでの2件の高注目度の殺害事件について刑事捜査を開始したこと、アラブ首長国連邦がイランとの貿易を停止したこと、ゼレンスキー大統領が汚職疑惑の中で側近を解任したこと、プーチン大統領がウクライナのドローン攻撃の影響を軽視する発言をしたこと、ヘルソン州でロシアのドローンがバスを直撃し4人が死亡したこと、NASAが月面のクレーター画像を公開したこと、モデルナとメルクのがん治療薬の治験成功、株式市場の小幅上昇などが伝えられます。</p>
+<p><strong>English Summary</strong>: This news wrap covers President Trump pausing his 50% tariffs on Canadian goods, Israel opening criminal investigations into two controversial killings in Gaza, the UAE halting trade with Iran, Zelenskyy dismissing a top aide amid a corruption probe, Putin downplaying the impact of Ukrainian drone strikes, a deadly Russian drone attack on a bus in Kherson, new NASA images of a moon crater from a SpaceX rocket, promising results from a Moderna-Merck melanoma treatment, and modest stock market gains.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>pause tariffs</strong>(関税を一時停止する) — トランプ大統領がカナダへの関税措置を一時的に止めたことを表す。例文: <em>The government agreed to pause tariffs while negotiations continue.</em></li>
+<li><strong>criminal investigations</strong>(刑事捜査) — イスラエル軍がガザでの殺害事件について開始した捜査。例文: <em>Authorities launched criminal investigations into the incident.</em></li>
+<li><strong>halt trade</strong>(貿易を停止する) — UAEがイランとの貿易を止めた措置。例文: <em>The country decided to halt trade with its neighbor after the dispute.</em></li>
+<li><strong>corruption investigation</strong>(汚職捜査) — ゼレンスキー大統領の側近解任の背景にある捜査。例文: <em>The minister resigned amid a corruption investigation.</em></li>
+<li><strong>downplay</strong>(軽視する、大したことないと言う) — プーチン大統領がドローン攻撃の影響を軽く見せようとした発言。例文: <em>Officials tried to downplay the severity of the outbreak.</em></li>
+<li><strong>a crater</strong>(クレーター、噴火口状のくぼみ) — SpaceXロケットの衝突で月面にできた穴。例文: <em>The impact left a large crater in the field.</em></li>
+<li><strong>defunct</strong>(機能していない、使われなくなった) — 使用済みで宇宙を漂っていたロケット部品を指す。例文: <em>The defunct satellite eventually burned up in the atmosphere.</em></li>
+<li><strong>surge</strong>((株価などが)急騰する) — モデルナ株が治験成功の報道で急上昇したことを表す。例文: <em>Shares surged nearly 20 percent after the announcement.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: トランプ大統領はカナダへの50%関税を、いつまで一時停止すると発表しましたか。</p>
+<hr>
+<h3>4. Landmark Trial(16:23〜)</h3>
+<p>Meta社が、子どもや10代の若者をアプリに依存させるよう意図的に製品設計をしたとして、カリフォルニア、コロラド、ケンタッキー、ニュージャージー州など複数の州から訴えられている裁判を特集。Bloombergのテック担当記者アレクサンドラ・レバイン氏が、これまでの訴訟との違い(コンテンツではなく製品設計そのものが争点であること)や、無限スクロール・通知機能などの具体的な設計、Meta側の反論、想定される制裁金の規模について解説します。</p>
+<p><strong>English Summary</strong>: Meta is on trial again, this time facing state lawsuits alleging it knowingly designed Instagram and Facebook to keep children hooked despite knowing the potential harm. Bloomberg reporter Alexandra Levine explains that, unlike past cases focused on content, this trial targets product design features like infinite scroll and push notifications, with penalties potentially reaching $200 billion to $1.4 trillion.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>knowingly designed</strong>(意図的に設計した) — Meta社が有害性を知りながら製品を作ったという訴えの核心表現。例文: <em>The lawsuit claims the company knowingly designed a defective product.</em></li>
+<li><strong>hooked</strong>(病みつきにさせられた、依存させられた) — 子どもたちがアプリに依存させられている状態を表す。例文: <em>Many teens feel hooked on their phones within minutes of waking up.</em></li>
+<li><strong>penalties</strong>(制裁金、罰則) — 州側が求めている巨額の金銭的制裁。例文: <em>The company could face steep penalties if found guilty.</em></li>
+<li><strong>unsubstantiated</strong>(根拠のない) — Meta広報担当者が州側の主張を否定した際の表現。例文: <em>The company called the allegations unsubstantiated.</em></li>
+<li><strong>infinite scroll</strong>(無限スクロール) — ユーザーを引き止めるための代表的な設計機能。例文: <em>Infinite scroll makes it easy to lose track of time on social media.</em></li>
+<li><strong>age verification</strong>(年齢確認) — 未成年ユーザーの偽の生年月日登録が問題になっている文脈。例文: <em>The platform is introducing stricter age verification measures.</em></li>
+<li><strong>injunctive relief</strong>(差止命令による救済) — 金銭的制裁だけでなく製品設計自体の変更を求める法的措置。例文: <em>The plaintiffs are seeking injunctive relief in addition to damages.</em></li>
+<li><strong>market value</strong>(時価総額) — Meta社の企業価値と想定される制裁金を比較する際に使われた語。例文: <em>The company's market value dropped sharply after the announcement.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: 今回の裁判が過去のMeta関連訴訟と異なる最大のポイントは何だと、アレクサンドラ・レバイン氏は説明していましたか。</p>
+<hr>
+<h3>5. Food &amp; Drug Safety(22:18〜)</h3>
+<p>トランプ大統領が、ホワイトハウスの医療政策顧問ハイディ・オーバートン博士をFDA(食品医薬品局)長官候補に指名しました。Politico記者ローレン・ガードナー氏が、オーバートン氏の経歴(ジョンズ・ホプキンス大学出身、公衆衛生と一般予防医学の専門医)、ワクチン接種スケジュール見直しへの関与、そして人員削減で3000人以上を失ったFDAが直面する食品由来疾患の急増(過去平均の7倍)などの課題について解説します。</p>
+<p><strong>English Summary</strong>: President Trump has nominated Dr. Heidi Overton, a White House health policy aide, to lead the FDA. Politico's Lauren Gardner explains that Overton is a double board-certified physician with close ties to the administration, has supported reworking the childhood vaccine schedule, and would take over an agency that has lost over 3,000 employees while facing a sharp rise in foodborne illness cases.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>nominate</strong>(指名する) — トランプ大統領がオーバートン氏をFDA長官候補に指名したことを表す動詞。例文: <em>The president plans to nominate a new candidate for the position.</em></li>
+<li><strong>overhaul</strong>(抜本的に見直す) — 小児ワクチン接種スケジュールの改定を指す表現。例文: <em>The agency proposed an overhaul of its safety guidelines.</em></li>
+<li><strong>tighter restrictions</strong>(より厳しい規制) — 中絶薬ミフェプリストンに対するオーバートン氏の姿勢。例文: <em>Lawmakers are pushing for tighter restrictions on the sale of the drug.</em></li>
+<li><strong>confirmation hearing</strong>(承認公聴会) — 上院でオーバートン氏の適格性が審査される予定の場。例文: <em>The nominee will face a confirmation hearing this fall.</em></li>
+<li><strong>foodborne illness</strong>(食中毒、食品由来の疾患) — FDAが直面する深刻な課題の一つ。例文: <em>Health officials are investigating a foodborne illness outbreak linked to lettuce.</em></li>
+<li><strong>outbreaks</strong>((病気の)集団発生) — 食中毒の急増を説明する際の語。例文: <em>Several outbreaks have been traced back to the same supplier.</em></li>
+<li><strong>attrition</strong>(人員の自然減少、離職) — FDAが慢性的な人手不足に悩んでいる背景。例文: <em>The department has struggled with high attrition among experienced staff.</em></li>
+<li><strong>toe the line</strong>(規律・方針に従う) — FDAが独立した意思決定機関としての立場を保とうとしてきた姿勢を表す表現。例文: <em>Employees are expected to toe the line set by upper management.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: FDAが今直面している食中毒の症例数は、2021〜2025年の平均と比べて何倍になっていますか。</p>
+<hr>
+<h3>6. Tense Alliance(28:16〜)</h3>
+<p>トランプ大統領が、北朝鮮の金正恩氏とまもなく会談する意向を示す一方、韓国との合同軍事演習への不満を改めて表明しました。ハドソン研究所のレベッカ・ハインリックス氏が、こうした発言の背景(ホルムズ海峡問題での韓国への苛立ち)や、実際には米韓の防衛協力が近年強化されている点、大統領の発言が同盟関係に与える影響について解説します。</p>
+<p><strong>English Summary</strong>: President Trump said he would soon meet North Korean leader Kim Jong-un while again criticizing joint U.S.-South Korea military exercises. Hudson Institute fellow Rebeccah Heinrichs argues the comments reflect frustration over South Korea's reluctance to help with the Strait of Hormuz, but says defense cooperation between the two countries has actually deepened in recent years, calling the overall relationship a "net positive."</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>scale back</strong>(縮小する) — トランプ大統領が命じた米韓合同軍事演習の縮小を指す表現。例文: <em>The company decided to scale back its overseas operations.</em></li>
+<li><strong>provocative</strong>(挑発的な) — 北朝鮮側が軍事演習をこう表現したという文脈。例文: <em>North Korea called the drills provocative.</em></li>
+<li><strong>a net positive</strong>(全体としてはプラス) — ハインリックス氏が米韓関係の現状を評価した表現。例文: <em>Despite some setbacks, the partnership has been a net positive overall.</em></li>
+<li><strong>deter</strong>(抑止する) — 軍事演習の本来の目的を説明する語。例文: <em>The exercises are meant to deter aggression, not provoke it.</em></li>
+<li><strong>a strategic wedge</strong>(戦略的なくさび、亀裂) — 大統領の同盟国批判が地域に生む隙を指す表現。例文: <em>Critics worry the remarks could create a strategic wedge that rivals exploit.</em></li>
+<li><strong>rhetoric</strong>(言葉遣い、物言い) — ハインリックス氏が大統領の発言スタイルを評した語。例文: <em>Her rhetoric was sharper than expected during the debate.</em></li>
+<li><strong>a transactional approach</strong>(取引的なアプローチ) — 同盟国への対応方針を表す表現。例文: <em>Some diplomats criticized his transactional approach to foreign policy.</em></li>
+<li><strong>a burden</strong>(負担) — 同盟国がアメリカにとって負担ではないという反論の中で使われた語。例文: <em>She argued that allies are not a burden but a strategic asset.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: レベッカ・ハインリックス氏は、米韓の同盟関係全体をどのように評価していましたか(プラスかマイナスか、その理由も含めて)。</p>
+<hr>
+<h3>7. Crossroads(36:52〜)</h3>
+<p>ジュディ・ウッドラフが、ピューリッツァー賞受賞歴史家ベバリー・ゲイジ氏とともにシカゴを出発点とする旅に出ます。19世紀末の富豪一家の邸宅(ドリハウス美術館)、1893年万国博覧会の跡地、労働争議の舞台となったパルマン地区、労働運動指導者ユージン・デブスの故郷テレホートを巡りながら、「金ぴか時代」に生まれた富と権力の集中、労働運動の高まり、そして現代社会との類似点を探ります。</p>
+<p><strong>English Summary</strong>: Judy Woodruff joins historian Beverly Gage on a road trip through Chicago, Pullman, and Terre Haute to explore the Gilded Age for Gage's new book. They visit sites showing the era's extreme wealth concentration and the labor conflicts it sparked, including the 1894 Pullman strike, and discuss how union organizer Eugene Debs was radicalized by the experience. Gage argues that 21st-century America has, in many ways, returned to Gilded Age conditions after the labor gains of the mid-20th century eroded.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>concentrations of wealth and power</strong>(富と権力の集中) — 金ぴか時代を特徴づける中心テーマ。例文: <em>The report warned about growing concentrations of wealth and power.</em></li>
+<li><strong>a landmark strike</strong>(歴史的なストライキ) — 1894年のパルマン・ストライキを指す表現。例文: <em>The 1894 Pullman strike is remembered as a landmark strike in U.S. labor history.</em></li>
+<li><strong>broke the strike</strong>(ストライキを鎮圧した) — 連邦政府が州兵を動員してストライキを終わらせたことを表す。例文: <em>The government sent troops in to break the strike.</em></li>
+<li><strong>radicalized</strong>(急進化した) — 投獄された経験を経てデブスが社会主義運動に傾倒したことを表す語。例文: <em>He was radicalized after witnessing the crackdown firsthand.</em></li>
+<li><strong>hierarchical</strong>(階層的な) — パルマン地区の住宅が身分によって配置されていたことを表す形容詞。例文: <em>The old company town had a strictly hierarchical layout.</em></li>
+<li><strong>erase</strong>(消し去る) — 20世紀の労働運動の成果が失われたことを再び表す表現。例文: <em>Decades of hard-won progress can be erased surprisingly quickly.</em></li>
+<li><strong>unresolved</strong>(未解決の) — 金ぴか時代の問いが今も解決されていないことを表す形容詞。例文: <em>Many of these questions remain unresolved today.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: ベバリー・ゲイジ氏は、20世紀半ばと比べて現代のアメリカの労働運動がどのように変化したと説明していましたか。</p>
+<hr>
+<h3>8. Seeing Double(46:56〜)</h3>
+<p>オハイオ州トゥインズバーグで50年続く「Twins Days Festival」、世界最大級の双子の祭典を特集。一卵性双生児同士の絆や、双子ならではの体験談(顔認証やSNS投稿の混同、成績のすり替えなど)が紹介されるほか、双子を対象にした皮膚科学や顔認証技術の研究にとっても貴重な機会となっていることが伝えられます。</p>
+<p><strong>English Summary</strong>: The Twins Days Festival in Twinsburg, Ohio celebrates its 50th year as the world's largest annual gathering of twins. Beyond the parade and contests, researchers use the event to study identical twins for dermatology and facial-recognition research, since twins share identical DNA. Participants describe the unique bond, occasional mix-ups, and even a "twin lingo" that outsiders wouldn't understand.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>identical twins</strong>(一卵性双生児) — 祭典の中心テーマとなる存在。例文: <em>Identical twins share the same DNA, unlike fraternal twins.</em></li>
+<li><strong>a bond</strong>(絆) — 双子同士の特別なつながりを表す語。例文: <em>Siblings often share a strong bond growing up.</em></li>
+<li><strong>twin lingo</strong>(双子特有の言い回し) — 双子同士にしか通じない表現を指す語。例文: <em>They developed their own twin lingo that confused everyone else.</em></li>
+<li><strong>facial recognition</strong>(顔認証) — 双子の研究テーマの一つとして紹介された技術。例文: <em>Facial recognition software sometimes struggles to tell identical twins apart.</em></li>
+<li><strong>a singleton</strong>(双子でない一人っ子(この文脈では双子の片割れがいない子)) — 双子の母親が生んだ、双子ではない赤ちゃんを指す語。例文: <em>Unlike her siblings, she was born a singleton.</em></li>
+<li><strong>donate property</strong>(土地を寄付する) — 町名がトゥインズバーグに改名された歴史的な経緯で使われた語。例文: <em>The family donated property to build the town's first school.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: トゥインズバーグという町の名前は、どのような歴史的な経緯で名付けられましたか。</p>
+<hr>
+<h3>9. Goodnight + Promo(52:03〜56:46)</h3>
+<p>番組の締めくくり。科学担当特派員マイルズ・オブライエンが、コロラド川の水不足問題を特集する生放送特番「Tipping Point: The Colorado River Reimagined」と、新シリーズ「Resolve to Solve」(ビーバーによる保水効果や、牛のメタン削減に役立つ海藻の研究などを扱う)を予告し、キャスターが視聴者に感謝を述べて番組を締めます。</p>
+<p><strong>English Summary</strong>: Science correspondent Miles O'Brien previews a live special, "Tipping Point: The Colorado River Reimagined," which examines drought and water-sharing disputes among seven states, as well as his new series "Resolve to Solve," which explores solutions like using beavers to preserve water and seaweed to cut methane from cattle. The anchors then thank viewers and close the broadcast.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>a deep dive</strong>(深く掘り下げること) — マイルズ・オブライエンが特番の内容を説明する際の表現。例文: <em>The documentary offers a deep dive into the history of the region.</em></li>
+<li><strong>drought</strong>(干ばつ) — コロラド川の水位低下の主な原因。例文: <em>Decades of drought have strained the region's water supply.</em></li>
+<li><strong>come to terms on</strong>(〜について合意する) — 7つの州が水資源の分配で合意できていない状況を表す。例文: <em>The two sides finally came to terms on a new contract.</em></li>
+<li><strong>a labor of love</strong>(愛情を注いだ仕事) — マイルズ・オブライエンが2年がかりで作った新シリーズを表現した語。例文: <em>Writing the novel was truly a labor of love for her.</em></li>
+<li><strong>check your local listings</strong>(お住まいの地域の番組表をご確認ください) — 番組の放送時間の案内で使われる定型表現。例文: <em>The special airs tonight — check your local listings for the exact time.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: マイルズ・オブライエンの新シリーズ「Resolve to Solve」では、コロラド川流域の保水にどんな動物が役立つと紹介されていましたか。</p>
+<hr>
+<p><strong>注記(本方式について)</strong> このガイドは、YouTubeの英語字幕(クローズドキャプション)全文を読み込んだ上で、内容を自分の言葉で要約・解説したものです。逐語的な書き起こし(スクリプト)ではありません。語彙リストの単語・短いフレーズ自体は実際の発言から採取していますが、背景説明・English Summary・理解度チェックの文章はすべて言い換えて作成しています。</p>
+<p><strong>取得日時</strong>: 2026年8月21日(1回目実行、字幕セグメント数371、字幕は動画の約96%をカバー)</p>
+
+</div>
+<div class="panel guide-panel" data-date="2026-08-14">
+<h2>PBS NewsHour Listening Guide</h2>
+<h4>PBS News Hour full episode — August 14, 2026(56分46秒)</h4>
+<hr>
+<h3>番組概要(内容を踏まえた要約)</h3>
+<p>金曜日のニュースアワーは、UnitedHealthcare CEO射殺事件の被告Luigi Mangioneが連邦裁判所で有罪を認めた驚きの展開から始まります。続いて、中東に長期展開中の空母USS Abraham Lincolnで水兵の士気低下や船外への飛び込み未遂が報じられる中、トランプ大統領がこれを軽視する発言をした問題を特集。その後、ヨーロッパの熱波や日本・米中西部の洪水などの短いニュースが続き、コンゴ民主共和国で史上2番目の規模に拡大しているエボラ出血熱の流行、地中海を渡ってギリシャを目指す移民の実態、David BrooksとKimberly Atkins Stohrによる週替わり政治分析(ウィスコンシン州予備選とイラン情勢)、ボストンのチャイナタウンで行われている高齢者向け音楽療法という順で特集が展開されます。</p>
+<hr>
+<h3>1. INTRO(00:00〜)</h3>
+<p>冒頭でキャスターのWilliam Brangham(この日はAmna NawazとGeoff Bennettが不在)が、その日の主要トピックを手短に紹介します。Mangioneの司法取引、空母の状況への大統領の反応、コンゴのエボラ、ギリシャの移民問題という4つの柱が予告されます。</p>
+<p><strong>English Summary</strong>: Anchor William Brangham opens the program alone, noting his co-anchors are away. He previews four major stories: Luigi Mangione's guilty plea, President Trump dismissing concerns about a Navy carrier's conditions, the worsening Ebola outbreak in Congo, and Greece's efforts to control migration across Europe.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>are away</strong>(不在にしている、休みを取っている) — 冒頭で共同キャスター2人が休みであることを説明する際に使われた表現。例文: <em>The regular host is away this week, so a guest anchor is filling in.</em></li>
+<li><strong>shooting death</strong>(銃撃による死) — Mangioneが起訴されている「CEOの銃撃死」という事件を指して使われた。例文: <em>The shooting death of the executive shocked the business community.</em></li>
+<li><strong>dismiss concerns</strong>(懸念を一蹴する) — トランプ大統領が空母の状況への懸念を軽視した態度を表す。例文: <em>The company dismissed concerns about safety and continued production.</em></li>
+<li><strong>long-deployed</strong>(長期間配備されている) — 通常より長く海上に展開している空母を形容する語。例文: <em>The long-deployed unit was finally scheduled to return home next month.</em></li>
+<li><strong>jump overboard</strong>(船から飛び降りる) — 空母の水兵が船外に飛び込もうとしたという報道に関連。例文: <em>A passenger reportedly tried to jump overboard during the storm.</em></li>
+<li><strong>death toll</strong>(死亡者数) — コンゴのエボラ流行に関する死者数の文脈で使用。例文: <em>The death toll from the flood continues to rise.</em></li>
+<li><strong>stem the flow of</strong>(〜の流れを食い止める) — ギリシャが移民の流入を抑えようとする取り組みを表す。例文: <em>The new policy aims to stem the flow of illegal weapons across the border.</em></li>
+<li><strong>demolish safeguards</strong>(安全策を骨抜きにする) — ギリシャ難民評議会の担当者が、庇護申請手続きの保護策が失われつつあると述べた表現。例文: <em>Critics say the new law demolishes safeguards meant to protect workers.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: 冒頭で予告された4つのトピックのうち、少なくとも2つを英語で言えるか確認してみましょう。</p>
+<hr>
+<h3>2. Guilty Plea(02:29〜)</h3>
+<p>UnitedHealthcareのCEO Brian Thompson殺害事件で起訴されていたLuigi Mangioneが、連邦裁判所で意外にも有罪を認めます。司法記者Ali Roginが、その動機や州レベルの殺人罪との関係(二重処罰の禁止=double jeopardy)を解説します。</p>
+<p><strong>English Summary</strong>: In a surprising move, Luigi Mangione pleaded guilty to federal stalking charges resulting in Brian Thompson's death, though he still faces a separate murder charge in New York state court. Correspondent Ali Rogin explains that his defense may be trying to invoke double jeopardy protections to get the state case dismissed. Mangione said he was motivated by chronic back pain and frustration with the health insurance system.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>plead guilty</strong>(罪を認める) — Mangioneが連邦裁判所で有罪の答弁をしたことを説明する中核表現。例文: <em>The defendant decided to plead guilty in exchange for a reduced sentence.</em></li>
+<li><strong>stalking</strong>(つきまとい、ストーカー行為) — 起訴内容の一つで、Thompson氏を尾行・監視していた行為を指す。例文: <em>He was charged with stalking after repeatedly following his former colleague.</em></li>
+<li><strong>double jeopardy</strong>(二重処罰の禁止、一事不再理) — 同一の犯罪行為について二度裁判にかけられないという憲法上の保護。弁護側がこれを根拠に州の裁判の棄却を求めている。例文: <em>Her lawyer argued that a second trial would violate the principle of double jeopardy.</em></li>
+<li><strong>show no remorse</strong>(反省の色を見せない) — 法廷でのMangioneの態度を表す表現。例文: <em>The convicted man showed no remorse during his sentencing hearing.</em></li>
+<li><strong>motion to dismiss</strong>(却下を求める申立て) — 弁護側が州の裁判の取り下げを求めて提出した法的文書。例文: <em>The lawyers filed a motion to dismiss the case on procedural grounds.</em></li>
+<li><strong>in stark contrast to</strong>(〜とは対照的に) — Mangioneが投資家を装って連絡した際の迅速な対応と、患者としての保険会社とのやり取りの遅さを比較した発言。例文: <em>The warm welcome was in stark contrast to how they had treated us before.</em></li>
+<li><strong>posing as</strong>(〜になりすまして) — Mangioneが投資家を装って会社の会議日程を調べた手口を表す。例文: <em>The scammer e-mailed the company posing as a government official.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: Mangioneの弁護側が州の裁判を棄却させたい根拠は何か、自分の言葉で説明できますか。</p>
+<hr>
+<h3>3. At Sea(06:27〜)</h3>
+<p>中東に展開中の空母USS Abraham Lincolnが、通常6か月とされる展開期間を大幅に超えて昨年11月から海上に留まっています。食料・衛生用品の不足やメンタルヘルスの悪化が報じられ、トランプ大統領やヘグセス国防長官はこれを軽視する発言をしました。元海軍作戦部長Gary Roughead氏は、中東の港湾インフラが使えないことによる補給の難しさを説明します。</p>
+<p><strong>English Summary</strong>: The USS Abraham Lincoln has been deployed since last November, far longer than the Navy's usual six-month standard, and sailors' families report shortages of food and worsening mental health, including attempted suicides. President Trump and Defense Secretary Hegseth downplayed the reports, while a senator and a retired admiral raised serious concerns about supply logistics in the region. A former Navy chief of operations explained that regional ports are no longer available for resupply because of instability tied to Iran.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>dismissive</strong>(軽視する態度の) — トランプ大統領やヘグセス長官の反応を形容する語。例文: <em>He gave a dismissive response when asked about the criticism.</em></li>
+<li><strong>swift backlash</strong>(素早い反発) — 大統領の発言に対する議員らの反応を表す。例文: <em>The announcement triggered swift backlash from environmental groups.</em></li>
+<li><strong>shortages of</strong>(〜の不足) — 空母内の食料や衛生用品の不足を説明する際に使われた。例文: <em>The region is experiencing severe shortages of clean water.</em></li>
+<li><strong>town hall</strong>(タウンホール、住民・関係者との対話集会) — 家族らが軍幹部にメンタルヘルスへの懸念を訴えた集会の形式。例文: <em>The mayor held a town hall to address residents' concerns.</em></li>
+<li><strong>dig deep</strong>(力を振り絞る) — 海軍幹部が乗員に「頑張ってほしい」という趣旨で使った表現。例文: <em>The team had to dig deep to finish the project on time.</em></li>
+<li><strong>resupply</strong>(再補給する) — 空母への物資補給に関する語で、この回のキーワードの一つ。例文: <em>The ship needed to resupply before continuing its mission.</em></li>
+<li><strong>logistics model</strong>(補給の仕組み、兵站モデル) — 元海軍幹部が中東での補給体制の変化を説明する際に使った語。例文: <em>The company redesigned its logistics model to reduce delivery times.</em></li>
+<li><strong>weigh on</strong>(〜に重くのしかかる、悪影響を与える) — 長期展開が乗員とその家族の心理面に与える影響を表す。例文: <em>The uncertainty about the merger weighed on employees for months.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: 元海軍作戦部長Gary Roughead氏によれば、なぜ現在の中東での補給が過去より難しくなっているのですか。</p>
+<hr>
+<h3>4. News Wrap(12:45〜)</h3>
+<p>ヨーロッパの熱波、日本の記録的豪雨(東京東部での洪水)、米中西部の洪水、ハワイに接近する熱帯嵐Lala、ウクライナへのロシアのドローン攻撃、英国Nigel Farage氏の議席奪還、ニジェールで拘束されていた米国人宣教師の解放、イタリアでの盗難美術品発見、株式市場の小幅下落など、複数の短いニュースが続けて読み上げられます。</p>
+<p><strong>English Summary</strong>: This news wrap covers a record-breaking European heat wave fueling wildfires, catastrophic flooding in Japan and the U.S. Midwest, an approaching tropical storm in Hawaii, deadly Russian drone strikes on Ukraine, Nigel Farage's return to the UK Parliament, the release of an American missionary held in Niger, and the recovery of stolen artworks in Italy.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>break records</strong>(記録を更新する) — ヨーロッパの熱波の深刻さを表す表現。例文: <em>Temperatures broke records across the country this summer.</em></li>
+<li><strong>engulf</strong>(〜を飲み込む、包み込む) — 英国での山火事が家屋を焼き尽くす様子を表す。例文: <em>Flames quickly engulfed the abandoned warehouse.</em></li>
+<li><strong>flood watch</strong>(洪水注意報) — 米中西部で発令されていた警報の種類。例文: <em>A flood watch remains in effect for the entire county.</em></li>
+<li><strong>recede</strong>((水位などが)引く、後退する) — 洪水の水位が徐々に下がっていく様子を表す。例文: <em>The floodwaters slowly began to recede after the rain stopped.</em></li>
+<li><strong>strengthen into a hurricane</strong>(発達してハリケーンになる) — ハワイに接近する熱帯嵐Lalaについての表現。例文: <em>The storm is expected to strengthen into a hurricane by the weekend.</em></li>
+<li><strong>regain one's seat</strong>(議席を取り戻す) — Nigel Farage氏が補欠選挙で議席に返り咲いたことを表す。例文: <em>The incumbent regained her seat after a narrow recount.</em></li>
+<li><strong>claim responsibility</strong>(犯行声明を出す) — 誘拐事件について「どの武装集団も犯行を認めていない」という文脈で使われた否定形。例文: <em>No group has claimed responsibility for the attack so far.</em></li>
+<li><strong>heist</strong>(強盗、窃盗事件) — イタリアでの美術品盗難事件を指す語。例文: <em>Police are still investigating the museum heist from last spring.</em></li>
+<li><strong>edge back from</strong>((高値などから)わずかに後退する) — S&amp;P500が過去最高値からわずかに下落したことを表す株式市場の表現。例文: <em>Shares edged back from their record high on Friday.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: 日本の洪水被害について、当局は何時間でどれくらいの降水量があったと説明していましたか。</p>
+<hr>
+<h3>5. Ebola Outbreak(19:07〜)</h3>
+<p>コンゴ民主共和国で拡大するエボラ出血熱の流行を特集。確認感染者数は4500人超、死者は2100人以上に達し、過去の流行より速いペースで死者数が増えています。WHO事務局長テドロス氏の発言や、現地の医療従事者・市場関係者の声、UCLAの疫学者Anne Rimoin氏へのインタビューを通じて、対応の難しさ(医療従事者の未払い賃金、診断キットの不備、紛争による医療アクセスの制限など)が語られます。</p>
+<p><strong>English Summary</strong>: The Ebola outbreak in the Democratic Republic of Congo is now the second-largest on record, driven by the rare Bundibugyo strain, for which no vaccine exists. Healthcare workers, some unpaid for months, are striking even as cases surge, and ongoing conflict over minerals is blocking access to care. Epidemiologist Anne Rimoin explains that diagnostic delays and weak infrastructure allowed the outbreak to spiral out of control before it was even officially declared.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>confirmed cases</strong>(確認された感染者数) — エボラの感染者数を報じる際の定型表現。例文: <em>The number of confirmed cases doubled within two weeks.</em></li>
+<li><strong>sound the alarm</strong>(警鐘を鳴らす) — WHO事務局長が流行の深刻さを訴える様子を表す。例文: <em>Scientists have been sounding the alarm about rising sea levels for years.</em></li>
+<li><strong>on track to</strong>(〜する見込みである) — 今回の流行が過去最悪の流行を上回るペースにあることを表す。例文: <em>The project is on track to finish ahead of schedule.</em></li>
+<li><strong>fragmented (medical) system</strong>(分断された(医療)体制) — コンゴの医療インフラの脆弱さを表す語。例文: <em>A fragmented health system made the response slower and less effective.</em></li>
+<li><strong>walk off the job</strong>(職場放棄をする、ストライキで仕事を離れる) — 未払い賃金に抗議して医療従事者が働くのをやめたことを表す。例文: <em>Dozens of workers walked off the job to protest unsafe conditions.</em></li>
+<li><strong>put one's life in danger</strong>(命を危険にさらす) — 看護師が感染リスクを負いながら働いていることを述べた発言。例文: <em>Firefighters put their lives in danger every time they enter a burning building.</em></li>
+<li><strong>hinder</strong>(妨げる) — 紛争が人道支援を妨げていることを表す国連職員の発言。例文: <em>Heavy snow hindered the rescue efforts.</em></li>
+<li><strong>spiral out of control</strong>(制御不能なほど悪化する) — 疫学者がコンゴの流行の広がり方を説明した際の表現。例文: <em>The situation spiraled out of control within just a few days.</em></li>
+<li><strong>contact tracing</strong>(接触者追跡) — 感染者の接触者を特定し隔離する公衆衛生上の手法。例文: <em>Contact tracing helped health officials contain the outbreak early on.</em></li>
+<li><strong>get in front of (a problem)</strong>(問題の先手を打つ) — 疫学者がエボラ対応で「後手に回らないこと」の重要性を語った表現。例文: <em>The city needs to get in front of the housing crisis before it worsens.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: Anne Rimoin氏は、今回の流行がなぜ検出まで数か月かかったと説明していましたか。</p>
+<hr>
+<h3>6. Desperate Journey(28:16〜)</h3>
+<p>地中海を渡ってギリシャに向かう移民の実態を取材。SNS上ではリビアからクレタ島への渡航を美化する動画が拡散する一方、実際には年間およそ250人が命を落としています。ギリシャ政府は不法移民をウガンダなど第三国へ送還する枠組み作りを進めており、これに対し難民支援団体は「非合法な追い返し(プッシュバック)」だと批判しています。南スーダンやシエラレオネから逃れてきた人々の証言も紹介されます。</p>
+<p><strong>English Summary</strong>: Videos glamorizing the dangerous Mediterranean crossing to Greece are spreading on social media, even though roughly 250 migrants have died making the journey this year. Greece is negotiating a deal with Uganda to deport rejected asylum seekers, a move refugee advocates say undermines the right to seek asylum. The report also features migrants who successfully settled in Greece, including survivors of war and abuse.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>inundate</strong>(押し寄せる、殺到する) — SNS上に渡航を美化する動画が大量に投稿されている様子を表す。例文: <em>Social media was inundated with videos praising the risky crossing.</em></li>
+<li><strong>perils of</strong>(〜の危険) — 地中海横断の危険性を指す表現。例文: <em>The documentary highlighted the perils of the desert crossing.</em></li>
+<li><strong>self-congratulatory</strong>(自画自賛的な) — 渡航に成功した若者たちがSNSに投稿するメッセージのトーンを表す。例文: <em>His self-congratulatory speech annoyed several colleagues.</em></li>
+<li><strong>deterrent</strong>(抑止力) — EUが移民の流入を防ぐための有効な手段をまだ見つけられていないという文脈。例文: <em>Higher fines are meant to serve as a deterrent to speeding.</em></li>
+<li><strong>pushback</strong>((国境での)追い返し) — 庇護を申請する前に移民を強制的に送り返す行為を指す専門用語。例文: <em>Human rights groups have documented illegal pushbacks at the border.</em></li>
+<li><strong>undermine</strong>(損なう、弱体化させる) — プッシュバックがギリシャの法治国家としての評判を傷つけているという批判。例文: <em>The scandal undermined public trust in the institution.</em></li>
+<li><strong>grant asylum</strong>(庇護を認める) — ギリシャが正式に難民を受け入れる際の表現。例文: <em>The country granted asylum to thousands of refugees last year.</em></li>
+<li><strong>flagrantly violate</strong>(露骨に違反する) — 難民支援団体代表が、政策が法的枠組みを無視していると批判した発言。例文: <em>The company flagrantly violated safety regulations for years.</em></li>
+<li><strong>persecuted</strong>(迫害されている) — 貧しく虐げられた人々が新たなルートを探し続ける理由を説明する文脈。例文: <em>Many refugees flee because they are persecuted for their beliefs.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: ギリシャの元移民担当大臣Dimitris Kairidis氏は、SNS上の渡航動画を誰が広めていると考えていましたか。</p>
+<hr>
+<h3>7. Brooks &amp; Atkins Stohr(36:18〜)</h3>
+<p>The AtlanticのDavid Brooks氏とThe Boston GlobeのKimberly Atkins Stohr氏による週替わりの政治分析コーナー。ウィスコンシン州民主党知事予備選での番狂わせ(民主社会主義候補の敗北)や、「ウォーク」政治の是非、そしてイラン・ホルムズ海峡をめぐる膠着状態について議論します。</p>
+<p><strong>English Summary</strong>: Columnists David Brooks and Kimberly Atkins Stohr discuss an upset in Wisconsin's Democratic gubernatorial primary, where a moderate candidate defeated a democratic socialist seen as a weak general-election contender. They also debate whether the "woke" political era has truly ended and analyze the prolonged U.S.-Iran standoff over the Strait of Hormuz, noting how American military and economic leverage has diminished.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>upset</strong>(番狂わせ、大方の予想を覆す結果) — ウィスコンシン州予備選での意外な結果を表す語。例文: <em>The underdog team pulled off a stunning upset in the finals.</em></li>
+<li><strong>eke out a win</strong>(かろうじて勝利をつかむ) — 候補者が僅差で勝った様子を表す表現。例文: <em>The senator eked out a win by fewer than a thousand votes.</em></li>
+<li><strong>out of touch with</strong>(〜の実情を理解していない) — 一部の民主党員が国民感情とかけ離れていたという批判。例文: <em>Critics say the executives are out of touch with everyday workers.</em></li>
+<li><strong>big tent</strong>(幅広い支持層を取り込む政党の方針) — 民主党が多様な有権者を取り込む必要があるという文脈。例文: <em>The party is trying to build a big tent to win back moderate voters.</em></li>
+<li><strong>deplete</strong>(使い果たす、枯渇させる) — 米軍の兵器備蓄がイラン情勢で消耗していることを表す。例文: <em>The prolonged conflict has depleted the country's military resources.</em></li>
+<li><strong>declare victory</strong>(勝利を宣言する) — トランプ大統領がホルムズ海峡情勢について勝利宣言をするのではという臆測に関する表現。例文: <em>The coach declared victory even though the score was still close.</em></li>
+<li><strong>asymmetric warfare</strong>(非対称戦) — イランが小規模な戦力でも米軍に対抗できている理由を説明する軍事用語。例文: <em>Small militias have used asymmetric warfare tactics against larger armies.</em></li>
+<li><strong>you can't argue with reality</strong>(現実には逆らえない) — いくら勝利を宣言しても、タンカーの通行量減少という事実は変わらないという趣旨の発言。例文: <em>Sales are down no matter what we say — you can't argue with reality.</em></li>
+<li><strong>cracking up</strong>(崩壊しつつある) — David Brooks氏が既存の政治的イデオロギーが崩れつつあると述べた表現。例文: <em>The old alliance seems to be cracking up after years of tension.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: David Brooks氏は、ウィスコンシンでの敗北の主な原因を「DSA(民主社会主義)運動の終わり」ではなく何だと説明していましたか。</p>
+<hr>
+<h3>8. Singing for Harmony(47:30〜)</h3>
+<p>ボストンのチャイナタウンにある高齢者施設で行われている音楽療法を特集。中国系の高齢移民たちが、なじみのある中国語の歌を通じて孤独感やうつ、認知機能の低下と向き合っている様子が紹介されます。Berklee音楽大学の専門家や学生が指導にあたっています。</p>
+<p><strong>English Summary</strong>: At a senior center in Boston's Chinatown, elderly Chinese immigrants use music therapy led by Berklee College of Music instructors to cope with isolation, depression, and memory loss. Participants describe how singing familiar songs helps them open up emotionally and feel joy, even those living with dementia. The segment highlights music therapy as a growing field bridging cultural and language barriers.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>sing-along</strong>(合唱、一緒に歌うこと) — 高齢者施設の朝の恒例行事を表す語。例文: <em>The camp organized a sing-along around the campfire every night.</em></li>
+<li><strong>lower one's defenses</strong>(心を開かせる、警戒心を解かせる) — 音楽が参加者の心理的な壁を下げる効果を説明した専門家の発言。例文: <em>A friendly conversation can help lower someone's defenses.</em></li>
+<li><strong>stigma</strong>(偏見、汚名) — 感情を表に出すことへの文化的な抵抗感を表す語。例文: <em>There is still a stigma attached to seeking mental health support in some communities.</em></li>
+<li><strong>exhibit symptoms</strong>(症状を示す) — アジア系住民がうつを「言葉」でなく「身体症状」で表す傾向についての発言。例文: <em>Patients may exhibit symptoms of stress without realizing it.</em></li>
+<li><strong>cognitive decline</strong>(認知機能の低下) — 音楽療法が予防を目指す目標の一つ。例文: <em>Regular social activity may help slow cognitive decline in older adults.</em></li>
+<li><strong>transferable (goals)</strong>((成果が)応用可能な、持ち越せる) — 音楽療法のセッションで身につけたスキルを日常生活に生かすという考え方。例文: <em>The training program focuses on transferable skills useful in any job.</em></li>
+<li><strong>scratch the surface</strong>(表面をなぞる程度、ほんの入り口) — 音楽が脳に与える影響についてまだ研究が始まったばかりだという発言。例文: <em>Researchers say they have only scratched the surface of this disease.</em></li>
+<li><strong>formative years</strong>(人格形成期、多感な時期) — 参加者が若い頃に親しんだ1960〜80年代の中国の歌についての説明。例文: <em>She spent her formative years in a small coastal town.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: 施設の副施設長Megan Cheung氏は、アジア系米国人のうつの表れ方についてどのように説明していましたか。</p>
+<hr>
+<h3>9. Goodnight + Promo(54:38〜56:46)</h3>
+<p>番組の締めくくり。処方薬の補助制度が予定より早く打ち切られることに関するオンライン記事の紹介、今夜放送の「Washington Week With The Atlantic」の予告(ホルムズ海峡の無期限封鎖の可能性について)、週末の「Horizons」「Compass Points」の告知が行われ、キャスターが視聴者に感謝を述べて番組を締めます。</p>
+<p><strong>English Summary</strong>: William Brangham closes the show by pointing viewers to an online article about the early end of a prescription drug subsidy, then previews tonight's "Washington Week With The Atlantic," which will discuss a possible indefinite U.S. blockade of the Strait of Hormuz. He also promotes the weekend programs "Horizons" and "Compass Points" before thanking the audience.</p>
+<p><strong>実際に使われていた語彙・表現</strong>:</p>
+<ul>
+<li><strong>subsidy</strong>(補助金) — 処方薬の補助制度を指す語。例文: <em>The government plans to cut the housing subsidy next year.</em></li>
+<li><strong>a year early</strong>(予定より1年早く) — 補助金制度の打ち切り時期についての表現。例文: <em>The company ended the promotion a year early due to low demand.</em></li>
+<li><strong>tune into</strong>((番組を)視聴する) — 視聴者に別番組を見るよう呼びかける定型表現。例文: <em>Be sure to tune into the debate tomorrow night.</em></li>
+<li><strong>indefinite blockade</strong>(無期限の封鎖) — ホルムズ海峡をめぐる今後の展開についての予告表現。例文: <em>The union threatened an indefinite blockade of the factory.</em></li>
+<li><strong>check your local listings</strong>(地域の番組表を確認してください) — 番組の放送時間が地域によって異なることを伝える定型フレーズ。例文: <em>The show airs at different times in each city, so check your local listings.</em></li>
+<li><strong>on behalf of</strong>(〜を代表して) — キャスターが番組チーム全体を代表して視聴者に感謝を述べる際の表現。例文: <em>On behalf of the whole team, thank you for your support.</em></li>
+</ul>
+<p><strong>理解度チェック</strong>: 今夜放送予定の「Washington Week With The Atlantic」では、どんなテーマが扱われる予定だと紹介されていましたか。</p>
+<hr>
+<p><strong>注記(本方式について)</strong> このガイドは、YouTubeの英語字幕(クローズドキャプション)全文を読み込んだ上で、内容を自分の言葉で要約・解説したものです。逐語的な書き起こし(スクリプト)ではありません。語彙リストの単語・短いフレーズ自体は実際の発言から採取していますが、背景説明・English Summary・理解度チェックの文章はすべて言い換えて作成しています。</p>
+<p><strong>取得日時</strong>: 2026年8月15日(1回目実行、字幕セグメント数369、字幕は動画の約97%をカバー)</p>
+
+</div>
+<div class="panel guide-panel" data-date="2026-08-13">
+<h2>PBS NewsHour Listening Guide</h2>
+<h4>PBS News Hour full episode — August 13, 2026(56分46秒)</h4>
+<p>英語ニュースは情報量が多く展開も速いので、<strong>「聞く前に話題の背景を知っておく」→「聞きながら鍵となる語彙を拾う」→「聞いた後に理解度を確認する」</strong>という3ステップで練習するのがおすすめです。以下、チャプターごとに整理しました。</p>
+<hr>
+<h3>番組概要(公式説明文の要約)</h3>
+<p>木曜日のニュースアワーでは、占領下のヨルダン川西岸地区でイスラエル人入植者が住居を包囲する事件が発生し、米国大使からの非難とイスラエル軍の対応を招いた。トランプ大統領の建設プロジェクトがワシントンの街並みを変え、納税者に多額のコストを負わせている実態。さらに、司法省がほとんど使われてこなかった手法を用いて、帰化したアメリカ人の市民権を剥奪しようとしている問題も取り上げられた。</p>
+<hr>
+<h3>1. INTRO(00:00〜)</h3>
+<p>番組冒頭、その日の主要トピックが手短に紹介されるパートです。ここで話される内容が後続セグメントの「予告」になっているので、まずはここだけ聞いて、今日何が取り上げられるかをメモしてみましょう。</p>
+<p><strong>リスニングのコツ</strong>: 固有名詞(West Bank, Trump, DOJなど)を聞き取れるかに集中。</p>
+<hr>
+<h3>2. News Wrap(02:43〜)</h3>
+<p>複数の短いニュースを立て続けに読み上げるコーナー。コロンビアの地震関連のニュースなどが含まれます。</p>
+<p><strong>想定される語彙</strong>:</p>
+<ul>
+<li>death toll(死者数)</li>
+<li>earthquake / aftershock(地震/余震)</li>
+<li>rescue efforts(救助活動)</li>
+<li>casualties(死傷者)</li>
+</ul>
+<p><strong>理解度チェック</strong>: コロンビアの地震で死者数はどのくらいと報じられているか、1つだけメモできれば十分です。</p>
+<hr>
+<h3>3. 米国、ヨルダン川西岸での入植者による住居包囲を非難(08:30〜)</h3>
+<p>イスラエル人入植者がヨルダン川西岸地区でパレスチナ人の住居を包囲し、米国大使が非難、イスラエル軍が対応したというニュースです。</p>
+<p><strong>想定される語彙</strong>:</p>
+<ul>
+<li>settlers / settlement(入植者/入植地)</li>
+<li>siege(包囲)</li>
+<li>condemn(非難する)</li>
+<li>ambassador(大使)</li>
+<li>military response(軍事的対応)</li>
+<li>act of terror(テロ行為)</li>
+</ul>
+<p><strong>理解度チェック</strong>:</p>
+<ul>
+<li>Who condemned the incident?(誰が非難したか)</li>
+<li>What did the Israeli military do in response?(イスラエル軍はどう対応したか)</li>
+</ul>
+<hr>
+<h3>4. 包囲された家族の証言(13:03〜)</h3>
+<p>実際に住居を包囲されたパレスチナ系アメリカ人家族へのインタビュー。個人の体験談なので、ニュース原稿より話し言葉に近く、感情がこもった話し方になりやすい点に注意。</p>
+<p><strong>想定される語彙</strong>:</p>
+<ul>
+<li>terrified / frightened(怖かった)</li>
+<li>barricade(バリケード)</li>
+<li>witness(目撃する)</li>
+<li>firsthand account(直接の体験談)</li>
+</ul>
+<p><strong>理解度チェック</strong>: 家族が具体的にどんな行動を取ったか、1つのエピソードを聞き取れるか試してみましょう。</p>
+<hr>
+<h3>5. Monumental Costs ― トランプ氏の建設事業(18:37〜)</h3>
+<p>トランプ大統領が主導する首都ワシントンでの建設プロジェクトが、景観を変え、納税者に多額の負担を強いているという特集。</p>
+<p><strong>想定される語彙</strong>:</p>
+<ul>
+<li>taxpayer-funded(税金で賄われる)</li>
+<li>renovation / construction project(改修/建設事業)</li>
+<li>price tag / cost overrun(費用/予算超過)</li>
+<li>marble(大理石)</li>
+</ul>
+<p><strong>理解度チェック</strong>: プロジェクトの総額や、批判されている理由をメモしてみましょう。</p>
+<hr>
+<h3>6. Revoking Citizenship ― 帰化米国人の市民権剥奪(27:04〜)</h3>
+<p>司法省(DOJ)が、あまり使われてこなかった手法を使って帰化したアメリカ人の市民権を剥奪しようとしている問題。法律・行政用語が多く出てくるやや難易度高めのセグメントです。</p>
+<p><strong>想定される語彙</strong>:</p>
+<ul>
+<li>naturalized citizen(帰化した市民)</li>
+<li>denaturalization(市民権剥奪)</li>
+<li>Justice Department / DOJ(司法省)</li>
+<li>legal tactic / loophole(法的手法/抜け穴)</li>
+<li>due process(法の適正手続き)</li>
+</ul>
+<p><strong>理解度チェック</strong>: DOJが使っている手法はどんなものとして説明されているか、大まかにでも掴めるか試してみましょう。</p>
+<hr>
+<h3>7. Cuts &amp; Consequences(32:27〜)</h3>
+<p>予算削減とその影響についての特集。</p>
+<p><strong>想定される語彙</strong>:</p>
+<ul>
+<li>budget cuts(予算削減)</li>
+<li>funding(資金提供)</li>
+<li>impact / consequences(影響)</li>
+</ul>
+<hr>
+<h3>8. Saving Elephants(39:22〜)</h3>
+<p>比較的軽めのトピックで、動物・科学系の特集です。</p>
+<p><strong>想定される語彙</strong>:</p>
+<ul>
+<li>conservation(保護活動)</li>
+<li>endangered species(絶滅危惧種)</li>
+<li>veterinarian(獣医)</li>
+<li>disease / outbreak(病気/流行)</li>
+</ul>
+<p><strong>リスニングのコツ</strong>: 政治・法律パートより語彙がやさしめなので、リスニング練習の「息抜き」に向いています。</p>
+<hr>
+<h3>9. 音楽と芸術のコーナー(44:51〜56:46)</h3>
+<p>Empowered by Art(アート関連の特集)、Hermanos Gutiérrezによる演奏「Los Ojos del Cóndor」、エンディング(Goodnight)。ここはニュースというより文化コーナーなので、リラックスして聞くのに向いています。</p>
+<hr>
+<p><strong>注記</strong> 上記は、PBSが公式にYouTubeへ掲載している番組概要文とチャプター(章立て)情報から合理的に推測した内容です。実際の放送で使われた言い回しをそのまま書き起こしたものではなく、あくまで学習用の予習・復習ガイドとしてご利用ください。</p>
+<p><strong>取得日時</strong>: 2026年8月14日</p>
+
+</div>
+  </div>
+  <div class="panel-group" data-mode="vocab">
+<div class="panel vocab-panel active" data-date="2026-08-19">
+<div class="vocab-grid">
+
+    <div class="vocab-card">
+      <div class="vocab-word">upset win</div>
+      <div class="vocab-meaning">番狂わせの勝利</div>
+      <div class="vocab-explanation">左派候補アンジー・ニクソン氏がフロリダ予備選で勝利したことを表す冒頭の表現。</div>
+      <div class="vocab-example">The rookie player's upset win stunned the entire league.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a tough road ahead</div>
+      <div class="vocab-meaning">この先の厳しい道のり</div>
+      <div class="vocab-explanation">予備選には勝ったものの本選挙では苦戦が予想されることを表す。</div>
+      <div class="vocab-example">Even after winning the nomination, she faces a tough road ahead in November.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">on trial</div>
+      <div class="vocab-meaning">裁判にかけられている</div>
+      <div class="vocab-explanation">Meta社が子どもの安全をめぐって法廷で争われている状況を表す。</div>
+      <div class="vocab-example">The company is currently on trial for alleged safety violations.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">deliberately designing</div>
+      <div class="vocab-meaning">意図的に設計する</div>
+      <div class="vocab-explanation">Meta社が中毒性の高い機能を意図的に作ったという州側の主張。</div>
+      <div class="vocab-example">Critics say the app was deliberately designing features to keep users hooked.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">negatively affecting</div>
+      <div class="vocab-meaning">悪影響を与えている</div>
+      <div class="vocab-explanation">子どもの精神衛生への影響を表す表現。</div>
+      <div class="vocab-example">Long screen time is negatively affecting children's sleep patterns.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a second Gilded Age</div>
+      <div class="vocab-meaning">第二の金ぴか時代</div>
+      <div class="vocab-explanation">歴史家ベバリー・ゲイジ氏が現代をたとえて使った表現。</div>
+      <div class="vocab-example">Some economists argue we are living through a second Gilded Age.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">erase</div>
+      <div class="vocab-meaning">消し去る</div>
+      <div class="vocab-explanation">20世紀の労働運動の成果が失われ、19世紀後半のような状況に戻ったという趣旨の発言。</div>
+      <div class="vocab-example">Decades of progress seemed to be erased almost overnight.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">outraised A 16 to 1</div>
+      <div class="vocab-meaning">資金調達でAに16対1の差をつけられた</div>
+      <div class="vocab-explanation">ニクソン氏が対立候補に資金面で大きく劣っていたことを表す。</div>
+      <div class="vocab-example">The incumbent outraised her opponent nearly five to one.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">remapped districts</div>
+      <div class="vocab-meaning">再区割りされた選挙区</div>
+      <div class="vocab-explanation">フロリダ共和党が引き直した選挙区を指す。</div>
+      <div class="vocab-example">Two incumbents won reelection in the newly remapped districts.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">prevail</div>
+      <div class="vocab-meaning">勝利を収める</div>
+      <div class="vocab-explanation">民主党現職議員が新しい選挙区でも勝ったことを表す。</div>
+      <div class="vocab-example">She prevailed in a closely watched primary race.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">abuse allegations</div>
+      <div class="vocab-meaning">虐待疑惑</div>
+      <div class="vocab-explanation">落選した共和党議員コリー・ミルズ氏に関する報道。</div>
+      <div class="vocab-example">He resigned amid abuse allegations from former staff members.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a toss-up with a twist</div>
+      <div class="vocab-meaning">意外な要素のある接戦</div>
+      <div class="vocab-explanation">アラスカ上院選が接戦であることを表す表現。</div>
+      <div class="vocab-example">Analysts called the race a toss-up with a twist after a third candidate entered.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">self-funded</div>
+      <div class="vocab-meaning">自己資金で賄われた</div>
+      <div class="vocab-explanation">対立候補ラルフ・ノーマン氏が選挙資金の多くを自己負担していることを表す。</div>
+      <div class="vocab-example">His campaign was largely self-funded rather than relying on donors.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">not a polished politician</div>
+      <div class="vocab-meaning">洗練された政治家ではない</div>
+      <div class="vocab-explanation">ダーリン・グラハム氏が自らの弱点を認めた発言。</div>
+      <div class="vocab-example">She admitted she wasn't a polished politician but promised to work hard.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a deep red state</div>
+      <div class="vocab-meaning">共和党が非常に強い州</div>
+      <div class="vocab-explanation">南カロライナ州の政治的傾向を表す表現。</div>
+      <div class="vocab-example">Winning the primary is decisive in such a deep red state.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">pause tariffs</div>
+      <div class="vocab-meaning">関税を一時停止する</div>
+      <div class="vocab-explanation">トランプ大統領がカナダへの関税措置を一時的に止めたことを表す。</div>
+      <div class="vocab-example">The government agreed to pause tariffs while negotiations continue.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">criminal investigations</div>
+      <div class="vocab-meaning">刑事捜査</div>
+      <div class="vocab-explanation">イスラエル軍がガザでの殺害事件について開始した捜査。</div>
+      <div class="vocab-example">Authorities launched criminal investigations into the incident.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">halt trade</div>
+      <div class="vocab-meaning">貿易を停止する</div>
+      <div class="vocab-explanation">UAEがイランとの貿易を止めた措置。</div>
+      <div class="vocab-example">The country decided to halt trade with its neighbor after the dispute.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">corruption investigation</div>
+      <div class="vocab-meaning">汚職捜査</div>
+      <div class="vocab-explanation">ゼレンスキー大統領の側近解任の背景にある捜査。</div>
+      <div class="vocab-example">The minister resigned amid a corruption investigation.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">downplay</div>
+      <div class="vocab-meaning">軽視する、大したことないと言う</div>
+      <div class="vocab-explanation">プーチン大統領がドローン攻撃の影響を軽く見せようとした発言。</div>
+      <div class="vocab-example">Officials tried to downplay the severity of the outbreak.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a crater</div>
+      <div class="vocab-meaning">クレーター、噴火口状のくぼみ</div>
+      <div class="vocab-explanation">SpaceXロケットの衝突で月面にできた穴。</div>
+      <div class="vocab-example">The impact left a large crater in the field.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">defunct</div>
+      <div class="vocab-meaning">機能していない、使われなくなった</div>
+      <div class="vocab-explanation">使用済みで宇宙を漂っていたロケット部品を指す。</div>
+      <div class="vocab-example">The defunct satellite eventually burned up in the atmosphere.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">surge</div>
+      <div class="vocab-meaning">(株価などが)急騰する</div>
+      <div class="vocab-explanation">モデルナ株が治験成功の報道で急上昇したことを表す。</div>
+      <div class="vocab-example">Shares surged nearly 20 percent after the announcement.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">knowingly designed</div>
+      <div class="vocab-meaning">意図的に設計した</div>
+      <div class="vocab-explanation">Meta社が有害性を知りながら製品を作ったという訴えの核心表現。</div>
+      <div class="vocab-example">The lawsuit claims the company knowingly designed a defective product.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">hooked</div>
+      <div class="vocab-meaning">病みつきにさせられた、依存させられた</div>
+      <div class="vocab-explanation">子どもたちがアプリに依存させられている状態を表す。</div>
+      <div class="vocab-example">Many teens feel hooked on their phones within minutes of waking up.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">penalties</div>
+      <div class="vocab-meaning">制裁金、罰則</div>
+      <div class="vocab-explanation">州側が求めている巨額の金銭的制裁。</div>
+      <div class="vocab-example">The company could face steep penalties if found guilty.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">unsubstantiated</div>
+      <div class="vocab-meaning">根拠のない</div>
+      <div class="vocab-explanation">Meta広報担当者が州側の主張を否定した際の表現。</div>
+      <div class="vocab-example">The company called the allegations unsubstantiated.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">infinite scroll</div>
+      <div class="vocab-meaning">無限スクロール</div>
+      <div class="vocab-explanation">ユーザーを引き止めるための代表的な設計機能。</div>
+      <div class="vocab-example">Infinite scroll makes it easy to lose track of time on social media.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">age verification</div>
+      <div class="vocab-meaning">年齢確認</div>
+      <div class="vocab-explanation">未成年ユーザーの偽の生年月日登録が問題になっている文脈。</div>
+      <div class="vocab-example">The platform is introducing stricter age verification measures.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">injunctive relief</div>
+      <div class="vocab-meaning">差止命令による救済</div>
+      <div class="vocab-explanation">金銭的制裁だけでなく製品設計自体の変更を求める法的措置。</div>
+      <div class="vocab-example">The plaintiffs are seeking injunctive relief in addition to damages.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">market value</div>
+      <div class="vocab-meaning">時価総額</div>
+      <div class="vocab-explanation">Meta社の企業価値と想定される制裁金を比較する際に使われた語。</div>
+      <div class="vocab-example">The company's market value dropped sharply after the announcement.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">nominate</div>
+      <div class="vocab-meaning">指名する</div>
+      <div class="vocab-explanation">トランプ大統領がオーバートン氏をFDA長官候補に指名したことを表す動詞。</div>
+      <div class="vocab-example">The president plans to nominate a new candidate for the position.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">overhaul</div>
+      <div class="vocab-meaning">抜本的に見直す</div>
+      <div class="vocab-explanation">小児ワクチン接種スケジュールの改定を指す表現。</div>
+      <div class="vocab-example">The agency proposed an overhaul of its safety guidelines.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">tighter restrictions</div>
+      <div class="vocab-meaning">より厳しい規制</div>
+      <div class="vocab-explanation">中絶薬ミフェプリストンに対するオーバートン氏の姿勢。</div>
+      <div class="vocab-example">Lawmakers are pushing for tighter restrictions on the sale of the drug.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">confirmation hearing</div>
+      <div class="vocab-meaning">承認公聴会</div>
+      <div class="vocab-explanation">上院でオーバートン氏の適格性が審査される予定の場。</div>
+      <div class="vocab-example">The nominee will face a confirmation hearing this fall.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">foodborne illness</div>
+      <div class="vocab-meaning">食中毒、食品由来の疾患</div>
+      <div class="vocab-explanation">FDAが直面する深刻な課題の一つ。</div>
+      <div class="vocab-example">Health officials are investigating a foodborne illness outbreak linked to lettuce.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">outbreaks</div>
+      <div class="vocab-meaning">(病気の)集団発生</div>
+      <div class="vocab-explanation">食中毒の急増を説明する際の語。</div>
+      <div class="vocab-example">Several outbreaks have been traced back to the same supplier.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">attrition</div>
+      <div class="vocab-meaning">人員の自然減少、離職</div>
+      <div class="vocab-explanation">FDAが慢性的な人手不足に悩んでいる背景。</div>
+      <div class="vocab-example">The department has struggled with high attrition among experienced staff.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">toe the line</div>
+      <div class="vocab-meaning">規律・方針に従う</div>
+      <div class="vocab-explanation">FDAが独立した意思決定機関としての立場を保とうとしてきた姿勢を表す表現。</div>
+      <div class="vocab-example">Employees are expected to toe the line set by upper management.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">scale back</div>
+      <div class="vocab-meaning">縮小する</div>
+      <div class="vocab-explanation">トランプ大統領が命じた米韓合同軍事演習の縮小を指す表現。</div>
+      <div class="vocab-example">The company decided to scale back its overseas operations.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">provocative</div>
+      <div class="vocab-meaning">挑発的な</div>
+      <div class="vocab-explanation">北朝鮮側が軍事演習をこう表現したという文脈。</div>
+      <div class="vocab-example">North Korea called the drills provocative.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a net positive</div>
+      <div class="vocab-meaning">全体としてはプラス</div>
+      <div class="vocab-explanation">ハインリックス氏が米韓関係の現状を評価した表現。</div>
+      <div class="vocab-example">Despite some setbacks, the partnership has been a net positive overall.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">deter</div>
+      <div class="vocab-meaning">抑止する</div>
+      <div class="vocab-explanation">軍事演習の本来の目的を説明する語。</div>
+      <div class="vocab-example">The exercises are meant to deter aggression, not provoke it.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a strategic wedge</div>
+      <div class="vocab-meaning">戦略的なくさび、亀裂</div>
+      <div class="vocab-explanation">大統領の同盟国批判が地域に生む隙を指す表現。</div>
+      <div class="vocab-example">Critics worry the remarks could create a strategic wedge that rivals exploit.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">rhetoric</div>
+      <div class="vocab-meaning">言葉遣い、物言い</div>
+      <div class="vocab-explanation">ハインリックス氏が大統領の発言スタイルを評した語。</div>
+      <div class="vocab-example">Her rhetoric was sharper than expected during the debate.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a transactional approach</div>
+      <div class="vocab-meaning">取引的なアプローチ</div>
+      <div class="vocab-explanation">同盟国への対応方針を表す表現。</div>
+      <div class="vocab-example">Some diplomats criticized his transactional approach to foreign policy.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a burden</div>
+      <div class="vocab-meaning">負担</div>
+      <div class="vocab-explanation">同盟国がアメリカにとって負担ではないという反論の中で使われた語。</div>
+      <div class="vocab-example">She argued that allies are not a burden but a strategic asset.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">concentrations of wealth and power</div>
+      <div class="vocab-meaning">富と権力の集中</div>
+      <div class="vocab-explanation">金ぴか時代を特徴づける中心テーマ。</div>
+      <div class="vocab-example">The report warned about growing concentrations of wealth and power.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a landmark strike</div>
+      <div class="vocab-meaning">歴史的なストライキ</div>
+      <div class="vocab-explanation">1894年のパルマン・ストライキを指す表現。</div>
+      <div class="vocab-example">The 1894 Pullman strike is remembered as a landmark strike in U.S. labor history.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">broke the strike</div>
+      <div class="vocab-meaning">ストライキを鎮圧した</div>
+      <div class="vocab-explanation">連邦政府が州兵を動員してストライキを終わらせたことを表す。</div>
+      <div class="vocab-example">The government sent troops in to break the strike.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">radicalized</div>
+      <div class="vocab-meaning">急進化した</div>
+      <div class="vocab-explanation">投獄された経験を経てデブスが社会主義運動に傾倒したことを表す語。</div>
+      <div class="vocab-example">He was radicalized after witnessing the crackdown firsthand.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">hierarchical</div>
+      <div class="vocab-meaning">階層的な</div>
+      <div class="vocab-explanation">パルマン地区の住宅が身分によって配置されていたことを表す形容詞。</div>
+      <div class="vocab-example">The old company town had a strictly hierarchical layout.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">erase</div>
+      <div class="vocab-meaning">消し去る</div>
+      <div class="vocab-explanation">20世紀の労働運動の成果が失われたことを再び表す表現。</div>
+      <div class="vocab-example">Decades of hard-won progress can be erased surprisingly quickly.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">unresolved</div>
+      <div class="vocab-meaning">未解決の</div>
+      <div class="vocab-explanation">金ぴか時代の問いが今も解決されていないことを表す形容詞。</div>
+      <div class="vocab-example">Many of these questions remain unresolved today.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">identical twins</div>
+      <div class="vocab-meaning">一卵性双生児</div>
+      <div class="vocab-explanation">祭典の中心テーマとなる存在。</div>
+      <div class="vocab-example">Identical twins share the same DNA, unlike fraternal twins.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a bond</div>
+      <div class="vocab-meaning">絆</div>
+      <div class="vocab-explanation">双子同士の特別なつながりを表す語。</div>
+      <div class="vocab-example">Siblings often share a strong bond growing up.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">twin lingo</div>
+      <div class="vocab-meaning">双子特有の言い回し</div>
+      <div class="vocab-explanation">双子同士にしか通じない表現を指す語。</div>
+      <div class="vocab-example">They developed their own twin lingo that confused everyone else.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">facial recognition</div>
+      <div class="vocab-meaning">顔認証</div>
+      <div class="vocab-explanation">双子の研究テーマの一つとして紹介された技術。</div>
+      <div class="vocab-example">Facial recognition software sometimes struggles to tell identical twins apart.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a singleton</div>
+      <div class="vocab-meaning">双子でない一人っ子(この文脈では双子の片割れがいない子)</div>
+      <div class="vocab-explanation">双子の母親が生んだ、双子ではない赤ちゃんを指す語。</div>
+      <div class="vocab-example">Unlike her siblings, she was born a singleton.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">donate property</div>
+      <div class="vocab-meaning">土地を寄付する</div>
+      <div class="vocab-explanation">町名がトゥインズバーグに改名された歴史的な経緯で使われた語。</div>
+      <div class="vocab-example">The family donated property to build the town's first school.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a deep dive</div>
+      <div class="vocab-meaning">深く掘り下げること</div>
+      <div class="vocab-explanation">マイルズ・オブライエンが特番の内容を説明する際の表現。</div>
+      <div class="vocab-example">The documentary offers a deep dive into the history of the region.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">drought</div>
+      <div class="vocab-meaning">干ばつ</div>
+      <div class="vocab-explanation">コロラド川の水位低下の主な原因。</div>
+      <div class="vocab-example">Decades of drought have strained the region's water supply.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">come to terms on</div>
+      <div class="vocab-meaning">〜について合意する</div>
+      <div class="vocab-explanation">7つの州が水資源の分配で合意できていない状況を表す。</div>
+      <div class="vocab-example">The two sides finally came to terms on a new contract.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a labor of love</div>
+      <div class="vocab-meaning">愛情を注いだ仕事</div>
+      <div class="vocab-explanation">マイルズ・オブライエンが2年がかりで作った新シリーズを表現した語。</div>
+      <div class="vocab-example">Writing the novel was truly a labor of love for her.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">check your local listings</div>
+      <div class="vocab-meaning">お住まいの地域の番組表をご確認ください</div>
+      <div class="vocab-explanation">番組の放送時間の案内で使われる定型表現。</div>
+      <div class="vocab-example">The special airs tonight — check your local listings for the exact time.</div>
+    </div>
+</div>
+</div>
+<div class="panel vocab-panel" data-date="2026-08-14">
+<div class="vocab-grid">
+
+    <div class="vocab-card">
+      <div class="vocab-word">are away</div>
+      <div class="vocab-meaning">不在にしている、休みを取っている</div>
+      <div class="vocab-explanation">冒頭で共同キャスター2人が休みであることを説明する際に使われた表現。</div>
+      <div class="vocab-example">The regular host is away this week, so a guest anchor is filling in.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">shooting death</div>
+      <div class="vocab-meaning">銃撃による死</div>
+      <div class="vocab-explanation">Mangioneが起訴されている「CEOの銃撃死」という事件を指して使われた。</div>
+      <div class="vocab-example">The shooting death of the executive shocked the business community.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">dismiss concerns</div>
+      <div class="vocab-meaning">懸念を一蹴する</div>
+      <div class="vocab-explanation">トランプ大統領が空母の状況への懸念を軽視した態度を表す。</div>
+      <div class="vocab-example">The company dismissed concerns about safety and continued production.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">long-deployed</div>
+      <div class="vocab-meaning">長期間配備されている</div>
+      <div class="vocab-explanation">通常より長く海上に展開している空母を形容する語。</div>
+      <div class="vocab-example">The long-deployed unit was finally scheduled to return home next month.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">jump overboard</div>
+      <div class="vocab-meaning">船から飛び降りる</div>
+      <div class="vocab-explanation">空母の水兵が船外に飛び込もうとしたという報道に関連。</div>
+      <div class="vocab-example">A passenger reportedly tried to jump overboard during the storm.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">death toll</div>
+      <div class="vocab-meaning">死亡者数</div>
+      <div class="vocab-explanation">コンゴのエボラ流行に関する死者数の文脈で使用。</div>
+      <div class="vocab-example">The death toll from the flood continues to rise.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">stem the flow of</div>
+      <div class="vocab-meaning">〜の流れを食い止める</div>
+      <div class="vocab-explanation">ギリシャが移民の流入を抑えようとする取り組みを表す。</div>
+      <div class="vocab-example">The new policy aims to stem the flow of illegal weapons across the border.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">demolish safeguards</div>
+      <div class="vocab-meaning">安全策を骨抜きにする</div>
+      <div class="vocab-explanation">ギリシャ難民評議会の担当者が、庇護申請手続きの保護策が失われつつあると述べた表現。</div>
+      <div class="vocab-example">Critics say the new law demolishes safeguards meant to protect workers.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">plead guilty</div>
+      <div class="vocab-meaning">罪を認める</div>
+      <div class="vocab-explanation">Mangioneが連邦裁判所で有罪の答弁をしたことを説明する中核表現。</div>
+      <div class="vocab-example">The defendant decided to plead guilty in exchange for a reduced sentence.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">stalking</div>
+      <div class="vocab-meaning">つきまとい、ストーカー行為</div>
+      <div class="vocab-explanation">起訴内容の一つで、Thompson氏を尾行・監視していた行為を指す。</div>
+      <div class="vocab-example">He was charged with stalking after repeatedly following his former colleague.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">double jeopardy</div>
+      <div class="vocab-meaning">二重処罰の禁止、一事不再理</div>
+      <div class="vocab-explanation">同一の犯罪行為について二度裁判にかけられないという憲法上の保護。弁護側がこれを根拠に州の裁判の棄却を求めている。</div>
+      <div class="vocab-example">Her lawyer argued that a second trial would violate the principle of double jeopardy.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">show no remorse</div>
+      <div class="vocab-meaning">反省の色を見せない</div>
+      <div class="vocab-explanation">法廷でのMangioneの態度を表す表現。</div>
+      <div class="vocab-example">The convicted man showed no remorse during his sentencing hearing.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">motion to dismiss</div>
+      <div class="vocab-meaning">却下を求める申立て</div>
+      <div class="vocab-explanation">弁護側が州の裁判の取り下げを求めて提出した法的文書。</div>
+      <div class="vocab-example">The lawyers filed a motion to dismiss the case on procedural grounds.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">in stark contrast to</div>
+      <div class="vocab-meaning">〜とは対照的に</div>
+      <div class="vocab-explanation">Mangioneが投資家を装って連絡した際の迅速な対応と、患者としての保険会社とのやり取りの遅さを比較した発言。</div>
+      <div class="vocab-example">The warm welcome was in stark contrast to how they had treated us before.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">posing as</div>
+      <div class="vocab-meaning">〜になりすまして</div>
+      <div class="vocab-explanation">Mangioneが投資家を装って会社の会議日程を調べた手口を表す。</div>
+      <div class="vocab-example">The scammer e-mailed the company posing as a government official.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">dismissive</div>
+      <div class="vocab-meaning">軽視する態度の</div>
+      <div class="vocab-explanation">トランプ大統領やヘグセス長官の反応を形容する語。</div>
+      <div class="vocab-example">He gave a dismissive response when asked about the criticism.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">swift backlash</div>
+      <div class="vocab-meaning">素早い反発</div>
+      <div class="vocab-explanation">大統領の発言に対する議員らの反応を表す。</div>
+      <div class="vocab-example">The announcement triggered swift backlash from environmental groups.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">shortages of</div>
+      <div class="vocab-meaning">〜の不足</div>
+      <div class="vocab-explanation">空母内の食料や衛生用品の不足を説明する際に使われた。</div>
+      <div class="vocab-example">The region is experiencing severe shortages of clean water.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">town hall</div>
+      <div class="vocab-meaning">タウンホール、住民・関係者との対話集会</div>
+      <div class="vocab-explanation">家族らが軍幹部にメンタルヘルスへの懸念を訴えた集会の形式。</div>
+      <div class="vocab-example">The mayor held a town hall to address residents' concerns.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">dig deep</div>
+      <div class="vocab-meaning">力を振り絞る</div>
+      <div class="vocab-explanation">海軍幹部が乗員に「頑張ってほしい」という趣旨で使った表現。</div>
+      <div class="vocab-example">The team had to dig deep to finish the project on time.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">resupply</div>
+      <div class="vocab-meaning">再補給する</div>
+      <div class="vocab-explanation">空母への物資補給に関する語で、この回のキーワードの一つ。</div>
+      <div class="vocab-example">The ship needed to resupply before continuing its mission.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">logistics model</div>
+      <div class="vocab-meaning">補給の仕組み、兵站モデル</div>
+      <div class="vocab-explanation">元海軍幹部が中東での補給体制の変化を説明する際に使った語。</div>
+      <div class="vocab-example">The company redesigned its logistics model to reduce delivery times.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">weigh on</div>
+      <div class="vocab-meaning">〜に重くのしかかる、悪影響を与える</div>
+      <div class="vocab-explanation">長期展開が乗員とその家族の心理面に与える影響を表す。</div>
+      <div class="vocab-example">The uncertainty about the merger weighed on employees for months.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">break records</div>
+      <div class="vocab-meaning">記録を更新する</div>
+      <div class="vocab-explanation">ヨーロッパの熱波の深刻さを表す表現。</div>
+      <div class="vocab-example">Temperatures broke records across the country this summer.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">engulf</div>
+      <div class="vocab-meaning">〜を飲み込む、包み込む</div>
+      <div class="vocab-explanation">英国での山火事が家屋を焼き尽くす様子を表す。</div>
+      <div class="vocab-example">Flames quickly engulfed the abandoned warehouse.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">flood watch</div>
+      <div class="vocab-meaning">洪水注意報</div>
+      <div class="vocab-explanation">米中西部で発令されていた警報の種類。</div>
+      <div class="vocab-example">A flood watch remains in effect for the entire county.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">recede</div>
+      <div class="vocab-meaning">(水位などが)引く、後退する</div>
+      <div class="vocab-explanation">洪水の水位が徐々に下がっていく様子を表す。</div>
+      <div class="vocab-example">The floodwaters slowly began to recede after the rain stopped.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">strengthen into a hurricane</div>
+      <div class="vocab-meaning">発達してハリケーンになる</div>
+      <div class="vocab-explanation">ハワイに接近する熱帯嵐Lalaについての表現。</div>
+      <div class="vocab-example">The storm is expected to strengthen into a hurricane by the weekend.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">regain one's seat</div>
+      <div class="vocab-meaning">議席を取り戻す</div>
+      <div class="vocab-explanation">Nigel Farage氏が補欠選挙で議席に返り咲いたことを表す。</div>
+      <div class="vocab-example">The incumbent regained her seat after a narrow recount.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">claim responsibility</div>
+      <div class="vocab-meaning">犯行声明を出す</div>
+      <div class="vocab-explanation">誘拐事件について「どの武装集団も犯行を認めていない」という文脈で使われた否定形。</div>
+      <div class="vocab-example">No group has claimed responsibility for the attack so far.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">heist</div>
+      <div class="vocab-meaning">強盗、窃盗事件</div>
+      <div class="vocab-explanation">イタリアでの美術品盗難事件を指す語。</div>
+      <div class="vocab-example">Police are still investigating the museum heist from last spring.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">edge back from</div>
+      <div class="vocab-meaning">(高値などから)わずかに後退する</div>
+      <div class="vocab-explanation">S&amp;P500が過去最高値からわずかに下落したことを表す株式市場の表現。</div>
+      <div class="vocab-example">Shares edged back from their record high on Friday.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">confirmed cases</div>
+      <div class="vocab-meaning">確認された感染者数</div>
+      <div class="vocab-explanation">エボラの感染者数を報じる際の定型表現。</div>
+      <div class="vocab-example">The number of confirmed cases doubled within two weeks.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">sound the alarm</div>
+      <div class="vocab-meaning">警鐘を鳴らす</div>
+      <div class="vocab-explanation">WHO事務局長が流行の深刻さを訴える様子を表す。</div>
+      <div class="vocab-example">Scientists have been sounding the alarm about rising sea levels for years.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">on track to</div>
+      <div class="vocab-meaning">〜する見込みである</div>
+      <div class="vocab-explanation">今回の流行が過去最悪の流行を上回るペースにあることを表す。</div>
+      <div class="vocab-example">The project is on track to finish ahead of schedule.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">fragmented (medical) system</div>
+      <div class="vocab-meaning">分断された(医療)体制</div>
+      <div class="vocab-explanation">コンゴの医療インフラの脆弱さを表す語。</div>
+      <div class="vocab-example">A fragmented health system made the response slower and less effective.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">walk off the job</div>
+      <div class="vocab-meaning">職場放棄をする、ストライキで仕事を離れる</div>
+      <div class="vocab-explanation">未払い賃金に抗議して医療従事者が働くのをやめたことを表す。</div>
+      <div class="vocab-example">Dozens of workers walked off the job to protest unsafe conditions.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">put one's life in danger</div>
+      <div class="vocab-meaning">命を危険にさらす</div>
+      <div class="vocab-explanation">看護師が感染リスクを負いながら働いていることを述べた発言。</div>
+      <div class="vocab-example">Firefighters put their lives in danger every time they enter a burning building.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">hinder</div>
+      <div class="vocab-meaning">妨げる</div>
+      <div class="vocab-explanation">紛争が人道支援を妨げていることを表す国連職員の発言。</div>
+      <div class="vocab-example">Heavy snow hindered the rescue efforts.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">spiral out of control</div>
+      <div class="vocab-meaning">制御不能なほど悪化する</div>
+      <div class="vocab-explanation">疫学者がコンゴの流行の広がり方を説明した際の表現。</div>
+      <div class="vocab-example">The situation spiraled out of control within just a few days.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">contact tracing</div>
+      <div class="vocab-meaning">接触者追跡</div>
+      <div class="vocab-explanation">感染者の接触者を特定し隔離する公衆衛生上の手法。</div>
+      <div class="vocab-example">Contact tracing helped health officials contain the outbreak early on.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">get in front of (a problem)</div>
+      <div class="vocab-meaning">問題の先手を打つ</div>
+      <div class="vocab-explanation">疫学者がエボラ対応で「後手に回らないこと」の重要性を語った表現。</div>
+      <div class="vocab-example">The city needs to get in front of the housing crisis before it worsens.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">inundate</div>
+      <div class="vocab-meaning">押し寄せる、殺到する</div>
+      <div class="vocab-explanation">SNS上に渡航を美化する動画が大量に投稿されている様子を表す。</div>
+      <div class="vocab-example">Social media was inundated with videos praising the risky crossing.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">perils of</div>
+      <div class="vocab-meaning">〜の危険</div>
+      <div class="vocab-explanation">地中海横断の危険性を指す表現。</div>
+      <div class="vocab-example">The documentary highlighted the perils of the desert crossing.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">self-congratulatory</div>
+      <div class="vocab-meaning">自画自賛的な</div>
+      <div class="vocab-explanation">渡航に成功した若者たちがSNSに投稿するメッセージのトーンを表す。</div>
+      <div class="vocab-example">His self-congratulatory speech annoyed several colleagues.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">deterrent</div>
+      <div class="vocab-meaning">抑止力</div>
+      <div class="vocab-explanation">EUが移民の流入を防ぐための有効な手段をまだ見つけられていないという文脈。</div>
+      <div class="vocab-example">Higher fines are meant to serve as a deterrent to speeding.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">pushback</div>
+      <div class="vocab-meaning">(国境での)追い返し</div>
+      <div class="vocab-explanation">庇護を申請する前に移民を強制的に送り返す行為を指す専門用語。</div>
+      <div class="vocab-example">Human rights groups have documented illegal pushbacks at the border.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">undermine</div>
+      <div class="vocab-meaning">損なう、弱体化させる</div>
+      <div class="vocab-explanation">プッシュバックがギリシャの法治国家としての評判を傷つけているという批判。</div>
+      <div class="vocab-example">The scandal undermined public trust in the institution.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">grant asylum</div>
+      <div class="vocab-meaning">庇護を認める</div>
+      <div class="vocab-explanation">ギリシャが正式に難民を受け入れる際の表現。</div>
+      <div class="vocab-example">The country granted asylum to thousands of refugees last year.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">flagrantly violate</div>
+      <div class="vocab-meaning">露骨に違反する</div>
+      <div class="vocab-explanation">難民支援団体代表が、政策が法的枠組みを無視していると批判した発言。</div>
+      <div class="vocab-example">The company flagrantly violated safety regulations for years.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">persecuted</div>
+      <div class="vocab-meaning">迫害されている</div>
+      <div class="vocab-explanation">貧しく虐げられた人々が新たなルートを探し続ける理由を説明する文脈。</div>
+      <div class="vocab-example">Many refugees flee because they are persecuted for their beliefs.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">upset</div>
+      <div class="vocab-meaning">番狂わせ、大方の予想を覆す結果</div>
+      <div class="vocab-explanation">ウィスコンシン州予備選での意外な結果を表す語。</div>
+      <div class="vocab-example">The underdog team pulled off a stunning upset in the finals.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">eke out a win</div>
+      <div class="vocab-meaning">かろうじて勝利をつかむ</div>
+      <div class="vocab-explanation">候補者が僅差で勝った様子を表す表現。</div>
+      <div class="vocab-example">The senator eked out a win by fewer than a thousand votes.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">out of touch with</div>
+      <div class="vocab-meaning">〜の実情を理解していない</div>
+      <div class="vocab-explanation">一部の民主党員が国民感情とかけ離れていたという批判。</div>
+      <div class="vocab-example">Critics say the executives are out of touch with everyday workers.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">big tent</div>
+      <div class="vocab-meaning">幅広い支持層を取り込む政党の方針</div>
+      <div class="vocab-explanation">民主党が多様な有権者を取り込む必要があるという文脈。</div>
+      <div class="vocab-example">The party is trying to build a big tent to win back moderate voters.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">deplete</div>
+      <div class="vocab-meaning">使い果たす、枯渇させる</div>
+      <div class="vocab-explanation">米軍の兵器備蓄がイラン情勢で消耗していることを表す。</div>
+      <div class="vocab-example">The prolonged conflict has depleted the country's military resources.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">declare victory</div>
+      <div class="vocab-meaning">勝利を宣言する</div>
+      <div class="vocab-explanation">トランプ大統領がホルムズ海峡情勢について勝利宣言をするのではという臆測に関する表現。</div>
+      <div class="vocab-example">The coach declared victory even though the score was still close.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">asymmetric warfare</div>
+      <div class="vocab-meaning">非対称戦</div>
+      <div class="vocab-explanation">イランが小規模な戦力でも米軍に対抗できている理由を説明する軍事用語。</div>
+      <div class="vocab-example">Small militias have used asymmetric warfare tactics against larger armies.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">you can't argue with reality</div>
+      <div class="vocab-meaning">現実には逆らえない</div>
+      <div class="vocab-explanation">いくら勝利を宣言しても、タンカーの通行量減少という事実は変わらないという趣旨の発言。</div>
+      <div class="vocab-example">Sales are down no matter what we say — you can't argue with reality.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">cracking up</div>
+      <div class="vocab-meaning">崩壊しつつある</div>
+      <div class="vocab-explanation">David Brooks氏が既存の政治的イデオロギーが崩れつつあると述べた表現。</div>
+      <div class="vocab-example">The old alliance seems to be cracking up after years of tension.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">sing-along</div>
+      <div class="vocab-meaning">合唱、一緒に歌うこと</div>
+      <div class="vocab-explanation">高齢者施設の朝の恒例行事を表す語。</div>
+      <div class="vocab-example">The camp organized a sing-along around the campfire every night.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">lower one's defenses</div>
+      <div class="vocab-meaning">心を開かせる、警戒心を解かせる</div>
+      <div class="vocab-explanation">音楽が参加者の心理的な壁を下げる効果を説明した専門家の発言。</div>
+      <div class="vocab-example">A friendly conversation can help lower someone's defenses.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">stigma</div>
+      <div class="vocab-meaning">偏見、汚名</div>
+      <div class="vocab-explanation">感情を表に出すことへの文化的な抵抗感を表す語。</div>
+      <div class="vocab-example">There is still a stigma attached to seeking mental health support in some communities.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">exhibit symptoms</div>
+      <div class="vocab-meaning">症状を示す</div>
+      <div class="vocab-explanation">アジア系住民がうつを「言葉」でなく「身体症状」で表す傾向についての発言。</div>
+      <div class="vocab-example">Patients may exhibit symptoms of stress without realizing it.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">cognitive decline</div>
+      <div class="vocab-meaning">認知機能の低下</div>
+      <div class="vocab-explanation">音楽療法が予防を目指す目標の一つ。</div>
+      <div class="vocab-example">Regular social activity may help slow cognitive decline in older adults.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">transferable (goals)</div>
+      <div class="vocab-meaning">(成果が)応用可能な、持ち越せる</div>
+      <div class="vocab-explanation">音楽療法のセッションで身につけたスキルを日常生活に生かすという考え方。</div>
+      <div class="vocab-example">The training program focuses on transferable skills useful in any job.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">scratch the surface</div>
+      <div class="vocab-meaning">表面をなぞる程度、ほんの入り口</div>
+      <div class="vocab-explanation">音楽が脳に与える影響についてまだ研究が始まったばかりだという発言。</div>
+      <div class="vocab-example">Researchers say they have only scratched the surface of this disease.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">formative years</div>
+      <div class="vocab-meaning">人格形成期、多感な時期</div>
+      <div class="vocab-explanation">参加者が若い頃に親しんだ1960〜80年代の中国の歌についての説明。</div>
+      <div class="vocab-example">She spent her formative years in a small coastal town.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">subsidy</div>
+      <div class="vocab-meaning">補助金</div>
+      <div class="vocab-explanation">処方薬の補助制度を指す語。</div>
+      <div class="vocab-example">The government plans to cut the housing subsidy next year.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a year early</div>
+      <div class="vocab-meaning">予定より1年早く</div>
+      <div class="vocab-explanation">補助金制度の打ち切り時期についての表現。</div>
+      <div class="vocab-example">The company ended the promotion a year early due to low demand.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">tune into</div>
+      <div class="vocab-meaning">(番組を)視聴する</div>
+      <div class="vocab-explanation">視聴者に別番組を見るよう呼びかける定型表現。</div>
+      <div class="vocab-example">Be sure to tune into the debate tomorrow night.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">indefinite blockade</div>
+      <div class="vocab-meaning">無期限の封鎖</div>
+      <div class="vocab-explanation">ホルムズ海峡をめぐる今後の展開についての予告表現。</div>
+      <div class="vocab-example">The union threatened an indefinite blockade of the factory.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">check your local listings</div>
+      <div class="vocab-meaning">地域の番組表を確認してください</div>
+      <div class="vocab-explanation">番組の放送時間が地域によって異なることを伝える定型フレーズ。</div>
+      <div class="vocab-example">The show airs at different times in each city, so check your local listings.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">on behalf of</div>
+      <div class="vocab-meaning">〜を代表して</div>
+      <div class="vocab-explanation">キャスターが番組チーム全体を代表して視聴者に感謝を述べる際の表現。</div>
+      <div class="vocab-example">On behalf of the whole team, thank you for your support.</div>
+    </div>
+</div>
+</div>
+<div class="panel vocab-panel" data-date="2026-08-13">
+<div class="vocab-grid">
+
+    <div class="vocab-card">
+      <div class="vocab-word">lay siege to</div>
+      <div class="vocab-meaning">〜を包囲する（動詞句）</div>
+      <div class="vocab-explanation">番組冒頭で、その日最初のトップニュースを予告する際に使われていた。</div>
+      <div class="vocab-example">Enemy forces laid siege to the ancient city for months.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">condemnation</div>
+      <div class="vocab-meaning">非難（名詞）</div>
+      <div class="vocab-explanation">米国大使が入植者の行為を非難したことを予告する際に使われていた。</div>
+      <div class="vocab-example">The attack drew condemnation from world leaders.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">military response</div>
+      <div class="vocab-meaning">軍事的対応（名詞句）</div>
+      <div class="vocab-explanation">イスラエル軍の対応を予告する文脈で使われていた。</div>
+      <div class="vocab-example">The incident triggered a swift military response.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a little-used tool</div>
+      <div class="vocab-meaning">あまり使われてこなかった手段（名詞句）</div>
+      <div class="vocab-explanation">市民権剥奪という手続きの珍しさを表す際に使われていた。</div>
+      <div class="vocab-example">Impeachment remains a little-used tool in most democracies.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">strip A of B</div>
+      <div class="vocab-meaning">AからBを剥奪する（動詞句）</div>
+      <div class="vocab-explanation">帰化市民から市民権を奪う政策を説明する際に使われていた。</div>
+      <div class="vocab-example">The scandal could strip him of his medals.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">incurring steep costs</div>
+      <div class="vocab-meaning">急激なコストを負う（動詞句）</div>
+      <div class="vocab-explanation">トランプ氏の建設事業が納税者に重い負担を強いていることを予告する文脈で使われていた。</div>
+      <div class="vocab-example">The delay ended up incurring steep costs for the company.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">transparent</div>
+      <div class="vocab-meaning">透明性がある（形容詞）</div>
+      <div class="vocab-explanation">建設事業の資金の流れが不透明だという批判の文脈で使われていた。</div>
+      <div class="vocab-example">Voters want the process to be fully transparent.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">accountable</div>
+      <div class="vocab-meaning">説明責任がある（形容詞）</div>
+      <div class="vocab-explanation">同じく資金の流れへの批判の文脈で使われていた。</div>
+      <div class="vocab-example">Elected officials should be accountable to the public.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">side deals</div>
+      <div class="vocab-meaning">裏取引（名詞句）</div>
+      <div class="vocab-explanation">寄付企業と政府の間に不透明な取引があるのではという疑念の文脈で使われていた。</div>
+      <div class="vocab-example">The investigation uncovered several questionable side deals.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">death toll</div>
+      <div class="vocab-meaning">死者数（名詞句）</div>
+      <div class="vocab-explanation">コロンビアの地震のニュースで使われていた。</div>
+      <div class="vocab-example">The death toll from the earthquake continues to rise.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">aftershock</div>
+      <div class="vocab-meaning">余震（名詞）</div>
+      <div class="vocab-explanation">地震後の余震の回数を説明する際に使われていた。</div>
+      <div class="vocab-example">Dozens of aftershocks rattled the region overnight.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">last-ditch effort</div>
+      <div class="vocab-meaning">最後の手段としての努力（名詞句）</div>
+      <div class="vocab-explanation">生存者を捜索する最後の試みを説明する際に使われていた。</div>
+      <div class="vocab-example">Rescuers made a last-ditch effort to reach the trapped miners.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">declared an economic emergency</div>
+      <div class="vocab-meaning">経済非常事態を宣言した（動詞句）</div>
+      <div class="vocab-explanation">コロンビア大統領が地震後に取った措置として説明されていた。</div>
+      <div class="vocab-example">The government declared an economic emergency after the crisis.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a vast undercount</div>
+      <div class="vocab-meaning">実際より大幅に少ない集計（名詞句）</div>
+      <div class="vocab-explanation">行方不明者数の公式発表が実態より少ない可能性を説明する際に使われていた。</div>
+      <div class="vocab-example">Officials admitted the figures were likely a vast undercount.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">sweltering</div>
+      <div class="vocab-meaning">うだるような暑さの（形容詞）</div>
+      <div class="vocab-explanation">ヨーロッパの熱波を描写する際に使われていた。</div>
+      <div class="vocab-example">Tourists struggled through the sweltering summer heat.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">exacerbating</div>
+      <div class="vocab-meaning">悪化させる（動詞のing形）</div>
+      <div class="vocab-explanation">熱波が干ばつや山火事を悪化させていることを説明していた。</div>
+      <div class="vocab-example">Poor drainage is exacerbating the flooding problem.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">flood alerts</div>
+      <div class="vocab-meaning">洪水警報（名詞句）</div>
+      <div class="vocab-explanation">米中西部の洪水被害のニュースで使われていた。</div>
+      <div class="vocab-example">Flood alerts were issued for several counties overnight.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">dispute reports</div>
+      <div class="vocab-meaning">報道内容に反論する（動詞句）</div>
+      <div class="vocab-explanation">国防長官が空母内の士気低下報道を否定した文脈で使われていた。</div>
+      <div class="vocab-example">The company disputed reports of unsafe working conditions.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">morale</div>
+      <div class="vocab-meaning">士気（名詞）</div>
+      <div class="vocab-explanation">空母乗組員の士気低下が報じられた文脈で使われていた。</div>
+      <div class="vocab-example">Team morale improved after the surprise bonus.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">turning a blind eye to A</div>
+      <div class="vocab-meaning">Aを見て見ぬふりする（動詞句）</div>
+      <div class="vocab-explanation">ハーバード大学への訴訟で、大学が反ユダヤ主義を見過ごしたという主張の文脈で使われていた。</div>
+      <div class="vocab-example">Managers were accused of turning a blind eye to the harassment.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">inched up</div>
+      <div class="vocab-meaning">わずかに上昇した（動詞句）</div>
+      <div class="vocab-explanation">株式市場のニュースで、ダウ平均の小幅な上昇を説明する際に使われていた。</div>
+      <div class="vocab-example">The unemployment rate inched up slightly last month.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">cut off water, electricity, and essential supplies</div>
+      <div class="vocab-meaning">水・電気・生活物資を断つ（動詞句）</div>
+      <div class="vocab-explanation">入植者が住居を包囲した際に行った具体的な行為として説明されていた。</div>
+      <div class="vocab-example">The siege cut off water, electricity, and essential supplies for days.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">act of terror</div>
+      <div class="vocab-meaning">テロ行為（名詞句）</div>
+      <div class="vocab-explanation">米国大使が入植者の行動を非難する際に使った強い表現。</div>
+      <div class="vocab-example">The attack was widely condemned as an act of terror.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">swarmed a home</div>
+      <div class="vocab-meaning">家を取り囲んだ（動詞句）</div>
+      <div class="vocab-explanation">大勢の入植者が一斉に家を包囲した様子を描写していた。</div>
+      <div class="vocab-example">Dozens of protesters swarmed the building entrance.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a menacing message</div>
+      <div class="vocab-meaning">脅迫めいたメッセージ（名詞句）</div>
+      <div class="vocab-explanation">焼け残った壁に残された脅迫文を指して使われていた。</div>
+      <div class="vocab-example">Someone left a menacing message spray-painted on the wall.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">besieged</div>
+      <div class="vocab-meaning">包囲された（形容詞・動詞の過去分詞）</div>
+      <div class="vocab-explanation">家族の住居が包囲されている状態を表す語として繰り返し使われていた。</div>
+      <div class="vocab-example">The town remained besieged for nearly a week.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">unprecedented levels</div>
+      <div class="vocab-meaning">前例のない水準（名詞句）</div>
+      <div class="vocab-explanation">国連が入植者による暴力の急増を説明する際に使われていた。</div>
+      <div class="vocab-example">Violence in the region has reached unprecedented levels this year.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">displacing</div>
+      <div class="vocab-meaning">住居を追われさせる（動詞のing形）</div>
+      <div class="vocab-explanation">入植者の攻撃によってパレスチナ人が住居を追われている現状を説明していた。</div>
+      <div class="vocab-example">The flooding ended up displacing thousands of families.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">juvenile delinquents</div>
+      <div class="vocab-meaning">非行少年（名詞句）</div>
+      <div class="vocab-explanation">イスラエル首相が入植者の行為を矮小化して呼んだ際の表現。</div>
+      <div class="vocab-example">The mayor downplayed the vandalism as the work of juvenile delinquents.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">vigilantism</div>
+      <div class="vocab-meaning">私的制裁（名詞）</div>
+      <div class="vocab-explanation">首相が入植者による自警的な暴力を否定する文脈で使われていた。</div>
+      <div class="vocab-example">The government said it would not tolerate vigilantism of any kind.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a rare rebuke</div>
+      <div class="vocab-meaning">異例の叱責（名詞句）</div>
+      <div class="vocab-explanation">米国大使が同盟国イスラエルを公に批判したことの異例さを表していた。</div>
+      <div class="vocab-example">The senator issued a rare rebuke of his own party's leadership.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">reprehensible</div>
+      <div class="vocab-meaning">非難に値する（形容詞）</div>
+      <div class="vocab-explanation">イスラエル軍自身が入植者の行為をこの語で説明していた。</div>
+      <div class="vocab-example">The court called the defendant's conduct reprehensible.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">dismantled the outposts</div>
+      <div class="vocab-meaning">前哨基地を解体した（動詞句）</div>
+      <div class="vocab-explanation">イスラエル軍が違法な入植地の前哨基地を撤去した措置として言及されていた。</div>
+      <div class="vocab-example">Authorities dismantled the illegal outposts within days.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a terrifying moment</div>
+      <div class="vocab-meaning">恐ろしい瞬間（名詞句）</div>
+      <div class="vocab-explanation">家族が包囲された瞬間を振り返るインタビューで使われていた。</div>
+      <div class="vocab-example">Losing sight of her son in the crowd was a terrifying moment.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">fearing for his life</div>
+      <div class="vocab-meaning">命の危険を感じて（分詞句）</div>
+      <div class="vocab-explanation">兄が弟の安否を心配していた様子を説明する文脈で使われていた。</div>
+      <div class="vocab-example">He called 911, fearing for his life.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">banned from accessing food and medicine</div>
+      <div class="vocab-meaning">食料や薬の入手を禁じられた（動詞句）</div>
+      <div class="vocab-explanation">包囲された家族が受けていた制限を説明する際に使われていた。</div>
+      <div class="vocab-example">Residents were banned from accessing the flooded area.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a closed military area</div>
+      <div class="vocab-meaning">立入禁止の軍事区域（名詞句）</div>
+      <div class="vocab-explanation">家族が住む地域が軍によって封鎖されていたことを説明していた。</div>
+      <div class="vocab-example">The border town was declared a closed military area.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">constantly surrounded</div>
+      <div class="vocab-meaning">常に取り囲まれている（形容詞句）</div>
+      <div class="vocab-explanation">家族が常に入植者に囲まれている恐怖を語る場面で使われていた。</div>
+      <div class="vocab-example">She felt constantly surrounded by reporters after the incident.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">intimidate and harass</div>
+      <div class="vocab-meaning">脅し、嫌がらせをする（動詞句）</div>
+      <div class="vocab-explanation">米国大使が入植者の行為を非難した際の表現として使われていた。</div>
+      <div class="vocab-example">The group was accused of trying to intimidate and harass witnesses.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">implemented</div>
+      <div class="vocab-meaning">実行に移される（動詞の過去分詞）</div>
+      <div class="vocab-explanation">口先だけでなく実際の行動が伴うべきだ、という文脈で使われていた。</div>
+      <div class="vocab-example">The new policy has not yet been fully implemented.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">subject to settler violence</div>
+      <div class="vocab-meaning">入植者による暴力の対象となる（形容詞句）</div>
+      <div class="vocab-explanation">他のパレスチナ系アメリカ人も同様の暴力の対象になっていることを説明していた。</div>
+      <div class="vocab-example">Several villages remain subject to ongoing violence.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">scaffolding</div>
+      <div class="vocab-meaning">足場（名詞）</div>
+      <div class="vocab-explanation">ワシントンD.C.の工事現場の様子を描写する際に使われていた。</div>
+      <div class="vocab-example">The old building is covered in scaffolding during renovation.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">bulldozing</div>
+      <div class="vocab-meaning">重機で取り壊す（動詞のing形）</div>
+      <div class="vocab-explanation">ホワイトハウス東棟の解体工事を説明する際に使われていた。</div>
+      <div class="vocab-example">Workers spent the week bulldozing the old parking structure.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a signature priority</div>
+      <div class="vocab-meaning">看板政策（名詞句）</div>
+      <div class="vocab-explanation">大統領が最重要視している建設事業を指して使われていた。</div>
+      <div class="vocab-example">Tax reform became the senator's signature priority.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">redirected taxpayer dollars</div>
+      <div class="vocab-meaning">税金の使途を切り替えた（動詞句）</div>
+      <div class="vocab-explanation">政府資金がホワイトハウスの改修事業に回された経緯を説明していた。</div>
+      <div class="vocab-example">The city redirected taxpayer dollars toward the new stadium project.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">funneled through A</div>
+      <div class="vocab-meaning">Aを経由して流された（動詞句）</div>
+      <div class="vocab-explanation">寄付金が特定の非営利団体を経由して集められていたことを説明していた。</div>
+      <div class="vocab-example">Donations were funneled through a small charitable trust.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a watchdog group</div>
+      <div class="vocab-meaning">監視団体（名詞句）</div>
+      <div class="vocab-explanation">政府の透明性を監視する団体を指して使われていた。</div>
+      <div class="vocab-example">A watchdog group filed a lawsuit demanding more transparency.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">preferential treatment</div>
+      <div class="vocab-meaning">優遇措置（名詞句）</div>
+      <div class="vocab-explanation">寄付企業が政府契約で優遇されていないかという疑惑の文脈で使われていた。</div>
+      <div class="vocab-example">The company denied receiving any preferential treatment.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">shake down donors</div>
+      <div class="vocab-meaning">寄付者から資金を引き出す（口語的動詞句、やや強引なニュアンス）</div>
+      <div class="vocab-explanation">大統領が寄付を集める手法を批判的に表現する際に使われていた。</div>
+      <div class="vocab-example">Critics accused the campaign of trying to shake down big donors.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">butter up donors</div>
+      <div class="vocab-meaning">寄付者にこびへつらう（口語的動詞句）</div>
+      <div class="vocab-explanation">同じく資金集めの手法を批判する文脈で使われていた。</div>
+      <div class="vocab-example">He spent the evening buttering up potential investors.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">evade scrutiny and accountability</div>
+      <div class="vocab-meaning">監視と説明責任を逃れる（動詞句）</div>
+      <div class="vocab-explanation">不透明な資金の流れが批判されている理由として使われていた。</div>
+      <div class="vocab-example">The scheme was designed to evade scrutiny and accountability.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">no-bid contracts</div>
+      <div class="vocab-meaning">入札なしの契約（名詞句）</div>
+      <div class="vocab-explanation">工事契約が競争入札なしで結ばれたことへの批判で使われていた。</div>
+      <div class="vocab-example">The audit criticized the agency for awarding no-bid contracts.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a price tag</div>
+      <div class="vocab-meaning">かかる費用（名詞句）</div>
+      <div class="vocab-explanation">建設事業の総額を表す際に繰り返し使われていた。</div>
+      <div class="vocab-example">The renovation carries a price tag of over $16 million.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">denaturalization</div>
+      <div class="vocab-meaning">市民権剥奪（名詞）</div>
+      <div class="vocab-explanation">帰化市民から市民権を剥奪する司法手続きを指す語として、専門家インタビューで繰り返し使われていた。</div>
+      <div class="vocab-example">The government rarely pursues denaturalization except in extreme cases.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">an end goal in itself</div>
+      <div class="vocab-meaning">それ自体が目的（名詞句）</div>
+      <div class="vocab-explanation">市民権剥奪が政策の手段ではなく目的化している、という批判の文脈で使われていた。</div>
+      <div class="vocab-example">For some, winning became an end goal in itself.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a political tool</div>
+      <div class="vocab-meaning">政治的な道具（名詞句）</div>
+      <div class="vocab-explanation">法的手続きが政治的な目的で使われているという批判の文脈で使われていた。</div>
+      <div class="vocab-example">Critics say the investigation is being used as a political tool.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">incredibly rare</div>
+      <div class="vocab-meaning">非常に稀（形容詞句）</div>
+      <div class="vocab-explanation">市民権剥奪が歴史的にほとんど例のない手続きだったことを説明する際に使われていた。</div>
+      <div class="vocab-example">Such a diagnosis is incredibly rare in young patients.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">national security interests</div>
+      <div class="vocab-meaning">国家安全保障上の利益（名詞句）</div>
+      <div class="vocab-explanation">過去の市民権剥奪事例が正当化された理由として言及されていた。</div>
+      <div class="vocab-example">The policy was defended on the grounds of national security interests.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">weaponized</div>
+      <div class="vocab-meaning">武器として使われる（形容詞・動詞の過去分詞）</div>
+      <div class="vocab-explanation">法的手続きが政治的攻撃の手段として使われているという批判で使われていた。</div>
+      <div class="vocab-example">Data privacy laws should not be weaponized against journalists.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a realistic proposition</div>
+      <div class="vocab-meaning">現実的な話（名詞句）</div>
+      <div class="vocab-explanation">ある個人の市民権剥奪が実現可能かどうかを議論する文脈で使われていた。</div>
+      <div class="vocab-example">Retiring at 40 isn't a realistic proposition for most people.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">materiality</div>
+      <div class="vocab-meaning">重要性（法的因果関係を左右する事実かどうか、名詞）</div>
+      <div class="vocab-explanation">市民権剥奪裁判で虚偽申告が結果に影響したかを問う法律用語として使われていた。</div>
+      <div class="vocab-example">The court focused on the materiality of the false statement.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a misstatement</div>
+      <div class="vocab-meaning">虚偽の申告（名詞）</div>
+      <div class="vocab-explanation">帰化申請時の虚偽記載を指す語として使われていた。</div>
+      <div class="vocab-example">The error was later found to be an innocent misstatement, not fraud.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">adjudicates</div>
+      <div class="vocab-meaning">裁定する（動詞）</div>
+      <div class="vocab-explanation">市民権剥奪の裁判がどの機関で判断されるかを説明する文脈で使われていた。</div>
+      <div class="vocab-example">A federal court adjudicates disputes like this one.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">removal proceeding</div>
+      <div class="vocab-meaning">国外退去手続き（名詞句）</div>
+      <div class="vocab-explanation">市民権を失った後に続く可能性のある手続きとして言及されていた。</div>
+      <div class="vocab-example">She was placed in removal proceedings after her visa expired.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">synthesize</div>
+      <div class="vocab-meaning">統合してまとめる（動詞）</div>
+      <div class="vocab-explanation">北極圏の研究成果を一つの報告書にまとめる作業を表す語として使われていた。</div>
+      <div class="vocab-example">The report synthesizes years of climate data into one summary.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">scrambling to do</div>
+      <div class="vocab-meaning">大慌てで〜しようとする（動詞句）</div>
+      <div class="vocab-explanation">資金打ち切りを受けて科学者たちが対応に追われている様子を表していた。</div>
+      <div class="vocab-example">The team was scrambling to finish the report before the deadline.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">curtail</div>
+      <div class="vocab-meaning">切り詰める、縮小する（動詞）</div>
+      <div class="vocab-explanation">政権による気候研究への予算縮小を表す語として使われていた。</div>
+      <div class="vocab-example">The company was forced to curtail its research spending.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">plagued with misinformation</div>
+      <div class="vocab-meaning">誤情報に満ちていると批判される（形容詞句）</div>
+      <div class="vocab-explanation">政権側が気候報告書を批判する際の言い回しとして使われていた。</div>
+      <div class="vocab-example">The debate has been plagued with misinformation online.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">bridging the gap</div>
+      <div class="vocab-meaning">隔たりを埋める（動詞句）</div>
+      <div class="vocab-explanation">専門的な生データと一般の理解との間を埋める役割を説明する際に使われていた。</div>
+      <div class="vocab-example">The workshop aims at bridging the gap between theory and practice.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">permafrost</div>
+      <div class="vocab-meaning">永久凍土（名詞）</div>
+      <div class="vocab-explanation">北極圏の環境変化を説明する専門用語として使われていた。</div>
+      <div class="vocab-example">Melting permafrost is releasing greenhouse gases once trapped in the ice.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">geopolitical tensions</div>
+      <div class="vocab-meaning">地政学的緊張（名詞句）</div>
+      <div class="vocab-explanation">北極圏の変化が国際関係に及ぼす影響として言及されていた。</div>
+      <div class="vocab-example">Geopolitical tensions in the region have risen sharply.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">dismantled the research center</div>
+      <div class="vocab-meaning">研究センターを解体した（動詞句）</div>
+      <div class="vocab-explanation">政権が気候研究機関を廃止した措置を説明する文脈で使われていた。</div>
+      <div class="vocab-example">The new administration quietly dismantled the research center.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">direct observations</div>
+      <div class="vocab-meaning">直接観測（名詞句）</div>
+      <div class="vocab-explanation">推測ではなく実測データに基づく報告であることを強調する際に使われていた。</div>
+      <div class="vocab-example">The study relies on direct observations rather than models.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">peer-reviewed</div>
+      <div class="vocab-meaning">査読を経た（形容詞）</div>
+      <div class="vocab-explanation">報告書の科学的信頼性を強調する際に使われていた。</div>
+      <div class="vocab-example">The findings were published in a peer-reviewed journal.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">environmental intelligence</div>
+      <div class="vocab-meaning">環境に関する情報・知見（名詞句）</div>
+      <div class="vocab-explanation">政策決定に役立つ環境データの重要性を説明する際に使われていた。</div>
+      <div class="vocab-example">Policymakers rely on environmental intelligence to plan for the future.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a calf</div>
+      <div class="vocab-meaning">動物の赤ちゃん（名詞、特に子ゾウなど）</div>
+      <div class="vocab-explanation">国立動物園で生まれた子ゾウLinh Maiを指して使われていた。</div>
+      <div class="vocab-example">The zoo welcomed a healthy elephant calf last spring.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">vulnerable</div>
+      <div class="vocab-meaning">脆弱な、かかりやすい（形容詞）</div>
+      <div class="vocab-explanation">子ゾウがウイルス性疾患にかかりやすいことを説明する文脈。</div>
+      <div class="vocab-example">Newborns are especially vulnerable to infection.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">latent</div>
+      <div class="vocab-meaning">潜伏している（形容詞）</div>
+      <div class="vocab-explanation">ウイルスが症状を出さずに体内に潜んでいる状態を説明していた。</div>
+      <div class="vocab-example">The virus can remain latent in the body for years.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">trunk-to-trunk contact</div>
+      <div class="vocab-meaning">鼻と鼻の接触（名詞句）</div>
+      <div class="vocab-explanation">象の間でウイルスが感染する経路として説明されていた。</div>
+      <div class="vocab-example">Researchers believe the disease spreads through trunk-to-trunk contact.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">an insidious disease</div>
+      <div class="vocab-meaning">気づかぬうちに進行する病気（名詞句）</div>
+      <div class="vocab-explanation">EEHVという象のウイルス性疾患を形容する際に使われていた。</div>
+      <div class="vocab-example">Diabetes can be an insidious disease if left unmonitored.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">antibodies</div>
+      <div class="vocab-meaning">抗体（名詞）</div>
+      <div class="vocab-explanation">子ゾウが母親から受け継ぐ免疫の話で使われていた。</div>
+      <div class="vocab-example">Breastfeeding passes protective antibodies to the baby.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a syringe</div>
+      <div class="vocab-meaning">注射器（名詞）</div>
+      <div class="vocab-explanation">獣医が子ゾウにウイルスサンプルを投与する手技の説明で使われていた。</div>
+      <div class="vocab-example">The nurse prepared a syringe for the vaccination.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">cracking that nut</div>
+      <div class="vocab-meaning">その難題を解決すること（イディオム）</div>
+      <div class="vocab-explanation">治療法の確立という難題に取り組む姿勢を表す口語表現として使われていた。</div>
+      <div class="vocab-example">Scientists have spent decades cracking that nut.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a rocky start</div>
+      <div class="vocab-meaning">波乱含みのスタート（名詞句）</div>
+      <div class="vocab-explanation">子ゾウが生まれた直後、母親との関係がうまくいかなかったことを表していた。</div>
+      <div class="vocab-example">The project had a rocky start but improved over time.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">pack on the pounds</div>
+      <div class="vocab-meaning">体重を増やす（口語表現）</div>
+      <div class="vocab-explanation">子ゾウが順調に体重を増やしている様子を表す表現として使われていた。</div>
+      <div class="vocab-example">The puppy has really packed on the pounds this year.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">an integral member</div>
+      <div class="vocab-meaning">欠かせない一員（名詞句）</div>
+      <div class="vocab-explanation">子ゾウが将来的に群れの重要な一員になることを期待する文脈で使われていた。</div>
+      <div class="vocab-example">She quickly became an integral member of the team.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">marries a blend of A and B</div>
+      <div class="vocab-meaning">AとBを融合させる（動詞句）</div>
+      <div class="vocab-explanation">音楽コーナーで、兄弟デュオの音楽性を紹介する際に使われていた。</div>
+      <div class="vocab-example">Her new novel marries a blend of memoir and fiction.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a forthcoming album</div>
+      <div class="vocab-meaning">近日発売のアルバム（名詞句）</div>
+      <div class="vocab-explanation">ミュージシャンへのインタビューで、新作アルバムを指して使われていた。</div>
+      <div class="vocab-example">Fans are eagerly waiting for details about the band's forthcoming album.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">command a certain stillness</div>
+      <div class="vocab-meaning">独特の静けさを生み出す（動詞句）</div>
+      <div class="vocab-explanation">演奏が観客に与える独特な雰囲気を表す言い回しとして使われていた。</div>
+      <div class="vocab-example">A great orator can command a certain stillness in a crowded room.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">instill</div>
+      <div class="vocab-meaning">（価値観などを）植え付ける（動詞）</div>
+      <div class="vocab-explanation">教育者が生徒に自己肯定感を教える文脈で使われていた。</div>
+      <div class="vocab-example">Good teachers instill a love of learning in their students.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">self-esteem</div>
+      <div class="vocab-meaning">自己肯定感（名詞）</div>
+      <div class="vocab-explanation">アート教育の効果として言及されていた。</div>
+      <div class="vocab-example">Winning the competition gave her a real boost in self-esteem.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">a core memory</div>
+      <div class="vocab-meaning">心に残る原体験（名詞句）</div>
+      <div class="vocab-explanation">生徒が写真を撮られた経験を振り返る場面で使われていた。</div>
+      <div class="vocab-example">Our first family trip abroad became a core memory for me.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">redlining</div>
+      <div class="vocab-meaning">レッドライニング（人種を理由にした住宅融資差別の歴史的慣行、名詞）</div>
+      <div class="vocab-explanation">アーティストの作品シリーズの背景として説明されていた。</div>
+      <div class="vocab-example">The documentary examines how redlining shaped many American cities.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">hazardous</div>
+      <div class="vocab-meaning">危険とみなされる（形容詞）</div>
+      <div class="vocab-explanation">redliningの文脈で、特定地域が「危険」と分類されていたことを説明する際に使われていた。</div>
+      <div class="vocab-example">The area was once labeled hazardous by lenders for unfair reasons.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">undervalued</div>
+      <div class="vocab-meaning">過小評価される（形容詞）</div>
+      <div class="vocab-explanation">同じくredliningの文脈で、地域の資産価値が不当に低く見積もられたことを表していた。</div>
+      <div class="vocab-example">Properties in the neighborhood were long undervalued by banks.</div>
+    </div>
+
+    <div class="vocab-card">
+      <div class="vocab-word">at a disadvantage</div>
+      <div class="vocab-meaning">不利な立場に（副詞句）</div>
+      <div class="vocab-explanation">資金の少ない学区が置かれている状況を説明する際に使われていた。</div>
+      <div class="vocab-example">Students without internet access are at a disadvantage in remote learning.</div>
+    </div>
+</div>
+</div>
+  </div>
+</main>
+
+<footer>YouTubeの英語字幕全文を読み込み、内容を自分の言葉で要約・解説したものです。逐語的な書き起こしではありません。</footer>
+
 <script>
-  (function () {
-    "use strict";
+(function () {
+  var modeBtns = document.querySelectorAll('.mode-btn');
+  var dateTabs = document.querySelectorAll('.date-tab');
+  var panelGroups = document.querySelectorAll('.panel-group');
 
-    var STORAGE_KEY = "pbs-guide-state";
+  var currentMode = 'guide';
+  var currentDate = document.querySelector('.date-tab.active').dataset.date;
 
-    function el(tag, className, html) {
-      var e = document.createElement(tag);
-      if (className) e.className = className;
-      if (html !== undefined) e.innerHTML = html;
-      return e;
-    }
-
-    function renderVocab(containerId, items) {
-      var ul = document.getElementById(containerId);
-      if (!ul) return;
-      var frag = document.createDocumentFragment();
-      items.forEach(function (item, i) {
-        var li = el("li", "vcard");
-        li.appendChild(el("span", "idx", String(i + 1).padStart(3, "0")));
-        var word = el("div", "word", "<b>" + item[0] + "</b> <span class=\"mean\">" + item[1] + "</span>");
-        li.appendChild(word);
-        li.appendChild(el("p", "exp", item[2]));
-        li.appendChild(el("p", "ex", item[3]));
-        frag.appendChild(li);
-      });
-      ul.appendChild(frag);
-    }
-
-    var VOCAB_0814 = [
-      ["are away", "不在にしている、休みを取っている", "冒頭で共同キャスター2人が休みであることを説明する際に使われた表現。", "The regular host is away this week, so a guest anchor is filling in."],
-      ["shooting death", "銃撃による死", "Mangioneが起訴されている「CEOの銃撃死」という事件を指して使われた。", "The shooting death of the executive shocked the business community."],
-      ["dismiss concerns", "懸念を一蹴する", "トランプ大統領が空母の状況への懸念を軽視した態度を表す。", "The company dismissed concerns about safety and continued production."],
-      ["long-deployed", "長期間配備されている", "通常より長く海上に展開している空母を形容する語。", "The long-deployed unit was finally scheduled to return home next month."],
-      ["jump overboard", "船から飛び降りる", "空母の水兵が船外に飛び込もうとしたという報道に関連。", "A passenger reportedly tried to jump overboard during the storm."],
-      ["death toll", "死亡者数", "コンゴのエボラ流行に関する死者数の文脈で使用。", "The death toll from the flood continues to rise."],
-      ["stem the flow of", "〜の流れを食い止める", "ギリシャが移民の流入を抑えようとする取り組みを表す。", "The new policy aims to stem the flow of illegal weapons across the border."],
-      ["demolish safeguards", "安全策を骨抜きにする", "ギリシャ難民評議会の担当者が、庇護申請手続きの保護策が失われつつあると述べた表現。", "Critics say the new law demolishes safeguards meant to protect workers."],
-      ["plead guilty", "罪を認める", "Mangioneが連邦裁判所で有罪の答弁をしたことを説明する中核表現。", "The defendant decided to plead guilty in exchange for a reduced sentence."],
-      ["stalking", "つきまとい、ストーカー行為", "起訴内容の一つで、Thompson氏を尾行・監視していた行為を指す。", "He was charged with stalking after repeatedly following his former colleague."],
-      ["double jeopardy", "二重処罰の禁止、一事不再理", "同一の犯罪行為について二度裁判にかけられないという憲法上の保護。弁護側がこれを根拠に州の裁判の棄却を求めている。", "Her lawyer argued that a second trial would violate the principle of double jeopardy."],
-      ["show no remorse", "反省の色を見せない", "法廷でのMangioneの態度を表す表現。", "The convicted man showed no remorse during his sentencing hearing."],
-      ["motion to dismiss", "却下を求める申立て", "弁護側が州の裁判の取り下げを求めて提出した法的文書。", "The lawyers filed a motion to dismiss the case on procedural grounds."],
-      ["in stark contrast to", "〜とは対照的に", "Mangioneが投資家を装って連絡した際の迅速な対応と、患者としての保険会社とのやり取りの遅さを比較した発言。", "The warm welcome was in stark contrast to how they had treated us before."],
-      ["posing as", "〜になりすまして", "Mangioneが投資家を装って会社の会議日程を調べた手口を表す。", "The scammer e-mailed the company posing as a government official."],
-      ["dismissive", "軽視する態度の", "トランプ大統領やヘグセス長官の反応を形容する語。", "He gave a dismissive response when asked about the criticism."],
-      ["swift backlash", "素早い反発", "大統領の発言に対する議員らの反応を表す。", "The announcement triggered swift backlash from environmental groups."],
-      ["shortages of", "〜の不足", "空母内の食料や衛生用品の不足を説明する際に使われた。", "The region is experiencing severe shortages of clean water."],
-      ["town hall", "タウンホール、住民・関係者との対話集会", "家族らが軍幹部にメンタルヘルスへの懸念を訴えた集会の形式。", "The mayor held a town hall to address residents' concerns."],
-      ["dig deep", "力を振り絞る", "海軍幹部が乗員に「頑張ってほしい」という趣旨で使った表現。", "The team had to dig deep to finish the project on time."],
-      ["resupply", "再補給する", "空母への物資補給に関する語で、この回のキーワードの一つ。", "The ship needed to resupply before continuing its mission."],
-      ["logistics model", "補給の仕組み、兵站モデル", "元海軍幹部が中東での補給体制の変化を説明する際に使った語。", "The company redesigned its logistics model to reduce delivery times."],
-      ["weigh on", "〜に重くのしかかる、悪影響を与える", "長期展開が乗員とその家族の心理面に与える影響を表す。", "The uncertainty about the merger weighed on employees for months."],
-      ["break records", "記録を更新する", "ヨーロッパの熱波の深刻さを表す表現。", "Temperatures broke records across the country this summer."],
-      ["engulf", "〜を飲み込む、包み込む", "英国での山火事が家屋を焼き尽くす様子を表す。", "Flames quickly engulfed the abandoned warehouse."],
-      ["flood watch", "洪水注意報", "米中西部で発令されていた警報の種類。", "A flood watch remains in effect for the entire county."],
-      ["recede", "(水位などが)引く、後退する", "洪水の水位が徐々に下がっていく様子を表す。", "The floodwaters slowly began to recede after the rain stopped."],
-      ["strengthen into a hurricane", "発達してハリケーンになる", "ハワイに接近する熱帯嵐Lalaについての表現。", "The storm is expected to strengthen into a hurricane by the weekend."],
-      ["regain one's seat", "議席を取り戻す", "Nigel Farage氏が補欠選挙で議席に返り咲いたことを表す。", "The incumbent regained her seat after a narrow recount."],
-      ["claim responsibility", "犯行声明を出す", "誘拐事件について「どの武装集団も犯行を認めていない」という文脈で使われた否定形。", "No group has claimed responsibility for the attack so far."],
-      ["heist", "強盗、窃盗事件", "イタリアでの美術品盗難事件を指す語。", "Police are still investigating the museum heist from last spring."],
-      ["edge back from", "(高値などから)わずかに後退する", "S&P500が過去最高値からわずかに下落したことを表す株式市場の表現。", "Shares edged back from their record high on Friday."],
-      ["confirmed cases", "確認された感染者数", "エボラの感染者数を報じる際の定型表現。", "The number of confirmed cases doubled within two weeks."],
-      ["sound the alarm", "警鐘を鳴らす", "WHO事務局長が流行の深刻さを訴える様子を表す。", "Scientists have been sounding the alarm about rising sea levels for years."],
-      ["on track to", "〜する見込みである", "今回の流行が過去最悪の流行を上回るペースにあることを表す。", "The project is on track to finish ahead of schedule."],
-      ["fragmented (medical) system", "分断された(医療)体制", "コンゴの医療インフラの脆弱さを表す語。", "A fragmented health system made the response slower and less effective."],
-      ["walk off the job", "職場放棄をする、ストライキで仕事を離れる", "未払い賃金に抗議して医療従事者が働くのをやめたことを表す。", "Dozens of workers walked off the job to protest unsafe conditions."],
-      ["put one's life in danger", "命を危険にさらす", "看護師が感染リスクを負いながら働いていることを述べた発言。", "Firefighters put their lives in danger every time they enter a burning building."],
-      ["hinder", "妨げる", "紛争が人道支援を妨げていることを表す国連職員の発言。", "Heavy snow hindered the rescue efforts."],
-      ["spiral out of control", "制御不能なほど悪化する", "疫学者がコンゴの流行の広がり方を説明した際の表現。", "The situation spiraled out of control within just a few days."],
-      ["contact tracing", "接触者追跡", "感染者の接触者を特定し隔離する公衆衛生上の手法。", "Contact tracing helped health officials contain the outbreak early on."],
-      ["get in front of (a problem)", "問題の先手を打つ", "疫学者がエボラ対応で「後手に回らないこと」の重要性を語った表現。", "The city needs to get in front of the housing crisis before it worsens."],
-      ["inundate", "押し寄せる、殺到する", "SNS上に渡航を美化する動画が大量に投稿されている様子を表す。", "Social media was inundated with videos praising the risky crossing."],
-      ["perils of", "〜の危険", "地中海横断の危険性を指す表現。", "The documentary highlighted the perils of the desert crossing."],
-      ["self-congratulatory", "自画自賛的な", "渡航に成功した若者たちがSNSに投稿するメッセージのトーンを表す。", "His self-congratulatory speech annoyed several colleagues."],
-      ["deterrent", "抑止力", "EUが移民の流入を防ぐための有効な手段をまだ見つけられていないという文脈。", "Higher fines are meant to serve as a deterrent to speeding."],
-      ["pushback", "(国境での)追い返し", "庇護を申請する前に移民を強制的に送り返す行為を指す専門用語。", "Human rights groups have documented illegal pushbacks at the border."],
-      ["undermine", "損なう、弱体化させる", "プッシュバックがギリシャの法治国家としての評判を傷つけているという批判。", "The scandal undermined public trust in the institution."],
-      ["grant asylum", "庇護を認める", "ギリシャが正式に難民を受け入れる際の表現。", "The country granted asylum to thousands of refugees last year."],
-      ["flagrantly violate", "露骨に違反する", "難民支援団体代表が、政策が法的枠組みを無視していると批判した発言。", "The company flagrantly violated safety regulations for years."],
-      ["persecuted", "迫害されている", "貧しく虐げられた人々が新たなルートを探し続ける理由を説明する文脈。", "Many refugees flee because they are persecuted for their beliefs."],
-      ["upset", "番狂わせ、大方の予想を覆す結果", "ウィスコンシン州予備選での意外な結果を表す語。", "The underdog team pulled off a stunning upset in the finals."],
-      ["eke out a win", "かろうじて勝利をつかむ", "候補者が僅差で勝った様子を表す表現。", "The senator eked out a win by fewer than a thousand votes."],
-      ["out of touch with", "〜の実情を理解していない", "一部の民主党員が国民感情とかけ離れていたという批判。", "Critics say the executives are out of touch with everyday workers."],
-      ["big tent", "幅広い支持層を取り込む政党の方針", "民主党が多様な有権者を取り込む必要があるという文脈。", "The party is trying to build a big tent to win back moderate voters."],
-      ["deplete", "使い果たす、枯渇させる", "米軍の兵器備蓄がイラン情勢で消耗していることを表す。", "The prolonged conflict has depleted the country's military resources."],
-      ["declare victory", "勝利を宣言する", "トランプ大統領がホルムズ海峡情勢について勝利宣言をするのではという臆測に関する表現。", "The coach declared victory even though the score was still close."],
-      ["asymmetric warfare", "非対称戦", "イランが小規模な戦力でも米軍に対抗できている理由を説明する軍事用語。", "Small militias have used asymmetric warfare tactics against larger armies."],
-      ["you can't argue with reality", "現実には逆らえない", "いくら勝利を宣言しても、タンカーの通行量減少という事実は変わらないという趣旨の発言。", "Sales are down no matter what we say — you can't argue with reality."],
-      ["cracking up", "崩壊しつつある", "David Brooks氏が既存の政治的イデオロギーが崩れつつあると述べた表現。", "The old alliance seems to be cracking up after years of tension."],
-      ["sing-along", "合唱、一緒に歌うこと", "高齢者施設の朝の恒例行事を表す語。", "The camp organized a sing-along around the campfire every night."],
-      ["lower one's defenses", "心を開かせる、警戒心を解かせる", "音楽が参加者の心理的な壁を下げる効果を説明した専門家の発言。", "A friendly conversation can help lower someone's defenses."],
-      ["stigma", "偏見、汚名", "感情を表に出すことへの文化的な抵抗感を表す語。", "There is still a stigma attached to seeking mental health support in some communities."],
-      ["exhibit symptoms", "症状を示す", "アジア系住民がうつを「言葉」でなく「身体症状」で表す傾向についての発言。", "Patients may exhibit symptoms of stress without realizing it."],
-      ["cognitive decline", "認知機能の低下", "音楽療法が予防を目指す目標の一つ。", "Regular social activity may help slow cognitive decline in older adults."],
-      ["transferable (goals)", "(成果が)応用可能な、持ち越せる", "音楽療法のセッションで身につけたスキルを日常生活に生かすという考え方。", "The training program focuses on transferable skills useful in any job."],
-      ["scratch the surface", "表面をなぞる程度、ほんの入り口", "音楽が脳に与える影響についてまだ研究が始まったばかりだという発言。", "Researchers say they have only scratched the surface of this disease."],
-      ["formative years", "人格形成期、多感な時期", "参加者が若い頃に親しんだ1960〜80年代の中国の歌についての説明。", "She spent her formative years in a small coastal town."],
-      ["subsidy", "補助金", "処方薬の補助制度を指す語。", "The government plans to cut the housing subsidy next year."],
-      ["a year early", "予定より1年早く", "補助金制度の打ち切り時期についての表現。", "The company ended the promotion a year early due to low demand."],
-      ["tune into", "(番組を)視聴する", "視聴者に別番組を見るよう呼びかける定型表現。", "Be sure to tune into the debate tomorrow night."],
-      ["indefinite blockade", "無期限の封鎖", "ホルムズ海峡をめぐる今後の展開についての予告表現。", "The union threatened an indefinite blockade of the factory."],
-      ["check your local listings", "地域の番組表を確認してください", "番組の放送時間が地域によって異なることを伝える定型フレーズ。", "The show airs at different times in each city, so check your local listings."],
-      ["on behalf of", "〜を代表して", "キャスターが番組チーム全体を代表して視聴者に感謝を述べる際の表現。", "On behalf of the whole team, thank you for your support."]
-    ];
-
-    var VOCAB_0813 = [
-      ["lay siege to", "〜を包囲する(動詞句)", "番組冒頭で、その日最初のトップニュースを予告する際に使われていた。", "Enemy forces laid siege to the ancient city for months."],
-      ["condemnation", "非難(名詞)", "米国大使が入植者の行為を非難したことを予告する際に使われていた。", "The attack drew condemnation from world leaders."],
-      ["military response", "軍事的対応(名詞句)", "イスラエル軍の対応を予告する文脈で使われていた。", "The incident triggered a swift military response."],
-      ["a little-used tool", "あまり使われてこなかった手段(名詞句)", "市民権剥奪という手続きの珍しさを表す際に使われていた。", "Impeachment remains a little-used tool in most democracies."],
-      ["strip A of B", "AからBを剥奪する(動詞句)", "帰化市民から市民権を奪う政策を説明する際に使われていた。", "The scandal could strip him of his medals."],
-      ["incurring steep costs", "急激なコストを負う(動詞句)", "トランプ氏の建設事業が納税者に重い負担を強いていることを予告する文脈で使われていた。", "The delay ended up incurring steep costs for the company."],
-      ["transparent", "透明性がある(形容詞)", "建設事業の資金の流れが不透明だという批判の文脈で使われていた。", "Voters want the process to be fully transparent."],
-      ["accountable", "説明責任がある(形容詞)", "同じく資金の流れへの批判の文脈で使われていた。", "Elected officials should be accountable to the public."],
-      ["side deals", "裏取引(名詞句)", "寄付企業と政府の間に不透明な取引があるのではという疑念の文脈で使われていた。", "The investigation uncovered several questionable side deals."],
-      ["death toll", "死者数(名詞句)", "コロンビアの地震のニュースで使われていた。", "The death toll from the earthquake continues to rise."],
-      ["aftershock", "余震(名詞)", "地震後の余震の回数を説明する際に使われていた。", "Dozens of aftershocks rattled the region overnight."],
-      ["last-ditch effort", "最後の手段としての努力(名詞句)", "生存者を捜索する最後の試みを説明する際に使われていた。", "Rescuers made a last-ditch effort to reach the trapped miners."],
-      ["declared an economic emergency", "経済非常事態を宣言した(動詞句)", "コロンビア大統領が地震後に取った措置として説明されていた。", "The government declared an economic emergency after the crisis."],
-      ["a vast undercount", "実際より大幅に少ない集計(名詞句)", "行方不明者数の公式発表が実態より少ない可能性を説明する際に使われていた。", "Officials admitted the figures were likely a vast undercount."],
-      ["sweltering", "うだるような暑さの(形容詞)", "ヨーロッパの熱波を描写する際に使われていた。", "Tourists struggled through the sweltering summer heat."],
-      ["exacerbating", "悪化させる(動詞のing形)", "熱波が干ばつや山火事を悪化させていることを説明していた。", "Poor drainage is exacerbating the flooding problem."],
-      ["flood alerts", "洪水警報(名詞句)", "米中西部の洪水被害のニュースで使われていた。", "Flood alerts were issued for several counties overnight."],
-      ["dispute reports", "報道内容に反論する(動詞句)", "国防長官が空母内の士気低下報道を否定した文脈で使われていた。", "The company disputed reports of unsafe working conditions."],
-      ["morale", "士気(名詞)", "空母乗組員の士気低下が報じられた文脈で使われていた。", "Team morale improved after the surprise bonus."],
-      ["turning a blind eye to A", "Aを見て見ぬふりする(動詞句)", "ハーバード大学への訴訟で、大学が反ユダヤ主義を見過ごしたという主張の文脈で使われていた。", "Managers were accused of turning a blind eye to the harassment."],
-      ["inched up", "わずかに上昇した(動詞句)", "株式市場のニュースで、ダウ平均の小幅な上昇を説明する際に使われていた。", "The unemployment rate inched up slightly last month."],
-      ["cut off water, electricity, and essential supplies", "水・電気・生活物資を断つ(動詞句)", "入植者が住居を包囲した際に行った具体的な行為として説明されていた。", "The siege cut off water, electricity, and essential supplies for days."],
-      ["act of terror", "テロ行為(名詞句)", "米国大使が入植者の行動を非難する際に使った強い表現。", "The attack was widely condemned as an act of terror."],
-      ["swarmed a home", "家を取り囲んだ(動詞句)", "大勢の入植者が一斉に家を包囲した様子を描写していた。", "Dozens of protesters swarmed the building entrance."],
-      ["a menacing message", "脅迫めいたメッセージ(名詞句)", "焼け残った壁に残された脅迫文を指して使われていた。", "Someone left a menacing message spray-painted on the wall."],
-      ["besieged", "包囲された(形容詞・動詞の過去分詞)", "家族の住居が包囲されている状態を表す語として繰り返し使われていた。", "The town remained besieged for nearly a week."],
-      ["unprecedented levels", "前例のない水準(名詞句)", "国連が入植者による暴力の急増を説明する際に使われていた。", "Violence in the region has reached unprecedented levels this year."],
-      ["displacing", "住居を追われさせる(動詞のing形)", "入植者の攻撃によってパレスチナ人が住居を追われている現状を説明していた。", "The flooding ended up displacing thousands of families."],
-      ["juvenile delinquents", "非行少年(名詞句)", "イスラエル首相が入植者の行為を矮小化して呼んだ際の表現。", "The mayor downplayed the vandalism as the work of juvenile delinquents."],
-      ["vigilantism", "私的制裁(名詞)", "首相が入植者による自警的な暴力を否定する文脈で使われていた。", "The government said it would not tolerate vigilantism of any kind."],
-      ["a rare rebuke", "異例の叱責(名詞句)", "米国大使が同盟国イスラエルを公に批判したことの異例さを表していた。", "The senator issued a rare rebuke of his own party's leadership."],
-      ["reprehensible", "非難に値する(形容詞)", "イスラエル軍自身が入植者の行為をこの語で説明していた。", "The court called the defendant's conduct reprehensible."],
-      ["dismantled the outposts", "前哨基地を解体した(動詞句)", "イスラエル軍が違法な入植地の前哨基地を撤去した措置として言及されていた。", "Authorities dismantled the illegal outposts within days."],
-      ["a terrifying moment", "恐ろしい瞬間(名詞句)", "家族が包囲された瞬間を振り返るインタビューで使われていた。", "Losing sight of her son in the crowd was a terrifying moment."],
-      ["fearing for his life", "命の危険を感じて(分詞句)", "兄が弟の安否を心配していた様子を説明する文脈で使われていた。", "He called 911, fearing for his life."],
-      ["banned from accessing food and medicine", "食料や薬の入手を禁じられた(動詞句)", "包囲された家族が受けていた制限を説明する際に使われていた。", "Residents were banned from accessing the flooded area."],
-      ["a closed military area", "立入禁止の軍事区域(名詞句)", "家族が住む地域が軍によって封鎖されていたことを説明していた。", "The border town was declared a closed military area."],
-      ["constantly surrounded", "常に取り囲まれている(形容詞句)", "家族が常に入植者に囲まれている恐怖を語る場面で使われていた。", "She felt constantly surrounded by reporters after the incident."],
-      ["intimidate and harass", "脅し、嫌がらせをする(動詞句)", "米国大使が入植者の行為を非難した際の表現として使われていた。", "The group was accused of trying to intimidate and harass witnesses."],
-      ["implemented", "実行に移される(動詞の過去分詞)", "口先だけでなく実際の行動が伴うべきだ、という文脈で使われていた。", "The new policy has not yet been fully implemented."],
-      ["subject to settler violence", "入植者による暴力の対象となる(形容詞句)", "他のパレスチナ系アメリカ人も同様の暴力の対象になっていることを説明していた。", "Several villages remain subject to ongoing violence."],
-      ["scaffolding", "足場(名詞)", "ワシントンD.C.の工事現場の様子を描写する際に使われていた。", "The old building is covered in scaffolding during renovation."],
-      ["bulldozing", "重機で取り壊す(動詞のing形)", "ホワイトハウス東棟の解体工事を説明する際に使われていた。", "Workers spent the week bulldozing the old parking structure."],
-      ["a signature priority", "看板政策(名詞句)", "大統領が最重要視している建設事業を指して使われていた。", "Tax reform became the senator's signature priority."],
-      ["redirected taxpayer dollars", "税金の使途を切り替えた(動詞句)", "政府資金がホワイトハウスの改修事業に回された経緯を説明していた。", "The city redirected taxpayer dollars toward the new stadium project."],
-      ["funneled through A", "Aを経由して流された(動詞句)", "寄付金が特定の非営利団体を経由して集められていたことを説明していた。", "Donations were funneled through a small charitable trust."],
-      ["a watchdog group", "監視団体(名詞句)", "政府の透明性を監視する団体を指して使われていた。", "A watchdog group filed a lawsuit demanding more transparency."],
-      ["preferential treatment", "優遇措置(名詞句)", "寄付企業が政府契約で優遇されていないかという疑惑の文脈で使われていた。", "The company denied receiving any preferential treatment."],
-      ["shake down donors", "寄付者から資金を引き出す(口語的動詞句、やや強引なニュアンス)", "大統領が寄付を集める手法を批判的に表現する際に使われていた。", "Critics accused the campaign of trying to shake down big donors."],
-      ["butter up donors", "寄付者にこびへつらう(口語的動詞句)", "同じく資金集めの手法を批判する文脈で使われていた。", "He spent the evening buttering up potential investors."],
-      ["evade scrutiny and accountability", "監視と説明責任を逃れる(動詞句)", "不透明な資金の流れが批判されている理由として使われていた。", "The scheme was designed to evade scrutiny and accountability."],
-      ["no-bid contracts", "入札なしの契約(名詞句)", "工事契約が競争入札なしで結ばれたことへの批判で使われていた。", "The audit criticized the agency for awarding no-bid contracts."],
-      ["a price tag", "かかる費用(名詞句)", "建設事業の総額を表す際に繰り返し使われていた。", "The renovation carries a price tag of over $16 million."],
-      ["denaturalization", "市民権剥奪(名詞)", "帰化市民から市民権を剥奪する司法手続きを指す語として、専門家インタビューで繰り返し使われていた。", "The government rarely pursues denaturalization except in extreme cases."],
-      ["an end goal in itself", "それ自体が目的(名詞句)", "市民権剥奪が政策の手段ではなく目的化している、という批判の文脈で使われていた。", "For some, winning became an end goal in itself."],
-      ["a political tool", "政治的な道具(名詞句)", "法的手続きが政治的な目的で使われているという批判の文脈で使われていた。", "Critics say the investigation is being used as a political tool."],
-      ["incredibly rare", "非常に稀(形容詞句)", "市民権剥奪が歴史的にほとんど例のない手続きだったことを説明する際に使われていた。", "Such a diagnosis is incredibly rare in young patients."],
-      ["national security interests", "国家安全保障上の利益(名詞句)", "過去の市民権剥奪事例が正当化された理由として言及されていた。", "The policy was defended on the grounds of national security interests."],
-      ["weaponized", "武器として使われる(形容詞・動詞の過去分詞)", "法的手続きが政治的攻撃の手段として使われているという批判で使われていた。", "Data privacy laws should not be weaponized against journalists."],
-      ["a realistic proposition", "現実的な話(名詞句)", "ある個人の市民権剥奪が実現可能かどうかを議論する文脈で使われていた。", "Retiring at 40 isn't a realistic proposition for most people."],
-      ["materiality", "重要性(法的因果関係を左右する事実かどうか、名詞)", "市民権剥奪裁判で虚偽申告が結果に影響したかを問う法律用語として使われていた。", "The court focused on the materiality of the false statement."],
-      ["a misstatement", "虚偽の申告(名詞)", "帰化申請時の虚偽記載を指す語として使われていた。", "The error was later found to be an innocent misstatement, not fraud."],
-      ["adjudicates", "裁定する(動詞)", "市民権剥奪の裁判がどの機関で判断されるかを説明する文脈で使われていた。", "A federal court adjudicates disputes like this one."],
-      ["removal proceeding", "国外退去手続き(名詞句)", "市民権を失った後に続く可能性のある手続きとして言及されていた。", "She was placed in removal proceedings after her visa expired."],
-      ["synthesize", "統合してまとめる(動詞)", "北極圏の研究成果を一つの報告書にまとめる作業を表す語として使われていた。", "The report synthesizes years of climate data into one summary."],
-      ["scrambling to do", "大慌てで〜しようとする(動詞句)", "資金打ち切りを受けて科学者たちが対応に追われている様子を表していた。", "The team was scrambling to finish the report before the deadline."],
-      ["curtail", "切り詰める、縮小する(動詞)", "政権による気候研究への予算縮小を表す語として使われていた。", "The company was forced to curtail its research spending."],
-      ["plagued with misinformation", "誤情報に満ちていると批判される(形容詞句)", "政権側が気候報告書を批判する際の言い回しとして使われていた。", "The debate has been plagued with misinformation online."],
-      ["bridging the gap", "隔たりを埋める(動詞句)", "専門的な生データと一般の理解との間を埋める役割を説明する際に使われていた。", "The workshop aims at bridging the gap between theory and practice."],
-      ["permafrost", "永久凍土(名詞)", "北極圏の環境変化を説明する専門用語として使われていた。", "Melting permafrost is releasing greenhouse gases once trapped in the ice."],
-      ["geopolitical tensions", "地政学的緊張(名詞句)", "北極圏の変化が国際関係に及ぼす影響として言及されていた。", "Geopolitical tensions in the region have risen sharply."],
-      ["dismantled the research center", "研究センターを解体した(動詞句)", "政権が気候研究機関を廃止した措置を説明する文脈で使われていた。", "The new administration quietly dismantled the research center."],
-      ["direct observations", "直接観測(名詞句)", "推測ではなく実測データに基づく報告であることを強調する際に使われていた。", "The study relies on direct observations rather than models."],
-      ["peer-reviewed", "査読を経た(形容詞)", "報告書の科学的信頼性を強調する際に使われていた。", "The findings were published in a peer-reviewed journal."],
-      ["environmental intelligence", "環境に関する情報・知見(名詞句)", "政策決定に役立つ環境データの重要性を説明する際に使われていた。", "Policymakers rely on environmental intelligence to plan for the future."],
-      ["a calf", "動物の赤ちゃん(名詞、特に子ゾウなど)", "国立動物園で生まれた子ゾウLinh Maiを指して使われていた。", "The zoo welcomed a healthy elephant calf last spring."],
-      ["vulnerable", "脆弱な、かかりやすい(形容詞)", "子ゾウがウイルス性疾患にかかりやすいことを説明する文脈。", "Newborns are especially vulnerable to infection."],
-      ["latent", "潜伏している(形容詞)", "ウイルスが症状を出さずに体内に潜んでいる状態を説明していた。", "The virus can remain latent in the body for years."],
-      ["trunk-to-trunk contact", "鼻と鼻の接触(名詞句)", "象の間でウイルスが感染する経路として説明されていた。", "Researchers believe the disease spreads through trunk-to-trunk contact."],
-      ["an insidious disease", "気づかぬうちに進行する病気(名詞句)", "EEHVという象のウイルス性疾患を形容する際に使われていた。", "Diabetes can be an insidious disease if left unmonitored."],
-      ["antibodies", "抗体(名詞)", "子ゾウが母親から受け継ぐ免疫の話で使われていた。", "Breastfeeding passes protective antibodies to the baby."],
-      ["a syringe", "注射器(名詞)", "獣医が子ゾウにウイルスサンプルを投与する手技の説明で使われていた。", "The nurse prepared a syringe for the vaccination."],
-      ["cracking that nut", "その難題を解決すること(イディオム)", "治療法の確立という難題に取り組む姿勢を表す口語表現として使われていた。", "Scientists have spent decades cracking that nut."],
-      ["a rocky start", "波乱含みのスタート(名詞句)", "子ゾウが生まれた直後、母親との関係がうまくいかなかったことを表していた。", "The project had a rocky start but improved over time."],
-      ["pack on the pounds", "体重を増やす(口語表現)", "子ゾウが順調に体重を増やしている様子を表す表現として使われていた。", "The puppy has really packed on the pounds this year."],
-      ["an integral member", "欠かせない一員(名詞句)", "子ゾウが将来的に群れの重要な一員になることを期待する文脈で使われていた。", "She quickly became an integral member of the team."],
-      ["marries a blend of A and B", "AとBを融合させる(動詞句)", "音楽コーナーで、兄弟デュオの音楽性を紹介する際に使われていた。", "Her new novel marries a blend of memoir and fiction."],
-      ["a forthcoming album", "近日発売のアルバム(名詞句)", "ミュージシャンへのインタビューで、新作アルバムを指して使われていた。", "Fans are eagerly waiting for details about the band's forthcoming album."],
-      ["command a certain stillness", "独特の静けさを生み出す(動詞句)", "演奏が観客に与える独特な雰囲気を表す言い回しとして使われていた。", "A great orator can command a certain stillness in a crowded room."],
-      ["instill", "(価値観などを)植え付ける(動詞)", "教育者が生徒に自己肯定感を教える文脈で使われていた。", "Good teachers instill a love of learning in their students."],
-      ["self-esteem", "自己肯定感(名詞)", "アート教育の効果として言及されていた。", "Winning the competition gave her a real boost in self-esteem."],
-      ["a core memory", "心に残る原体験(名詞句)", "生徒が写真を撮られた経験を振り返る場面で使われていた。", "Our first family trip abroad became a core memory for me."],
-      ["redlining", "レッドライニング(人種を理由にした住宅融資差別の歴史的慣行、名詞)", "アーティストの作品シリーズの背景として説明されていた。", "The documentary examines how redlining shaped many American cities."],
-      ["hazardous", "危険とみなされる(形容詞)", "redliningの文脈で、特定地域が「危険」と分類されていたことを説明する際に使われていた。", "The area was once labeled hazardous by lenders for unfair reasons."],
-      ["undervalued", "過小評価される(形容詞)", "同じくredliningの文脈で、地域の資産価値が不当に低く見積もられたことを表していた。", "Properties in the neighborhood were long undervalued by banks."],
-      ["at a disadvantage", "不利な立場に(副詞句)", "資金の少ない学区が置かれている状況を説明する際に使われていた。", "Students without internet access are at a disadvantage in remote learning."]
-    ];
-
-    renderVocab("vocab-0814", VOCAB_0814);
-    renderVocab("vocab-0813", VOCAB_0813);
-
-    var modeBtns = document.querySelectorAll(".mode-btn");
-    var dateBtns = document.querySelectorAll(".date-btn");
-    var panels = document.querySelectorAll(".panel");
-
-    var state = { mode: "guide", date: "2026-08-14" };
-
-    try {
-      var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-      if (saved && saved.mode && saved.date) state = saved;
-    } catch (e) { /* ignore */ }
-
-    function apply() {
-      modeBtns.forEach(function (b) {
-        b.classList.toggle("active", b.dataset.mode === state.mode);
-      });
-      dateBtns.forEach(function (b) {
-        b.classList.toggle("active", b.dataset.date === state.date);
-      });
-      panels.forEach(function (p) {
-        var match = p.dataset.mode === state.mode && p.dataset.date === state.date;
-        p.hidden = !match;
-      });
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) { /* ignore */ }
-    }
-
+  function render() {
+    panelGroups.forEach(function (g) {
+      g.classList.toggle('active', g.dataset.mode === currentMode);
+    });
+    document.querySelectorAll('.panel').forEach(function (p) {
+      var inActiveGroup = p.parentElement.dataset.mode === currentMode;
+      p.classList.toggle('active', inActiveGroup && p.dataset.date === currentDate);
+    });
     modeBtns.forEach(function (b) {
-      b.addEventListener("click", function () {
-        state.mode = b.dataset.mode;
-        apply();
-      });
+      b.classList.toggle('active', b.dataset.mode === currentMode);
     });
-
-    dateBtns.forEach(function (b) {
-      b.addEventListener("click", function () {
-        state.date = b.dataset.date;
-        apply();
-      });
+    dateTabs.forEach(function (t) {
+      t.classList.toggle('active', t.dataset.date === currentDate);
     });
+  }
 
-    apply();
-  })();
+  modeBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      currentMode = b.dataset.mode;
+      render();
+    });
+  });
+  dateTabs.forEach(function (t) {
+    t.addEventListener('click', function () {
+      currentDate = t.dataset.date;
+      render();
+    });
+  });
+
+  render();
+})();
 </script>
+</body>
+</html>
